@@ -1,6 +1,6 @@
 package by.c43.store;
 
-import by.voluevich.calc.configuration.WebConfiguration;
+import by.c43.store.configuration.WebConfiguration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {

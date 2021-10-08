@@ -2,6 +2,7 @@ package by.c43.store.entity;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
@@ -9,13 +10,31 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
     private long id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
     private TypeOfUser typeOfUser;
+
+    @Column(nullable = false)
     private String picture;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Column(nullable = false)
+    private Telephone telephone;
 
     @Override
     public boolean equals(Object o) {
@@ -39,6 +58,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", typeOfUser=" + typeOfUser +
                 ", picture='" + picture + '\'' +
+                ", telephone=" + telephone +
                 '}';
     }
 }

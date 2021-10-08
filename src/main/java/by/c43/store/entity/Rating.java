@@ -2,6 +2,7 @@ package by.c43.store.entity;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,11 +11,20 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
 public class Rating {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
     private long id;
+
+    @Column(nullable = false)
     private double score;
-    private List<Long> users;
+
+    @Singular
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn
+    private List<User> users;
 
     @Override
     public boolean equals(Object o) {

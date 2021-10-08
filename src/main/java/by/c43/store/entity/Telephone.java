@@ -2,6 +2,7 @@ package by.c43.store.entity;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.Objects;
 
 @Setter
@@ -9,8 +10,14 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
 public class Telephone {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
     private long id;
+
+    @Column(nullable = false)
     private long number;
 
     @Override

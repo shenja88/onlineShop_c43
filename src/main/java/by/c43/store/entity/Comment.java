@@ -3,6 +3,7 @@ package by.c43.store.entity;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -11,11 +12,21 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
 public class Comment {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
     private long id;
+
+    @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
     private Timestamp time;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn
     private User user;
 
     @Override

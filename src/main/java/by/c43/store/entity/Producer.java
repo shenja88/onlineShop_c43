@@ -2,6 +2,7 @@ package by.c43.store.entity;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,17 +11,36 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
 public class Producer {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
     private long id;
-    private String name;
-    private String email;
-    private String password;
-    private String description;
-    private String picture;
-    private Address address;
-    private List<Telephone> telephones;
 
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
+    private String picture;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Column(nullable = false)
+    private Address address;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn
+    @Singular
+    private List<Telephone> telephones;
 
     @Override
     public boolean equals(Object o) {

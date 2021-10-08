@@ -22,9 +22,8 @@ public class Rating {
     private double score;
 
     @Singular
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn
-    private List<User> users;
+    @ElementCollection
+    private List<Long> users;
 
     @Override
     public boolean equals(Object o) {

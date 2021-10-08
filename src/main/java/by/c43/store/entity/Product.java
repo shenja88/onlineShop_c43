@@ -24,6 +24,7 @@ public class Product {
     @Column(nullable = false)
     private String description;
 
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private CategoryOfProduct category;
 

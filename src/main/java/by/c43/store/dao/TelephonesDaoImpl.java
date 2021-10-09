@@ -23,65 +23,53 @@ public class TelephonesDaoImpl implements TelephoneDao {
 
     @Override
     public void save(Telephone telephone) {
-        try (Session session = sessionFactory.openSession()) {
-            session.save(telephone);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        session.save(telephone);
+        session.close();
     }
 
     @Override
     public void delete(long id) {
-        try (Session session = sessionFactory.openSession()) {
-            Telephone telephone = session
-                    .createQuery(GET_BY_ID, Telephone.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-            session.delete(telephone);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        Telephone telephone = session
+                .createQuery(GET_BY_ID, Telephone.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        session.delete(telephone);
+        session.close();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Telephone getById(long id) {
-        Telephone telephone = null;
-        try (Session session = sessionFactory.openSession()) {
-            telephone = session
-                    .createQuery(GET_BY_ID, Telephone.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        Telephone telephone = session
+                .createQuery(GET_BY_ID, Telephone.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        session.close();
         return telephone;
     }
 
     @Override
     public boolean isExistById(long id) {
-        Optional<Telephone> telephone = Optional.empty();
-        try (Session session = sessionFactory.openSession()) {
-            telephone = session
-                    .createQuery(GET_BY_ID, Telephone.class)
-                    .setParameter("id", id)
-                    .uniqueResultOptional();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        Optional<Telephone> telephone = session
+                .createQuery(GET_BY_ID, Telephone.class)
+                .setParameter("id", id)
+                .uniqueResultOptional();
+        session.close();
         return telephone.isPresent();
     }
 
     @Override
     public boolean isExistByNumber(String number) {
-        Optional<Telephone> telephone = Optional.empty();
-        try (Session session = sessionFactory.openSession()) {
-            telephone = session
-                    .createQuery(GET_BY_NUMBER, Telephone.class)
-                    .setParameter("number", number)
-                    .uniqueResultOptional();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        Optional<Telephone> telephone = session
+                .createQuery(GET_BY_NUMBER, Telephone.class)
+                .setParameter("number", number)
+                .uniqueResultOptional();
+        session.close();
         return telephone.isPresent();
     }
 }

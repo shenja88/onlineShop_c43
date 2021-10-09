@@ -25,135 +25,113 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void save(User user) {
-        try (Session session = sessionFactory.openSession()) {
-            session.save(user);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        session.save(user);
+        session.close();
     }
 
     @Override
     public void delete(long id) {
-        try (Session session = sessionFactory.openSession()) {
-            User user = session
-                    .createQuery(GET_BY_ID, User.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-            session.delete(user);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        User user = session
+                .createQuery(GET_BY_ID, User.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        session.delete(user);
+        session.close();
     }
 
     @Override
     public void updateName(String newName, long id) {
-        try (Session session = sessionFactory.openSession()) {
-            User user = session
-                    .createQuery(GET_BY_ID, User.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-            user.setName(newName);
-            session.update(user);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        User user = session
+                .createQuery(GET_BY_ID, User.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        user.setName(newName);
+        session.update(user);
+        session.close();
     }
 
     @Override
     public void updateEmail(String newEmail, long id) {
-        try (Session session = sessionFactory.openSession()) {
-            User user = session
-                    .createQuery(GET_BY_ID, User.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-            user.setEmail(newEmail);
-            session.update(user);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        User user = session
+                .createQuery(GET_BY_ID, User.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        user.setEmail(newEmail);
+        session.update(user);
+        session.close();
     }
 
     @Override
     public void updatePassword(String newPassword, long id) {
-        try (Session session = sessionFactory.openSession()) {
-            User user = session
-                    .createQuery(GET_BY_ID, User.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-            user.setPassword(newPassword);
-            session.update(user);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        User user = session
+                .createQuery(GET_BY_ID, User.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        user.setPassword(newPassword);
+        session.update(user);
+        session.close();
     }
 
     @Override
     public void updatePicture(String newPicture, long id) {
-        try (Session session = sessionFactory.openSession()) {
-            User user = session
-                    .createQuery(GET_BY_ID, User.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-            user.setPicture(newPicture);
-            session.update(user);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        User user = session
+                .createQuery(GET_BY_ID, User.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        user.setPicture(newPicture);
+        session.update(user);
+        session.close();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public User getById(long id) {
-        User user = null;
-        try (Session session = sessionFactory.openSession()) {
-            user = session
-                    .createQuery(GET_BY_ID, User.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        User user = session
+                .createQuery(GET_BY_ID, User.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        session.close();
         return user;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public User getByEmail(String email) {
-        User user = null;
-        try (Session session = sessionFactory.openSession()) {
-            user = session
-                    .createQuery(GET_BY_EMAIL, User.class)
-                    .setParameter("email", email)
-                    .getSingleResult();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        User user = session
+                .createQuery(GET_BY_EMAIL, User.class)
+                .setParameter("email", email)
+                .getSingleResult();
+        session.close();
         return user;
     }
 
     @Override
     public boolean isExistById(long id) {
-        Optional<User> optionalUser = Optional.empty();
-        try (Session session = sessionFactory.openSession()) {
-            optionalUser = session
-                    .createQuery(GET_BY_ID, User.class)
-                    .setParameter("id", id)
-                    .uniqueResultOptional();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        Optional<User> optionalUser = session
+                .createQuery(GET_BY_ID, User.class)
+                .setParameter("id", id)
+                .uniqueResultOptional();
+        session.close();
         return optionalUser.isPresent();
     }
 
     @Override
     public boolean isExistByEmail(String email) {
-        Optional<User> optionalUser = Optional.empty();
-        try (Session session = sessionFactory.openSession()) {
-            optionalUser = session
-                    .createQuery(GET_BY_EMAIL, User.class)
-                    .setParameter("email", email)
-                    .uniqueResultOptional();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        Optional<User> optionalUser = session
+                .createQuery(GET_BY_EMAIL, User.class)
+                .setParameter("email", email)
+                .uniqueResultOptional();
+        session.close();
         return optionalUser.isPresent();
     }
 }

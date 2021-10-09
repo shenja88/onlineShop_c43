@@ -43,14 +43,13 @@ public class Product {
     @Column(nullable = false)
     private Rating rating;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn
     @Singular
     private List<Comment> comments;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
-    @Column(nullable = false)
     private User owner;
 
     @Column(nullable = false)

@@ -1,7 +1,6 @@
 package by.c43.store.dao;
 
 import by.c43.store.entity.Address;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
@@ -11,7 +10,7 @@ import java.util.Optional;
 
 @Transactional
 @Component
-public class AddressDaoImpl implements AddressDao{
+public class AddressDaoImpl implements AddressDao {
     private final SessionFactory sessionFactory;
 
     public AddressDaoImpl(SessionFactory sessionFactory) {
@@ -23,68 +22,55 @@ public class AddressDaoImpl implements AddressDao{
 
     @Override
     public void save(Address address) {
-        try (Session session = sessionFactory.openSession()) {
-            session.save(address);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        session.save(address);
+        session.close();
     }
 
     @Override
     public void delete(long id) {
-        try (Session session = sessionFactory.openSession()) {
-            Address address = session
-                    .createQuery(GET_BY_ID, Address.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-            session.delete(address);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        Address address = session
+                .createQuery(GET_BY_ID, Address.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        session.delete(address);
+        session.close();
     }
 
     @Override
     public Address getById(long id) {
-        Address address = null;
-        try (Session session = sessionFactory.openSession()) {
-            address = session
-                    .createQuery(GET_BY_ID, Address.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        Address address = session
+                .createQuery(GET_BY_ID, Address.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        session.close();
         return address;
     }
 
     @Override
     public boolean isExistById(long id) {
-        Optional<Address> optionalAddress = Optional.empty();
-        try (Session session = sessionFactory.openSession()) {
-            optionalAddress = session
-                    .createQuery(GET_BY_ID, Address.class)
-                    .setParameter("id", id)
-                    .uniqueResultOptional();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        Optional<Address> optionalAddress = session
+                .createQuery(GET_BY_ID, Address.class)
+                .setParameter("id", id)
+                .uniqueResultOptional();
+        session.close();
         return optionalAddress.isPresent();
     }
 
     @Override
     public boolean isExistByInfo(Address address) {
-        Optional<Address> optionalAddress = Optional.empty();
-        try (Session session = sessionFactory.openSession()) {
-            optionalAddress = session
-                    .createQuery(GET_BY_INFO, Address.class)
-                    .setParameter("country", address.getCountry())
-                    .setParameter("city", address.getCity())
-                    .setParameter("street", address.getStreet())
-                    .setParameter("home", address.getHome())
-                    .uniqueResultOptional();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+        Session session = sessionFactory.openSession();
+        Optional<Address> optionalAddress = session
+                .createQuery(GET_BY_INFO, Address.class)
+                .setParameter("country", address.getCountry())
+                .setParameter("city", address.getCity())
+                .setParameter("street", address.getStreet())
+                .setParameter("home", address.getHome())
+                .uniqueResultOptional();
+        session.close();
         return optionalAddress.isPresent();
     }
 }

@@ -28,6 +28,7 @@ public class RatingDaoImpl implements RatingDao{
         session.close();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Rating getById(long id) {
         Session session = sessionFactory.openSession();

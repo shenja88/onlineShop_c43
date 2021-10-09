@@ -39,6 +39,7 @@ public class TelephonesDaoImpl implements TelephoneDao {
         session.close();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Telephone getById(long id) {
         Session session = sessionFactory.openSession();

@@ -89,6 +89,7 @@ public class UserDaoImpl implements UserDao {
         session.close();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public User getById(long id) {
         Session session = sessionFactory.openSession();
@@ -100,6 +101,7 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public User getByEmail(String email) {
         Session session = sessionFactory.openSession();

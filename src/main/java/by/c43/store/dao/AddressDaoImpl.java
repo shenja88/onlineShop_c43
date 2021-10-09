@@ -38,6 +38,7 @@ public class AddressDaoImpl implements AddressDao {
         session.close();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Address getById(long id) {
         Session session = sessionFactory.openSession();

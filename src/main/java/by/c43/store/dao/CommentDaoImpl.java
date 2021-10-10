@@ -58,8 +58,7 @@ public class CommentDaoImpl implements CommentDao {
     public boolean isExistByInfo(Comment comment) {
         Session session = sessionFactory.openSession();
         Optional<Comment> commentOpt = Optional.ofNullable((Comment)session.createQuery(
-             " FROM Comments as com LEFT JOIN com.user user " +
-                " WHERE com.description = :checkDescription AND user.email = :checkUserEmail ")
+             " FROM Comments WHERE description = :checkDescription AND User.email = :checkUserEmail ")
                 .setParameter("checkDescription", comment.getDescription())
                 .setParameter("checkUserEmail", comment.getUser().getEmail())
                 .getSingleResult());

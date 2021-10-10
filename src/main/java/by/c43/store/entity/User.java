@@ -34,6 +34,7 @@ public class User {
     private String picture;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "telephone_id")
     @Column(nullable = false)
     private Telephone telephone;
 

@@ -34,11 +34,12 @@ public class Producer {
     private String picture;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "address_id")
     @Column(nullable = false)
     private Address address;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn
+    @JoinColumn(name = "telephone_id")
     @Singular
     private List<Telephone> telephones;
 

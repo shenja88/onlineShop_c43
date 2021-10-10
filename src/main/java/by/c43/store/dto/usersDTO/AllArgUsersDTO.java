@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 public class AllArgUsersDTO {
 
     @NotBlank
-    @Size(min = 3, max = 30, message = "Enter a name of length 3-16")
+    @Size(min = 3, max = 30, message = "Enter a name of length 3-30")
     private String name;
 
     @NotBlank
@@ -30,6 +30,10 @@ public class AllArgUsersDTO {
             "1 lowercase letter, and 1 number with no spaces.")
     private String password;
 
+    @NotBlank(message = "Enter a correct URL picture!")
     private String picture;
+
+    @NotBlank
+    @Size(min = 9, message = "Phone number cannot have less then 9 numbers")
     private Telephone telephone;
 }

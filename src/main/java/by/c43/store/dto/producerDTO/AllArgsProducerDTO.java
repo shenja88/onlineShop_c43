@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 public class AllArgsProducerDTO {
     @NotBlank
-    @Size(min = 3, max = 30, message = "Enter a name of length 3-16")
+    @Size(min = 3, max = 30, message = "Enter a name of length 3-30")
     private String name;
 
     @NotBlank
@@ -35,7 +35,7 @@ public class AllArgsProducerDTO {
     @NotBlank(message = "Field must not be empty!")
     private String description;
 
-    @NotBlank(message = "Field must not be empty!")
+    @NotBlank(message = "Enter a correct URL picture!")
     private String picture;
 
     @NotBlank(message = "Field must not be empty!")

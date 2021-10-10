@@ -8,9 +8,13 @@ public interface AddressDao {
 
     void delete(long id);
 
+    void update(Address address);
+
     Address getById(long id);
 
     boolean isExistById(long id);
 
     boolean isExistByInfo(Address address);
+
+
 }

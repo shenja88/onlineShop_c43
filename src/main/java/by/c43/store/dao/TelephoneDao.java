@@ -11,6 +11,8 @@ public interface TelephoneDao {
 
     void delete(long id);
 
+    void update(String newNumber, long id);
+
     Telephone getById(long id);
 
     boolean isExistById(long id);

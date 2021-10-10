@@ -18,14 +18,14 @@ public class Telephone {
     private long id;
 
     @Column(nullable = false)
-    private long number;
+    private String number;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Telephone telephone = (Telephone) o;
-        return number == telephone.number;
+        return Objects.equals(number, telephone.number);
     }
 
     @Override

@@ -31,11 +31,17 @@ public class TelephonesDaoImpl implements TelephoneDao {
     @Override
     public void delete(long id) {
         Session session = sessionFactory.openSession();
-        Telephone telephone = session
-                .createQuery(GET_BY_ID, Telephone.class)
-                .setParameter("id", id)
-                .getSingleResult();
+        Telephone telephone = session.get(Telephone.class, id);
         session.delete(telephone);
+        session.close();
+    }
+
+    @Override
+    public void update(String newNumber, long id) {
+        Session session = sessionFactory.openSession();
+        Telephone telephone = session.get(Telephone.class, id);
+        telephone.setNumber(newNumber);
+        session.update(telephone);
         session.close();
     }
 
@@ -43,10 +49,7 @@ public class TelephonesDaoImpl implements TelephoneDao {
     @Override
     public Telephone getById(long id) {
         Session session = sessionFactory.openSession();
-        Telephone telephone = session
-                .createQuery(GET_BY_ID, Telephone.class)
-                .setParameter("id", id)
-                .getSingleResult();
+        Telephone telephone = session.get(Telephone.class, id);
         session.close();
         return telephone;
     }

@@ -1,18 +1,13 @@
 package by.c43.store.dto.usersDTO;
 
 import by.c43.store.entity.Telephone;
-import by.c43.store.entity.TypeOfUser;
 import by.c43.store.utils.Patterns;
-import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode
+
 public class AllArgUsersDTO {
 
     @NotBlank

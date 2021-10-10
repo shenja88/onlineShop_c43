@@ -39,15 +39,6 @@ public class Product {
     @Column(nullable = false)
     private double price;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Column(nullable = false)
-    private Rating rating;
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn
-    @Singular
-    private List<Comment> comments;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private User owner;
@@ -63,12 +54,12 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return Objects.equals(name, product.name) && Objects.equals(description, product.description) && category == product.category && Objects.equals(producer, product.producer) && Objects.equals(owner, product.owner);
+        return id == product.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, category, producer, owner);
+        return Objects.hash(id);
     }
 
     @Override
@@ -81,8 +72,6 @@ public class Product {
                 ", producer=" + producer +
                 ", picture='" + picture + '\'' +
                 ", price=" + price +
-                ", rating=" + rating +
-                ", comments=" + comments +
                 ", owner=" + owner +
                 ", reservedStatus=" + reservedStatus +
                 ", saleStatus=" + saleStatus +

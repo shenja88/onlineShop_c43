@@ -218,6 +218,7 @@ public class ProductDaoImpl implements ProductDao {
         return products;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Product> getByCategory(CategoryOfProduct category) {
         Session session = sessionFactory.openSession();

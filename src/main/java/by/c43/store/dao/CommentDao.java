@@ -15,6 +15,8 @@ public interface CommentDao {
 
     Optional<Comment> getById(long id);
 
+    List<Comment> getByIdProduct(long id);
+
     boolean isExistById(long id);
 
     boolean isExistByInfo(Comment comment);

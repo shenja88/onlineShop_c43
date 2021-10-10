@@ -15,6 +15,7 @@ public class RatingDaoImpl implements RatingDao{
     private final SessionFactory sessionFactory;
 
     private final static String GET_BY_ID = "from Rating where id =: id";
+    private final static String GET_BY_PRODUCT = "FROM Rating where product.id =: product_id";
 
 
     public RatingDaoImpl(SessionFactory sessionFactory) {
@@ -38,6 +39,16 @@ public class RatingDaoImpl implements RatingDao{
     }
 
     @Override
+    public Rating getByIdProduct(long idProduct) {
+        Session session = sessionFactory.openSession();
+        Rating rating = session.createQuery(GET_BY_PRODUCT, Rating.class)
+                .setParameter("product_id", idProduct)
+                .getSingleResult();
+        session.close();
+        return rating;
+    }
+
+    @Override
     public void setNewScore(double newScore, long id) {
         Session session = sessionFactory.openSession();
         Rating rating = session.get(Rating.class, id);
@@ -51,6 +62,16 @@ public class RatingDaoImpl implements RatingDao{
         Session session = sessionFactory.openSession();
         Optional<Rating> optionalRating = session.createQuery(GET_BY_ID, Rating.class)
                 .setParameter("id", id)
+                .uniqueResultOptional();
+        session.close();
+        return optionalRating.isPresent();
+    }
+
+    @Override
+    public boolean isExistByInfo(long id) {
+        Session session = sessionFactory.openSession();
+        Optional<Rating> optionalRating = session.createQuery(GET_BY_PRODUCT, Rating.class)
+                .setParameter("product_id", id)
                 .uniqueResultOptional();
         session.close();
         return optionalRating.isPresent();

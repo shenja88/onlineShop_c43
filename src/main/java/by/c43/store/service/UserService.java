@@ -45,7 +45,7 @@ public class UserService {
 
 
     public boolean updateUserPassword(String oldPassword, String newPassword, String confirmPassword, User user) {
-        if (checkPassword(user.getPassword(), oldPassword)) {
+        if (checkPassword(user.getPassword(), oldPassword) && !oldPassword.equals(newPassword)) {
             if (checkPassword(newPassword, confirmPassword)) {
                 userDAO.updatePassword(newPassword, user.getId());
             }

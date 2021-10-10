@@ -34,12 +34,12 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return Objects.equals(country, address.country) && Objects.equals(city, address.city) && Objects.equals(street, address.street) && Objects.equals(home, address.home);
+        return id == address.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(country, city, street, home);
+        return Objects.hash(id);
     }
 
     @Override

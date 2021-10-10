@@ -25,12 +25,12 @@ public class Telephone {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Telephone telephone = (Telephone) o;
-        return Objects.equals(number, telephone.number);
+        return id == telephone.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number);
+        return Objects.hash(id);
     }
 
     @Override

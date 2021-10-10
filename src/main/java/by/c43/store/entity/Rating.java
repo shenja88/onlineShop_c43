@@ -25,17 +25,21 @@ public class Rating {
     @ElementCollection
     private List<Long> users;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn("product_id")
+    private Product product;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Rating rating = (Rating) o;
-        return id == rating.id && Double.compare(rating.score, score) == 0 && Objects.equals(users, rating.users);
+        return id == rating.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, score, users);
+        return Objects.hash(id);
     }
 
     @Override

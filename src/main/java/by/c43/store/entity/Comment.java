@@ -29,17 +29,21 @@ public class Comment {
     @JoinColumn
     private User user;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn("product_id")
+    private Product product;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
-        return Objects.equals(description, comment.description) && Objects.equals(user, comment.user);
+        return id == comment.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(description, user);
+        return Objects.hash(id);
     }
 
     @Override

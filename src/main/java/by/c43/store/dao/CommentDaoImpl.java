@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -18,7 +19,8 @@ import java.util.Optional;
 public class CommentDaoImpl implements CommentDao {
     private final SessionFactory sessionFactory;
 
-
+    private final static String GET_BY_INFO = "FROM Comment WHERE description = :checkDescription AND User.email = :checkUserEmail";
+    private final static String GET_BY_PRODUCT_ID = "FROM Comment where product.id =: id_product";
 
     @Override
     public void save(Comment comment) {
@@ -57,20 +59,30 @@ public class CommentDaoImpl implements CommentDao {
     @Override
     public boolean isExistByInfo(Comment comment) {
         Session session = sessionFactory.openSession();
-        Optional<Comment> commentOpt = Optional.ofNullable((Comment)session.createQuery(
-             " FROM Comments WHERE description = :checkDescription AND User.email = :checkUserEmail ")
+        Optional<Comment> commentOpt = session.createQuery(GET_BY_INFO, Comment.class)
                 .setParameter("checkDescription", comment.getDescription())
                 .setParameter("checkUserEmail", comment.getUser().getEmail())
-                .getSingleResult());
+                .uniqueResultOptional();
         return commentOpt.isPresent();
 
     }
 
-
+    @Transactional(readOnly = true)
     @Override
     public Optional<Comment> getById(long id) {
         Session session = sessionFactory.openSession();
         return Optional.ofNullable(session.get(Comment.class, id));
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Comment> getByIdProduct(long id) {
+        Session session = sessionFactory.openSession();
+        List<Comment> commentList = session.createQuery(GET_BY_PRODUCT_ID, Comment.class)
+                .setParameter("id_product", id)
+                .getResultList();
+        session.close();
+        return commentList;
     }
 
 

@@ -47,12 +47,12 @@ public class Producer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Producer producer = (Producer) o;
-        return Objects.equals(email, producer.email) && Objects.equals(password, producer.password);
+        return id == producer.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, password);
+        return Objects.hash(id);
     }
 
     @Override

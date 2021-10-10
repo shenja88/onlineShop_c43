@@ -1,7 +1,6 @@
 package by.c43.store.dao;
 
 import by.c43.store.entity.Telephone;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
@@ -31,10 +30,7 @@ public class TelephonesDaoImpl implements TelephoneDao {
     @Override
     public void delete(long id) {
         Session session = sessionFactory.openSession();
-        Telephone telephone = session
-                .createQuery(GET_BY_ID, Telephone.class)
-                .setParameter("id", id)
-                .getSingleResult();
+        Telephone telephone = session.get(Telephone.class, id);
         session.delete(telephone);
         session.close();
     }
@@ -43,10 +39,7 @@ public class TelephonesDaoImpl implements TelephoneDao {
     @Override
     public Telephone getById(long id) {
         Session session = sessionFactory.openSession();
-        Telephone telephone = session
-                .createQuery(GET_BY_ID, Telephone.class)
-                .setParameter("id", id)
-                .getSingleResult();
+        Telephone telephone = session.get(Telephone.class, id);
         session.close();
         return telephone;
     }

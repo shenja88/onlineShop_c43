@@ -30,7 +30,7 @@ public class ProductDaoImpl implements ProductDao {
     private static final String GET_BY_RATING_LOW = "from Product where rating.score >=: low";
     private static final String GET_BY_RATING_UP = "from Product where rating.score <=: up";
     private static final String GET_BY_INFO = "from Product where name =: name and category =: category and Producer.id =: prodId";
-
+    private static final String GET_BY_CATEGORY = "from Product where category =: category";
 
     @Override
     public void save(Product product) {
@@ -50,7 +50,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public void updateName(String newName, long id) {
         Session session = sessionFactory.openSession();
-        Product product = getById(id);
+        Product product = session.get(Product.class, id);
         product.setName(newName);
         session.update(product);
         session.close();
@@ -59,7 +59,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public void updateDescription(String newDescription, long id) {
         Session session = sessionFactory.openSession();
-        Product product = getById(id);
+        Product product = session.get(Product.class, id);
         product.setDescription(newDescription);
         session.update(product);
         session.close();
@@ -68,7 +68,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public void updatePrice(double newPrice, long id) {
         Session session = sessionFactory.openSession();
-        Product product = getById(id);
+        Product product = session.get(Product.class, id);
         product.setPrice(newPrice);
         session.update(product);
         session.close();
@@ -77,7 +77,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public void updateProductCategory(CategoryOfProduct newProductCategory, long id) {
         Session session = sessionFactory.openSession();
-        Product product = getById(id);
+        Product product = session.get(Product.class, id);
         product.setCategory(newProductCategory);
         session.update(product);
         session.close();
@@ -86,7 +86,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public void updatePicture(String newPicture, long id) {
         Session session = sessionFactory.openSession();
-        Product product = getById(id);
+        Product product = session.get(Product.class, id);
         product.setPicture(newPicture);
         session.update(product);
         session.close();
@@ -95,7 +95,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public void setOwner(User user, long productId) {
         Session session = sessionFactory.openSession();
-        Product product = getById(productId);
+        Product product = session.get(Product.class, productId);
         product.setOwner(user);
         session.update(product);
         session.close();
@@ -104,7 +104,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public void setReservedStatus(boolean status, long id) {
         Session session = sessionFactory.openSession();
-        Product product = getById(id);
+        Product product = session.get(Product.class, id);
         product.setReservedStatus(status);
         session.update(product);
         session.close();
@@ -113,7 +113,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public void setForSaleStatus(boolean status, long id) {
         Session session = sessionFactory.openSession();
-        Product product = getById(id);
+        Product product = session.get(Product.class, id);
         product.setSaleStatus(status);
         session.update(product);
         session.close();
@@ -123,10 +123,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public Product getById(long id) {
         Session session = sessionFactory.openSession();
-        Product product = session
-                .createQuery(GET_BY_ID, Product.class)
-                .setParameter("id", id)
-                .getSingleResult();
+        Product product = session.get(Product.class, id);
         session.close();
         return product;
     }
@@ -201,7 +198,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Product> getAllByScoreDownLimit(int lowerLimit) {
+    public List<Product> getAllByScoreLowerLimit(int lowerLimit) {
         Session session = sessionFactory.openSession();
         List<Product> products = session.createQuery(GET_BY_RATING_LOW, Product.class)
                 .setParameter("low", lowerLimit)
@@ -216,6 +213,16 @@ public class ProductDaoImpl implements ProductDao {
         Session session = sessionFactory.openSession();
         List<Product> products = session.createQuery(GET_BY_RATING_UP, Product.class)
                 .setParameter("up", upperLimit)
+                .getResultList();
+        session.close();
+        return products;
+    }
+
+    @Override
+    public List<Product> getByCategory(CategoryOfProduct category) {
+        Session session = sessionFactory.openSession();
+        List<Product> products = session.createQuery(GET_BY_CATEGORY, Product.class)
+                .setParameter("category", category)
                 .getResultList();
         session.close();
         return products;

@@ -28,8 +28,8 @@ public class Product {
     @Column(nullable = false)
     private CategoryOfProduct category;
 
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "producer_id")
     @Column(nullable = false)
     private Producer producer;
 
@@ -40,7 +40,7 @@ public class Product {
     private double price;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn
+    @JoinColumn(name = "user_id")
     private User owner;
 
     @Column(nullable = false)

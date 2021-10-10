@@ -26,11 +26,11 @@ public class Comment {
     private Timestamp time;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn("product_id")
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @Override

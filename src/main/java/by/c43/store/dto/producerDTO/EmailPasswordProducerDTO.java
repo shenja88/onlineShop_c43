@@ -1,4 +1,4 @@
-package by.c43.store.dto.usersDTO;
+package by.c43.store.dto.producerDTO;
 
 import by.c43.store.utils.Patterns;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class EmailPasswordUsersDTO {
+public class EmailPasswordProducerDTO {
 
     @NotBlank
     @Size(min = 6, max = 100)

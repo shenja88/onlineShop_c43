@@ -26,7 +26,7 @@ public class Rating {
     private List<Long> users;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn("product_id")
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @Override

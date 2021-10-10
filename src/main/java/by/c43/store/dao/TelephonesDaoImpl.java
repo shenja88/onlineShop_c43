@@ -35,6 +35,15 @@ public class TelephonesDaoImpl implements TelephoneDao {
         session.close();
     }
 
+    @Override
+    public void update(String newNumber, long id) {
+        Session session = sessionFactory.openSession();
+        Telephone telephone = session.get(Telephone.class, id);
+        telephone.setNumber(newNumber);
+        session.update(telephone);
+        session.close();
+    }
+
     @Transactional(readOnly = true)
     @Override
     public Telephone getById(long id) {

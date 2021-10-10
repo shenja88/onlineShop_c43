@@ -30,10 +30,7 @@ public class AddressDaoImpl implements AddressDao {
     @Override
     public void delete(long id) {
         Session session = sessionFactory.openSession();
-        Address address = session
-                .createQuery(GET_BY_ID, Address.class)
-                .setParameter("id", id)
-                .getSingleResult();
+        Address address = session.get(Address.class, id);
         session.delete(address);
         session.close();
     }
@@ -42,10 +39,7 @@ public class AddressDaoImpl implements AddressDao {
     @Override
     public Address getById(long id) {
         Session session = sessionFactory.openSession();
-        Address address = session
-                .createQuery(GET_BY_ID, Address.class)
-                .setParameter("id", id)
-                .getSingleResult();
+        Address address = session.get(Address.class, id);
         session.close();
         return address;
     }

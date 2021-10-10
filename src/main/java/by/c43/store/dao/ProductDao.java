@@ -42,9 +42,11 @@ public interface ProductDao {
 
     List<Product> getAllByScore(int lowerLimit, int upperLimit);
 
-    List<Product> getAllByScoreDownLimit(int lowerLimit);
+    List<Product> getAllByScoreLowerLimit(int lowerLimit);
 
     List<Product> getAllByScoreUpLimit(int upperLimit);
+
+    List<Product> getByCategory(CategoryOfProduct category);
 
     boolean isExistById(long id);
 

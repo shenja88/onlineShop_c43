@@ -1,6 +1,7 @@
 package by.c43.store.dao;
 
 import by.c43.store.entity.Address;
+import by.c43.store.entity.Comment;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
@@ -35,6 +36,9 @@ public class AddressDaoImpl implements AddressDao {
         session.close();
     }
 
+
+
+
     @Transactional(readOnly = true)
     @Override
     public Address getById(long id) {
@@ -68,4 +72,18 @@ public class AddressDaoImpl implements AddressDao {
         session.close();
         return optionalAddress.isPresent();
     }
+
+    @Override
+    public void update(Address address) {
+        Session session = sessionFactory.openSession();
+        Address addressUp = session.load(Address.class, address.getId());
+        addressUp.setCountry(address.getCountry());
+        addressUp.setCity(address.getCity());
+        addressUp.setStreet(address.getStreet());
+        addressUp.setHome(address.getHome());
+        session.update(addressUp);
+        session.close();
+    }
+
+
 }

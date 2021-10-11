@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @AllArgsConstructor
@@ -17,15 +18,17 @@ public class AllArgsProductDTO {
     @Size(min = 3, max = 100, message = "Enter a name of length 3-100")
     private String name;
 
+    @NotEmpty
     @NotBlank(message = "Field must not be empty!")
     private String description;
 
+    @NotEmpty
     @NotBlank(message = "Field must not be empty!")
     private CategoryOfProduct category;
 
+    @NotEmpty
     @NotBlank(message = "Enter a correct URL picture!")
     private String picture;
 
-    @NotBlank(message = "Field must not be empty!")
     private double price;
 }

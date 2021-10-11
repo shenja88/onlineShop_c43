@@ -8,7 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -32,21 +34,28 @@ public class AllArgsProducerDTO {
             "1 lowercase letter, and 1 number with no spaces.")
     private String password;
 
+    @NotEmpty
     @NotBlank(message = "Field must not be empty!")
     private String description;
 
+
+    @NotEmpty
     @NotBlank(message = "Enter a correct URL picture!")
     private String picture;
 
+    @NotEmpty
     @NotBlank(message = "Field must not be empty!")
     private String country;
 
+    @NotEmpty
     @NotBlank(message = "Field must not be empty!")
     private String city;
 
+    @NotEmpty
     @NotBlank(message = "Field must not be empty!")
     private String street;
 
+    @NotEmpty
     @NotBlank(message = "Field must not be empty!")
     private String home;
 

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -30,10 +31,11 @@ public class AllArgUsersDTO {
             "1 lowercase letter, and 1 number with no spaces.")
     private String password;
 
+    @NotEmpty
     @NotBlank(message = "Enter a correct URL picture!")
     private String picture;
 
     @NotBlank
     @Size(min = 9, message = "Phone number cannot have less then 9 numbers")
-    private Telephone telephone;
+    private String number;
 }

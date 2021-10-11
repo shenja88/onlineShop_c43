@@ -1,5 +1,6 @@
 package by.c43.store.dto.addressDTO;
 
+import by.c43.store.utils.ConstraintsMessageManager;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,18 +15,18 @@ import javax.validation.constraints.Size;
 public class AllArgAddressDTO {
 
     @NotBlank
-    @Size(min = 3, max = 16, message = "Name of country cannot have less then 3 and more then 16 letters")
+    @Size(min = 3, max = 16, message = ConstraintsMessageManager.NAME_OF_COUNTRY_ERROR)
     private String country;
 
     @NotBlank
-    @Size(min = 3, max = 16, message = "Name of city cannot have less then 3 and more then 16 letters")
+    @Size(min = 3, max = 16, message = ConstraintsMessageManager.NAME_OF_CITY_ERROR)
     private String city;
 
     @NotBlank
-    @Size(min = 3, max = 16, message = "Name of street cannot have less then 3 and more then 16 letters")
+    @Size(min = 3, max = 16, message = ConstraintsMessageManager.NAME_OF_STREET_ERROR)
     private String street;
 
-    @NotBlank(message = "This field is required")
+    @NotBlank(message = ConstraintsMessageManager.NOT_EMPTY_ERROR)
     @NotEmpty
     private String home;
 }

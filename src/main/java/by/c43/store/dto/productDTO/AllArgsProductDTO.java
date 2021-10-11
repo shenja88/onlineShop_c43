@@ -1,6 +1,7 @@
 package by.c43.store.dto.productDTO;
 
 import by.c43.store.entity.CategoryOfProduct;
+import by.c43.store.utils.ConstraintsMessageManager;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,19 +16,19 @@ import javax.validation.constraints.Size;
 public class AllArgsProductDTO {
 
     @NotBlank
-    @Size(min = 3, max = 100, message = "Enter a name of length 3-100")
+    @Size(min = 3, max = 100, message = ConstraintsMessageManager.NAME_PRODUCT_ERROR)
     private String name;
 
     @NotEmpty
-    @NotBlank(message = "Field must not be empty!")
+    @NotBlank(message = ConstraintsMessageManager.NOT_EMPTY_ERROR)
     private String description;
 
     @NotEmpty
-    @NotBlank(message = "Field must not be empty!")
+    @NotBlank(message = ConstraintsMessageManager.NOT_EMPTY_ERROR)
     private CategoryOfProduct category;
 
     @NotEmpty
-    @NotBlank(message = "Enter a correct URL picture!")
+    @NotBlank(message = ConstraintsMessageManager.PICTURE_ERROR)
     private String picture;
 
     private double price;

@@ -14,7 +14,6 @@ public class ProducerService {
 
     private final ProducerDao producerDao;
 
-
     public boolean saveProducer(Producer producer){
         if(!producerDao.isExistByEmail(producer.getEmail())){
             producerDao.addProducer(producer);

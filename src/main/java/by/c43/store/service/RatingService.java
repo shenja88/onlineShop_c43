@@ -14,16 +14,11 @@ public class RatingService {
 
     private final RatingDao ratingDao;
 
-
     public boolean saveRating(Rating rating){
-        if(ratingDao.isExistByInfo(rating.getProduct().getId())){
+        if(ratingDao.isExistById(rating.getId())){
             ratingDao.saveRating(rating);
             return true;
         }else return false;
-    }
-
-    public Optional<Rating> getRatingById(long id){
-        return Optional.of(ratingDao.getByIdProduct(id));
     }
 
     public boolean updateScore(double newScore, long id, User user) {

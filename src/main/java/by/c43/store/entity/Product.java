@@ -43,6 +43,9 @@ public class Product {
     @JoinColumn(name = "user_id")
     private User owner;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    private Rating rating;
+
     @Column(nullable = false)
     private boolean reservedStatus;
 

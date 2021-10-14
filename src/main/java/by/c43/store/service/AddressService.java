@@ -11,8 +11,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class AddressService {
-    private AddressDao addressDao;
-
+    private final AddressDao addressDao;
 
     public boolean save(Address address){
         if(addressDao.isExistByInfo(address)){
@@ -23,7 +22,6 @@ public class AddressService {
         }
     }
 
-
     public boolean delete(long id){
         if(addressDao.isExistById(id)){
             addressDao.delete(id);
@@ -31,7 +29,6 @@ public class AddressService {
         }
         return false;
     }
-
 
     public boolean update(Address address){
          if(addressDao.isExistByInfo(address)){
@@ -41,7 +38,6 @@ public class AddressService {
              return true;
          }
     }
-
 
     public Optional<Address> getAddressById(long id){
         return Optional.ofNullable(addressDao.getById(id));

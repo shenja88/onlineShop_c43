@@ -25,10 +25,6 @@ public class Rating {
     @ElementCollection
     private List<Long> users;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_id")
-    private Product product;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

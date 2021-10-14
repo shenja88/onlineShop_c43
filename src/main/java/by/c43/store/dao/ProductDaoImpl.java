@@ -31,6 +31,7 @@ public class ProductDaoImpl implements ProductDao {
     private static final String GET_BY_RATING_UP = "from Product where rating.score <=: up";
     private static final String GET_BY_INFO = "from Product where name =: name and category =: category and Producer.id =: prodId";
     private static final String GET_BY_CATEGORY = "from Product where category =: category";
+    private static final String GET_BY_SALE_STATUS = "from Product where saleStatus =: status";
 
     @Override
     public void save(Product product) {
@@ -186,18 +187,6 @@ public class ProductDaoImpl implements ProductDao {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Product> getAllByScore(int lowerLimit, int upperLimit) {
-        Session session = sessionFactory.openSession();
-        List<Product> products = session.createQuery(GET_BY_RATING_LOW_UP, Product.class)
-                .setParameter("low", lowerLimit)
-                .setParameter("up", upperLimit)
-                .getResultList();
-        session.close();
-        return products;
-    }
-
-    @Transactional(readOnly = true)
-    @Override
     public List<Product> getAllByScoreLowerLimit(int lowerLimit) {
         Session session = sessionFactory.openSession();
         List<Product> products = session.createQuery(GET_BY_RATING_LOW, Product.class)
@@ -215,6 +204,15 @@ public class ProductDaoImpl implements ProductDao {
                 .setParameter("up", upperLimit)
                 .getResultList();
         session.close();
+        return products;
+    }
+
+    @Override
+    public List<Product> getSaleStatus(boolean status) {
+        Session session = sessionFactory.openSession();
+        List<Product> products = session.createQuery(GET_BY_SALE_STATUS, Product.class)
+                .setParameter("status", status)
+                .getResultList();
         return products;
     }
 

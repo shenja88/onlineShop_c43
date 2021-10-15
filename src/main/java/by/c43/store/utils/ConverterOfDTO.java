@@ -2,6 +2,7 @@ package by.c43.store.utils;
 
 import by.c43.store.dto.addressDTO.AllArgAddressDTO;
 import by.c43.store.dto.cardDTO.CardDTO;
+import by.c43.store.dto.commentDTO.DescriptionProductUserDTO;
 import by.c43.store.dto.producerDTO.AllArgsProducerDTO;
 import by.c43.store.dto.producerDTO.EmailPasswordProducerDTO;
 import by.c43.store.dto.productDTO.AllArgsProductDTO;
@@ -89,6 +90,26 @@ public class ConverterOfDTO {
                 .product(product)
                 .comments(comments)
                 .rating(rating)
+                .build();
+    }
+
+    public static Comment getDescriptionProductUserDTO(DescriptionProductUserDTO descriptionProductUserDTO){
+        return Comment.builder()
+                .description(descriptionProductUserDTO.getDescription())
+                .user(User.builder()
+                        .name(descriptionProductUserDTO.getUser().getName())
+                        .email(descriptionProductUserDTO.getUser().getEmail())
+                        .password(descriptionProductUserDTO.getUser().getPassword())
+                        .password(descriptionProductUserDTO.getUser().getPassword())
+                        .typeOfUser(descriptionProductUserDTO.getUser().getTypeOfUser())
+                        .picture(descriptionProductUserDTO.getUser().getPicture())
+                        .telephone(Telephone.builder()
+                                .number(descriptionProductUserDTO.getUser().getTelephone().getNumber())
+                                .build())
+                        .build())
+                .product(Product.builder()
+                        .id(descriptionProductUserDTO.getId())
+                        .build())
                 .build();
     }
 }

@@ -74,9 +74,9 @@ public class UserService {
     }
 
 
-    public boolean deleteUser(User user){
-        if(userDAO.isExistById(user.getId()) && user.getTypeOfUser().equals(TypeOfUser.ADMIN)){
-             userDAO.delete(user.getId());
+    public boolean deleteUser(User user, long id){
+        if(userDAO.isExistById(id) && user.getTypeOfUser().equals(TypeOfUser.ADMIN)){
+             userDAO.delete(id);
              return true;
         }
         return false;

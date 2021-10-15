@@ -22,22 +22,12 @@ public class AddressDaoImpl implements AddressDao {
     private static final String GET_BY_INFO = "from Address where country =: country and city =: city and street =: street and home =: home";
 
     @Override
-    public void save(Address address) {
-        Session session = sessionFactory.openSession();
-        session.save(address);
-        session.close();
-    }
-
-    @Override
     public void delete(long id) {
         Session session = sessionFactory.openSession();
         Address address = session.get(Address.class, id);
         session.delete(address);
         session.close();
     }
-
-
-
 
     @Transactional(readOnly = true)
     @Override
@@ -72,18 +62,4 @@ public class AddressDaoImpl implements AddressDao {
         session.close();
         return optionalAddress.isPresent();
     }
-
-    @Override
-    public void update(Address address) {
-        Session session = sessionFactory.openSession();
-        Address addressUp = session.load(Address.class, address.getId());
-        addressUp.setCountry(address.getCountry());
-        addressUp.setCity(address.getCity());
-        addressUp.setStreet(address.getStreet());
-        addressUp.setHome(address.getHome());
-        session.update(addressUp);
-        session.close();
-    }
-
-
 }

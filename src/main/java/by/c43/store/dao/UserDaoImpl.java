@@ -1,5 +1,6 @@
 package by.c43.store.dao;
 
+import by.c43.store.entity.Telephone;
 import by.c43.store.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -83,6 +84,18 @@ public class UserDaoImpl implements UserDao {
                 .setParameter("id", id)
                 .getSingleResult();
         user.setPicture(newPicture);
+        session.update(user);
+        session.close();
+    }
+
+    @Override
+    public void updateTelephone(long userId, Telephone telephone) {
+        Session session = sessionFactory.openSession();
+        User user = session
+                .createQuery(GET_BY_ID, User.class)
+                .setParameter("id", userId)
+                .getSingleResult();
+        user.setTelephone(telephone);
         session.update(user);
         session.close();
     }

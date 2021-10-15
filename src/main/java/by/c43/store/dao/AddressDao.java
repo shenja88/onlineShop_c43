@@ -4,11 +4,7 @@ import by.c43.store.entity.Address;
 
 public interface AddressDao {
 
-    void save(Address address);
-
     void delete(long id);
-
-    void update(Address address);
 
     Address getById(long id);
 

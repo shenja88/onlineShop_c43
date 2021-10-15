@@ -13,29 +13,11 @@ public class TelephoneService {
 
     TelephoneDao telephoneDao;
 
-    public boolean save (Telephone telephone){
-        if (telephoneDao.isExistByNumber(telephone.getNumber())){
-            return false;
-        }else {
-            telephoneDao.save(telephone);
-            return true;
-        }
-    }
-
     public boolean delete(long id){
         if (telephoneDao.isExistById(id)){
             telephoneDao.delete(id);
             return true;
         }else{
-            return false;
-        }
-    }
-
-    public boolean update(Telephone telephone, String newNumber){
-        if (telephoneDao.isExistByNumber(telephone.getNumber())) {
-            telephoneDao.update(newNumber, telephone.getId());
-            return true;
-        }else {
             return false;
         }
     }

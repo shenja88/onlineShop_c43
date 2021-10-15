@@ -2,6 +2,7 @@ package by.c43.store.dao;
 
 import by.c43.store.entity.Address;
 import by.c43.store.entity.Producer;
+import by.c43.store.entity.Telephone;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
@@ -101,6 +102,24 @@ public class ProducerDaoImpl implements  ProducerDao{
         Producer producer = session.get(Producer.class, id);
         session.close();
         return producer;
+    }
+
+    @Override
+    public void updateTelephone(long producerId, Telephone telephone) {
+        Session session = sessionFactory.openSession();
+        Producer producer = session.get(Producer.class, producerId);
+        producer.getTelephones().set(producer.getTelephones().indexOf(telephone), telephone);
+        session.update(producer);
+        session.close();
+    }
+
+    @Override
+    public void addTelephone(long producerId, Telephone telephone) {
+        Session session = sessionFactory.openSession();
+        Producer producer = session.get(Producer.class, producerId);
+        producer.getTelephones().add(telephone);
+        session.update(producer);
+        session.close();
     }
 
 

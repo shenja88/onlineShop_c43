@@ -196,6 +196,20 @@ public class ProductDaoImpl implements ProductDao {
         return products;
     }
 
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Product> getAllByScore(int lowerLimit, int upperLimit) {
+        Session session = sessionFactory.openSession();
+        List<Product> products = session.createQuery(GET_BY_RATING_LOW_UP, Product.class)
+                .setParameter("low", lowerLimit)
+                .setParameter("up", upperLimit)
+                .getResultList();
+        session.close();
+        return products;
+    }
+
+
     @Transactional(readOnly = true)
     @Override
     public List<Product> getAllByScoreUpLimit(int upperLimit) {
@@ -213,6 +227,7 @@ public class ProductDaoImpl implements ProductDao {
         List<Product> products = session.createQuery(GET_BY_SALE_STATUS, Product.class)
                 .setParameter("status", status)
                 .getResultList();
+        session.close();
         return products;
     }
 

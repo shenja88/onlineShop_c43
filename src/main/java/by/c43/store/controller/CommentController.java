@@ -6,6 +6,7 @@ import by.c43.store.entity.Comment;
 import by.c43.store.entity.Product;
 import by.c43.store.entity.User;
 import by.c43.store.service.CommentService;
+import by.c43.store.service.ProductService;
 import by.c43.store.utils.ConverterOfDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,13 +26,11 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService commentService;
+    private final ProductService productService;
 
 
-    @GetMapping("/add{id}")
-
-    public String showListOfComments(@PathVariable long idProduct, @ModelAttribute("newComment") DescriptionProductUserDTO descriptionProductUserDTO, Model model){
-        List<Comment> commentsByIdProduct = commentService.getCommentsByIdProduct(idProduct);
-        model.addAttribute("commentsByIdProduct", commentsByIdProduct);
+    @GetMapping("/add")
+    public String showListOfComments(@ModelAttribute("newComment") DescriptionProductUserDTO descriptionProductUserDTO){
         return "comment";
     }
 
@@ -39,12 +38,11 @@ public class CommentController {
     public String addComment(@Valid @ModelAttribute("newComment") DescriptionProductUserDTO commentDTO, BindingResult bindingResult, Model model, HttpSession httpSession){
         if (bindingResult.hasErrors()){
             model.addAttribute("message_add_com", "Comment adding error");
-            return "comment";
         }else{
             commentService.saveComment(ConverterOfDTO.getDescriptionProductUserDTO(commentDTO));
             model.addAttribute("message_add_com", "Comment added!");
-            return "comment";
         }
+        return "comment";
     }
 
     @GetMapping("/update")
@@ -64,7 +62,7 @@ public class CommentController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteComment(@PathVariable long id, @ModelAttribute("deletedComment") DescriptionProductUserDTO commentDTO, HttpSession httpSession, Model model){
+    public String deleteComment(@PathVariable long id, HttpSession httpSession, Model model){
         if (commentService.deleteById(id)){
             model.addAttribute("message_remove_com", "Successfully deleted!");
         }else{
@@ -74,9 +72,11 @@ public class CommentController {
     }
 
     @GetMapping("/allByProduct/{id}")
-    public String showAllCommentsByProductId (@PathVariable long id, @ModelAttribute("allComments") DescriptionProductUserDTO commentDTO, HttpSession httpSession, Model model){
+    public String showAllCommentsByProductId (@PathVariable long id, HttpSession httpSession, Model model){
         List<Comment> commentsByIdProduct = commentService.getCommentsByIdProduct(id);
         model.addAttribute("allComments", commentsByIdProduct);
+        Product byId = productService.getById(id);
+        model.addAttribute("productById", byId);
         return "comment";
     }
 

@@ -21,26 +21,10 @@ public class TelephonesDaoImpl implements TelephoneDao {
     private static final String GET_BY_NUMBER = "from Telephone where number =: number";
 
     @Override
-    public void save(Telephone telephone) {
-        Session session = sessionFactory.openSession();
-        session.save(telephone);
-        session.close();
-    }
-
-    @Override
     public void delete(long id) {
         Session session = sessionFactory.openSession();
         Telephone telephone = session.get(Telephone.class, id);
         session.delete(telephone);
-        session.close();
-    }
-
-    @Override
-    public void update(String newNumber, long id) {
-        Session session = sessionFactory.openSession();
-        Telephone telephone = session.get(Telephone.class, id);
-        telephone.setNumber(newNumber);
-        session.update(telephone);
         session.close();
     }
 

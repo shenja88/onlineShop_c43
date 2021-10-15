@@ -20,13 +20,6 @@ public class RatingDaoImpl implements RatingDao{
         this.sessionFactory = sessionFactory;
     }
 
-    @Override
-    public void saveRating(Rating rating) {
-        Session session = sessionFactory.openSession();
-        session.save(rating);
-        session.close();
-    }
-
     @Transactional(readOnly = true)
     @Override
     public Rating getById(long id) {
@@ -37,10 +30,11 @@ public class RatingDaoImpl implements RatingDao{
     }
 
     @Override
-    public void setNewScore(double newScore, long id) {
+    public void setNewScore(double newScore, long ratingId, long userId) {
         Session session = sessionFactory.openSession();
-        Rating rating = session.get(Rating.class, id);
+        Rating rating = session.get(Rating.class, ratingId);
         rating.setScore(newScore);
+        rating.getUsers().add(userId);
         session.update(rating);
         session.close();
     }

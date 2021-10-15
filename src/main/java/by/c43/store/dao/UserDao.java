@@ -1,5 +1,6 @@
 package by.c43.store.dao;
 
+import by.c43.store.entity.Telephone;
 import by.c43.store.entity.User;
 import org.hibernate.Session;
 
@@ -16,6 +17,8 @@ public interface UserDao {
     void updatePassword(String newPassword,long id);
 
     void updatePicture(String newPicture,long id);
+
+    void updateTelephone(long userId, Telephone telephone);
 
     User getById(long id);
 

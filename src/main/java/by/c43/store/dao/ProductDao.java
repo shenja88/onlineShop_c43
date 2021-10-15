@@ -26,6 +26,14 @@ public interface ProductDao {
 
     void setReservedStatus(boolean status, long id);
 
+    List<Product> getAllByScoreLowerLimit(int lowerLimit);
+
+    List<Product> getAllByScoreUpLimit(int upperLimit);
+
+    List<Product> getAllByScore(int lowerLimit, int upperLimit);
+
+    List<Product> getSaleStatus(boolean status);
+
     void setForSaleStatus(boolean status, long id);
 
     Product getById(long id);
@@ -39,12 +47,6 @@ public interface ProductDao {
     List<Product> getAllByPriceLowerLimit(int lowerLimit);
 
     List<Product> getAllByPriceUpLimit(int upperLimit);
-
-    List<Product> getAllByScore(int lowerLimit, int upperLimit);
-
-    List<Product> getAllByScoreLowerLimit(int lowerLimit);
-
-    List<Product> getAllByScoreUpLimit(int upperLimit);
 
     List<Product> getByCategory(CategoryOfProduct category);
 

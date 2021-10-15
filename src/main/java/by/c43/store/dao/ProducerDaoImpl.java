@@ -105,6 +105,16 @@ public class ProducerDaoImpl implements  ProducerDao{
     }
 
     @Override
+    public Producer getByEmail(String email) {
+        Session session = sessionFactory.openSession();
+        Producer producer = session.createQuery(GET_BY_EMAIL, Producer.class)
+                .setParameter("email", email)
+                .getSingleResult();
+        session.close();
+        return producer;
+    }
+
+    @Override
     public void updateTelephone(long producerId, Telephone telephone) {
         Session session = sessionFactory.openSession();
         Producer producer = session.get(Producer.class, producerId);

@@ -15,14 +15,11 @@ public class CommentService {
 
     private final CommentDao commentDao;
 
-    public boolean saveComment(Comment comment, User user, Product product){
-        comment.setProduct(product);
-        comment.setUser(user);
+    public boolean saveComment(Comment comment){
         if(commentDao.isExistByInfo(comment)){
             commentDao.save(comment);
             return true;
         }else return false;
-
     }
 
     public boolean updateDescription(long id, String newDescription){

@@ -4,6 +4,7 @@ import by.c43.store.dto.addressDTO.AllArgAddressDTO;
 import by.c43.store.dto.producerDTO.*;
 import by.c43.store.dto.telephonesDTO.NumberTelDTO;
 import by.c43.store.entity.Producer;
+import by.c43.store.entity.Telephone;
 import by.c43.store.entity.User;
 import by.c43.store.service.ProducerService;
 import by.c43.store.utils.ConverterOfDTO;
@@ -18,7 +19,7 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("producer")
+@RequestMapping("/producer")
 @AllArgsConstructor
 public class ProducerController {
 
@@ -77,6 +78,7 @@ public class ProducerController {
         if(!bindingResult.hasErrors()){
             Producer producer =(Producer) httpSession.getAttribute("producer");
             if(producerService.updateName(producer, producerNameDTO.getName())){
+                producer.setName(producerNameDTO.getName());
                 model.addAttribute("message", "Update name successfully passed");
             }else model.addAttribute("message", "Update name failed!");
         }
@@ -95,6 +97,7 @@ public class ProducerController {
         if(!bindingResult.hasErrors()){
             Producer producer =(Producer) httpSession.getAttribute("producer");
             if(producerService.updateEmail(producer, producerEmailDTO.getEmail())){
+                producer.setEmail(producerEmailDTO.getEmail());
                 model.addAttribute("message", "Update email successfully passed");
             }else model.addAttribute("message", "Update email failed!");
         }
@@ -114,6 +117,7 @@ public class ProducerController {
         if(!bindingResult.hasErrors()){
             Producer producer =(Producer) httpSession.getAttribute("producer");
             if(producerService.updatePassword(producer, passwordDTO.getNewPassword(), passwordDTO.getOldPassword())){
+                producer.setPassword(passwordDTO.getNewPassword());
                 model.addAttribute("message", "Update password successfully passed");
             }else model.addAttribute("message", "Update password failed!");
         }
@@ -132,6 +136,7 @@ public class ProducerController {
         if(!bindingResult.hasErrors()){
             Producer producer =(Producer) httpSession.getAttribute("producer");
             if(producerService.updatePicture(producer, pictureDTO.getPicture())){
+                producer.setPicture(pictureDTO.getPicture());
                 model.addAttribute("message", "Update picture successfully passed");
             }else model.addAttribute("message", "Update picture failed!");
         }
@@ -151,6 +156,7 @@ public class ProducerController {
         if(!bindingResult.hasErrors()){
             Producer producer =(Producer) httpSession.getAttribute("producer");
             if(producerService.updateDescription(producer, descriptionDTO.getDescription())){
+                producer.setDescription(descriptionDTO.getDescription());
                 model.addAttribute("message", "Update description successfully passed");
             }else model.addAttribute("message", "Update description failed!");
         }
@@ -177,6 +183,7 @@ public class ProducerController {
         if(!bindingResult.hasErrors()){
             Producer producer =(Producer) httpSession.getAttribute("producer");
             if(producerService.addTelephone(producer, ConverterOfDTO.getTelDTO(numberTelDTO))){
+                producer.getTelephones().add(ConverterOfDTO.getTelDTO(numberTelDTO));
                 model.addAttribute("message", "Telephone successfully added");
             }else model.addAttribute("message", "The adding of the telephone failed!");
         }
@@ -195,7 +202,9 @@ public class ProducerController {
                                   Model model, HttpSession httpSession){
         if(!bindingResult.hasErrors()){
             Producer producer =(Producer) httpSession.getAttribute("producer");
-            if(producerService.updateTelephone(producer, ConverterOfDTO.getTelDTO(numberTelDTO))){
+            Telephone telephone = ConverterOfDTO.getTelDTO(numberTelDTO);
+            if(producerService.updateTelephone(producer, telephone)){
+                producer.getTelephones().set(producer.getTelephones().indexOf(telephone), telephone );
                 model.addAttribute("message", "Telephone successfully updated");
             }else model.addAttribute("message", "The update of the telephone failed!");
         }
@@ -215,6 +224,7 @@ public class ProducerController {
         if(!bindingResult.hasErrors()){
             Producer producer =(Producer) httpSession.getAttribute("producer");
             if(producerService.updateAddress(producer, ConverterOfDTO.getAllArgAddressDTO(addressDTO))){
+                producer.setAddress(ConverterOfDTO.getAllArgAddressDTO(addressDTO));
                 model.addAttribute("message", "Address successfully updated");
             }else model.addAttribute("message", "The update of the address failed!");
         }
@@ -224,7 +234,7 @@ public class ProducerController {
     @PostMapping("/logOut")
     public String logOut(HttpSession httpSession){
         httpSession.invalidate();
-        return "redirecr:/";
+        return "redirect:/";
     }
 
 

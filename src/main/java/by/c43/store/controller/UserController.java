@@ -38,9 +38,9 @@ public class UserController {
         if (!bindingResult.hasErrors()) {
             User user = ConverterOfDTO.getAllArgUsersDTO(userDTO);
             if (userService.registration(user)) {
-                model.addAttribute("message1", "Registration successful!");
+                model.addAttribute("messageReg", "Registration successful!");
             } else {
-                model.addAttribute("message2", "Email already exists!");
+                model.addAttribute("messageReg", "Email already exists!");
             }
         }
         return "reg";
@@ -61,9 +61,9 @@ public class UserController {
             if (userOp.isPresent()) {
                 httpSession.setAttribute("user", userOp.get());
                 httpSession.setAttribute("basket", productBasket);
-                model.addAttribute("messageAuth1", "Authorization was successful!");
+                model.addAttribute("messageAuth", "Authorization was successful!");
             } else {
-                model.addAttribute("messageAuth2", "User not found!");
+                model.addAttribute("messageAuth", "User not found!");
             }
         }
         return "/auth";
@@ -83,9 +83,9 @@ public class UserController {
             if (userService.updateUserName(user, nameUserDTO.getName())) {
                 user.setName(nameUserDTO.getName());
                 httpSession.setAttribute("user", user);
-                model.addAttribute("messageName1", "Name has been changed!");
+                model.addAttribute("messageName", "Name has been changed!");
             } else {
-                model.addAttribute("messageName2", "Name has not been changed!");
+                model.addAttribute("messageName", "Name has not been changed!");
             }
         }
         return "updName";
@@ -105,9 +105,9 @@ public class UserController {
             if (userService.updateUserEmail(user, emailUserDTO.getEmail())) {
                 user.setName(emailUserDTO.getEmail());
                 httpSession.setAttribute("user", user);
-                model.addAttribute("messageEmail1", "Email has been changed!");
+                model.addAttribute("messageEmail", "Email has been changed!");
             } else {
-                model.addAttribute("messageEmail2", "Email has not been changed!");
+                model.addAttribute("messageEmail", "Email has not been changed!");
             }
         }
         return "updEmail";
@@ -127,9 +127,9 @@ public class UserController {
             if (userService.updateUserPassword(passwordUserDTO.getOldPassword(), passwordUserDTO.getNewPassword(), passwordUserDTO.getConfirmNewPassword(), user)) {
                 user.setName(passwordUserDTO.getNewPassword());
                 httpSession.setAttribute("user", user);
-                model.addAttribute("messagePassword1", "Password has been changed!");
+                model.addAttribute("messagePassword", "Password has been changed!");
             } else {
-                model.addAttribute("messagePassword2", "Password has not been changed!");
+                model.addAttribute("messagePassword", "Password has not been changed!");
             }
         }
         return "updPassword";
@@ -149,9 +149,9 @@ public class UserController {
             if (userService.updateUserPicture(user, pictureUserDTO.getPicture())) {
                 user.setName(pictureUserDTO.getPicture());
                 httpSession.setAttribute("user", user);
-                model.addAttribute("messagePicture1", "Picture has been changed!");
+                model.addAttribute("messagePicture", "Picture has been changed!");
             } else {
-                model.addAttribute("messagePicture2", "Picture has not been changed!");
+                model.addAttribute("messagePicture", "Picture has not been changed!");
             }
         }
         return "updPicture";
@@ -183,9 +183,9 @@ public class UserController {
     public String deleteUser(@PathVariable long id, Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         if (userService.deleteUser(user, id)) {
-            model.addAttribute("messageDeleteUser1", "User has been deleted!");
+            model.addAttribute("messageDeleteUser", "User has been deleted!");
         } else {
-            model.addAttribute("messageDeleteUser2", "User has not been deleted!");
+            model.addAttribute("messageDeleteUser", "User has not been deleted!");
         }
         return "deleteUser";
     }
@@ -197,6 +197,6 @@ public class UserController {
             productBasket.resetReservedStatusAfterLogOutOrPurchase();
         }
         httpSession.invalidate();
-        return "redirect:/";
+        return "redirect:/store";
     }
 }

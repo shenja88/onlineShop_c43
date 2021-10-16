@@ -79,7 +79,7 @@ public class ProductController {
         return "updateDescriptionProd";
     }
 
-    @PostMapping("/updName/{id}")
+    @PostMapping("/updDesc/{id}")
     public String updateDescription(@Valid @ModelAttribute("descDTO") DescriptionProductDTO dto, BindingResult bindingResult,
                                     Model model, @PathVariable long id) {
         if (!bindingResult.hasErrors()) {

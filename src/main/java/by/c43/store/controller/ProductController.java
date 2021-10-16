@@ -149,9 +149,9 @@ public class ProductController {
     }
 
     @PostMapping("/updRating/{id}")
-    public String updateRating(@PathVariable long id, double newRating, Model model, HttpSession session){
+    public String updateRating(@PathVariable long id, double newPrice, Model model, HttpSession session){
         User user = (User) session.getAttribute("user");
-        if(productService.updateScore(newRating, id, user)){
+        if(productService.updateScore(newPrice, id, user)){
             model.addAttribute("messageUpdRating", "Rating has been changed!");
         } else{
             model.addAttribute("messageUpdRating", "Operation failed!");

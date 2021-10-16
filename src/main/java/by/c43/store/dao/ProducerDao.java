@@ -24,6 +24,8 @@ public interface ProducerDao {
 
     Producer getById(long id);
 
+    Producer getByEmail(String email);
+
     void updateTelephone(long producerId, Telephone telephone);
 
     void addTelephone(long producerId, Telephone telephone);

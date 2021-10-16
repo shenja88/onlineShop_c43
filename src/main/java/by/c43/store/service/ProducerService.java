@@ -2,9 +2,7 @@ package by.c43.store.service;
 
 
 import by.c43.store.dao.ProducerDao;
-import by.c43.store.entity.Address;
-import by.c43.store.entity.Producer;
-import by.c43.store.entity.Telephone;
+import by.c43.store.entity.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +21,9 @@ public class ProducerService {
         } else return false;
     }
 
-    public boolean deleteProducer(Producer producer) {
-        if (producerDao.isExistById(producer.getId())) {
-            producerDao.deleteProducer(producer.getId());
+    public boolean deleteProducer(long id, User user) {
+        if (producerDao.isExistById(id) && user.getTypeOfUser() == TypeOfUser.ADMIN ) {
+            producerDao.deleteProducer(id);
             return true;
         } else return false;
     }
@@ -96,6 +94,10 @@ public class ProducerService {
 
     public Optional<Producer> getProducerById(long id) {
         return Optional.of(producerDao.getById(id));
+    }
+
+    public Optional<Producer> getProductByEmail(String email){
+        return Optional.of(producerDao.getByEmail(email));
     }
 
     private boolean equalsFields(Producer producer, Address address) {

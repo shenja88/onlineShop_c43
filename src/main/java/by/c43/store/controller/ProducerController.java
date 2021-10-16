@@ -234,7 +234,7 @@ public class ProducerController {
     @PostMapping("/logOut")
     public String logOut(HttpSession httpSession){
         httpSession.invalidate();
-        return "redirect:/";
+        return "redirect:/home";
     }
 
 

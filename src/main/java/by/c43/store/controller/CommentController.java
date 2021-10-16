@@ -51,7 +51,8 @@ public class CommentController {
     }
 
     @PostMapping("/update")
-    public String updateComments(@ModelAttribute("updatedComment") DescriptionProductUserDTO commentDTO, String newDescription, HttpSession httpSession, Model model){
+    public String updateComments(@Valid @ModelAttribute("updatedComment") DescriptionProductUserDTO commentDTO, String newDescription,
+                                 HttpSession httpSession, Model model){
         User user = (User) httpSession.getAttribute("user");
         if (commentService.updateDescription(user.getId(), newDescription)){
             model.addAttribute("message_update_com", "Successfully updated!");
@@ -62,7 +63,7 @@ public class CommentController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteComment(@PathVariable long id, HttpSession httpSession, Model model){
+    public String deleteComment(@PathVariable long id, Model model){
         if (commentService.deleteById(id)){
             model.addAttribute("message_remove_com", "Successfully deleted!");
         }else{
@@ -72,7 +73,7 @@ public class CommentController {
     }
 
     @GetMapping("/allByProduct/{id}")
-    public String showAllCommentsByProductId (@PathVariable long id, HttpSession httpSession, Model model){
+    public String showAllCommentsByProductId (@PathVariable long id, Model model){
         List<Comment> commentsByIdProduct = commentService.getCommentsByIdProduct(id);
         model.addAttribute("allComments", commentsByIdProduct);
         Product byId = productService.getById(id);

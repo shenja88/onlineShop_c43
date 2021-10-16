@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public String addProduct(@ModelAttribute("product") AllArgsProductDTO dto, BindingResult bindingResult,
+    public String addProduct(@Valid @ModelAttribute("product") AllArgsProductDTO dto, BindingResult bindingResult,
                              HttpSession session, Model model) {
         if (!bindingResult.hasErrors()) {
             Producer producer = (Producer) session.getAttribute("producer");
@@ -61,7 +62,7 @@ public class ProductController {
     }
 
     @PostMapping("/updName/{id}")
-    public String updateName(@ModelAttribute("nameDTO") NameProductDTO dto, BindingResult bindingResult,
+    public String updateName(@Valid @ModelAttribute("nameDTO") NameProductDTO dto, BindingResult bindingResult,
                              Model model, @PathVariable long id) {
         if (!bindingResult.hasErrors()) {
             if (productService.updateName(dto.getName(), id)) {
@@ -79,7 +80,7 @@ public class ProductController {
     }
 
     @PostMapping("/updName/{id}")
-    public String updateDescription(@ModelAttribute("descDTO") DescriptionProductDTO dto, BindingResult bindingResult,
+    public String updateDescription(@Valid @ModelAttribute("descDTO") DescriptionProductDTO dto, BindingResult bindingResult,
                                     Model model, @PathVariable long id) {
         if (!bindingResult.hasErrors()) {
             if (productService.updateDescription(dto.getDescription(), id)) {
@@ -97,7 +98,7 @@ public class ProductController {
     }
 
     @PostMapping("/updPicture/{id}")
-    public String updatePicture(@ModelAttribute("pictureDTO") PictureProductDTO dto, BindingResult bindingResult,
+    public String updatePicture(@Valid @ModelAttribute("pictureDTO") PictureProductDTO dto, BindingResult bindingResult,
                                 Model model, @PathVariable long id) {
         if (!bindingResult.hasErrors()) {
             if (productService.updatePicture(dto.getPicture(), id)) {
@@ -115,7 +116,7 @@ public class ProductController {
     }
 
     @PostMapping("/updType/{id}")
-    public String updateType(@ModelAttribute("typeDTO") TypeProductDTO dto, BindingResult bindingResult,
+    public String updateType(@Valid @ModelAttribute("typeDTO") TypeProductDTO dto, BindingResult bindingResult,
                              Model model, @PathVariable long id) {
         if (!bindingResult.hasErrors()) {
             if (productService.updateTypeProduct(dto.getCategory(), id)) {
@@ -143,14 +144,14 @@ public class ProductController {
     }
 
     @GetMapping("/updRating/{id}")
-    public String updateRating(@PathVariable String id){
+    public String updateRating(@PathVariable long id){
         return "updRatingProd";
     }
 
     @PostMapping("/updRating/{id}")
-    public String updateRating(@PathVariable long id, double newPrice, Model model, HttpSession session){
+    public String updateRating(@PathVariable long id, double newRating, Model model, HttpSession session){
         User user = (User) session.getAttribute("user");
-        if(productService.updateScore(newPrice, id, user)){
+        if(productService.updateScore(newRating, id, user)){
             model.addAttribute("messageUpdRating", "Rating successfully changed!");
         } else{
             model.addAttribute("messageUpdRating", "Operation failed!");
@@ -181,39 +182,21 @@ public class ProductController {
         return "store";
     }
 
-    @PostMapping("/byRating")
-    public String getByRating(String low, String up, Model model){
+    @PostMapping("/byPrice")
+    public String getByPrice(String low, String up, Model model){
         List<Product> products = new ArrayList<>();
-        if(low != null && up != null){
-            int l = Integer.parseInt(low);
-            int u = Integer.parseInt(up);
-            products = productService.getAllByPriceLowUp(l, u);
-        } else if(low == null && up != null){
-            int u = Integer.parseInt(up);
-            products = productService.getAllByPriceUp(u);
-        } else if(low != null) {
-            int l = Integer.parseInt(low);
-            products = productService.getAllByPriceLow(l);
-        }
+        products = productService.chooseProductsByPrice(low, up, products);
         model.addAttribute("listProd", products);
         return "store";
     }
 
-    @PostMapping("/byPrice")
-    public String getByPrice(String low, String up, Model model){
+    @PostMapping("/byRating")
+    public String getByRating(String low, String up, Model model){
         List<Product> products = new ArrayList<>();
-        if(low != null && up != null){
-            int l = Integer.parseInt(low);
-            int u = Integer.parseInt(up);
-            products = productService.getAllByRatingLowUp(l, u);
-        } else if(low == null && up != null){
-            int u = Integer.parseInt(up);
-            products = productService.getAllByRatingUp(u);
-        } else if(low != null) {
-            int l = Integer.parseInt(low);
-            products = productService.getAllByRatingLow(l);
-        }
+        products = productService.chooseProductsByRating(low, up, products);
         model.addAttribute("listProd", products);
         return "store";
     }
+
+
 }

@@ -84,7 +84,7 @@ public class ProductService {
            return false;
         } else {
             double newRating = (product.getRating().getScore() + newScore) / 2;
-            ratingDao.setNewScore(newRating, product.getRating().getId(), user.getId());
+            ratingDao.setNewScore(newRating, productId, user.getId());
         }
         return true;
     }
@@ -127,5 +127,35 @@ public class ProductService {
 
     public List<Product> getByProducer(Producer producer) {
         return productDao.getAllByProducer(producer.getId());
+    }
+
+    public List<Product> chooseProductsByPrice(String low, String up, List<Product> products) {
+        if (low != null && up != null) {
+            int l = Integer.parseInt(low);
+            int u = Integer.parseInt(up);
+            products = getAllByPriceLowUp(l, u);
+        } else if (low == null && up != null) {
+            int u = Integer.parseInt(up);
+            products = getAllByPriceUp(u);
+        } else if (low != null) {
+            int l = Integer.parseInt(low);
+            products = getAllByPriceLow(l);
+        }
+        return products;
+    }
+
+    public List<Product> chooseProductsByRating(String low, String up, List<Product> products) {
+        if(low != null && up != null){
+            int l = Integer.parseInt(low);
+            int u = Integer.parseInt(up);
+            products = getAllByRatingLowUp(l, u);
+        } else if(low == null && up != null){
+            int u = Integer.parseInt(up);
+            products = getAllByRatingUp(u);
+        } else if(low != null) {
+            int l = Integer.parseInt(low);
+            products =getAllByRatingLow(l);
+        }
+        return products;
     }
 }

@@ -157,13 +157,13 @@ public class UserController {
         return "updPicture";
     }
 
-    @GetMapping("/addTel")
+    @GetMapping("/updTel")
     public String updateNumber(Model model) {
         model.addAttribute("numberTelDTO", new NumberTelDTO());
         return "addTelephone";
     }
 
-    @PostMapping("/addTel")
+    @PostMapping("/updTel")
     public String updateNumber(@Valid @ModelAttribute("numberTelDTO") NumberTelDTO telDTO,
                                BindingResult bindingResult, Model model, HttpSession session) {
         if (!bindingResult.hasErrors()) {

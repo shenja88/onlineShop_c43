@@ -152,9 +152,9 @@ public class ProductController {
     public String updateRating(@PathVariable long id, double newPrice, Model model, HttpSession session){
         User user = (User) session.getAttribute("user");
         if(productService.updateScore(newPrice, id, user)){
-            model.addAttribute("messageUpdRating1", "Rating has been changed!");
+            model.addAttribute("messageUpdRating1", "Rating changed");
         } else{
-            model.addAttribute("messageUpdRating", "Operation failed!");
+            model.addAttribute("messageUpdRating2", "Failed!");
         }
         return "updRatingProd";
     }

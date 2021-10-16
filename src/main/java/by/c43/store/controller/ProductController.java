@@ -6,6 +6,7 @@ import by.c43.store.entity.Producer;
 import by.c43.store.entity.Product;
 import by.c43.store.entity.User;
 import by.c43.store.service.ProductService;
+import by.c43.store.utils.ControllerMessageManager;
 import by.c43.store.utils.ConverterOfDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -35,9 +36,9 @@ public class ProductController {
             Producer producer = (Producer) session.getAttribute("producer");
             Product product = ConverterOfDTO.getAllArgsProductDTO(dto, producer);
             if (productService.save(product)) {
-                model.addAttribute("messageAddProd", "Product successfully added!");
+                model.addAttribute("messageAddProd", ControllerMessageManager.ADD_PRODUCT_SUCCESSFULLY);
             } else {
-                model.addAttribute("messageAddProd", "Product addition error");
+                model.addAttribute("messageAddProd", ControllerMessageManager.ADD_PRODUCT_FAIL);
             }
         }
         return "addProduct";
@@ -48,9 +49,9 @@ public class ProductController {
         User user = (User) session.getAttribute("user");
         Product product = productService.getById(id);
         if (productService.delete(user, product)) {
-            model.addAttribute("messageRemoveProd", "Product deleted successfully!");
+            model.addAttribute("messageRemoveProd", ControllerMessageManager.DELETE_PRODUCT_SUCCESSFULLY);
         } else {
-            model.addAttribute("messageRemoveProd", "Product removal error!");
+            model.addAttribute("messageRemoveProd", ControllerMessageManager.DELETE_PRODUCT_FAIL);
         }
         return "store";
     }
@@ -65,9 +66,9 @@ public class ProductController {
                              Model model, @PathVariable long id) {
         if (!bindingResult.hasErrors()) {
             if (productService.updateName(dto.getName(), id)) {
-                model.addAttribute("messageUpdName", "Product name successfully changed!");
+                model.addAttribute("messageUpdName", ControllerMessageManager.UPDATE_PRODUCT_NAME_SUCCESSFULLY);
             } else {
-                model.addAttribute("messageUpdName", "Operation failed!");
+                model.addAttribute("messageUpdName", ControllerMessageManager.OPERATION_FAILED);
             }
         }
         return "updNameProd";
@@ -83,9 +84,9 @@ public class ProductController {
                                     Model model, @PathVariable long id) {
         if (!bindingResult.hasErrors()) {
             if (productService.updateDescription(dto.getDescription(), id)) {
-                model.addAttribute("messageUpdDescription", "Product description successfully changed!");
+                model.addAttribute("messageUpdDescription", ControllerMessageManager.UPDATE_DESCRIPTION_SUCCESSFULLY);
             } else {
-                model.addAttribute("messageUpdDescription", "Operation failed!");
+                model.addAttribute("messageUpdDescription", ControllerMessageManager.OPERATION_FAILED);
             }
         }
         return "updDescriptionProd";
@@ -101,9 +102,9 @@ public class ProductController {
                                 Model model, @PathVariable long id) {
         if (!bindingResult.hasErrors()) {
             if (productService.updatePicture(dto.getPicture(), id)) {
-                model.addAttribute("messageUpdPicture", "Product picture successfully changed!");
+                model.addAttribute("messageUpdPicture", ControllerMessageManager.UPDATE_PICTURE_SUCCESSFULLY);
             } else {
-                model.addAttribute("messageUpdPicture", "Operation failed!");
+                model.addAttribute("messageUpdPicture", ControllerMessageManager.OPERATION_FAILED);
             }
         }
         return "updPictureProd";
@@ -119,9 +120,9 @@ public class ProductController {
                              Model model, @PathVariable long id) {
         if (!bindingResult.hasErrors()) {
             if (productService.updateTypeProduct(dto.getCategory(), id)) {
-                model.addAttribute("messageUpdType", "Product type successfully changed!");
+                model.addAttribute("messageUpdType", ControllerMessageManager.UPDATE_TYPE_SUCCESSFULLY);
             } else {
-                model.addAttribute("messageUpdType", "Operation failed!");
+                model.addAttribute("messageUpdType", ControllerMessageManager.OPERATION_FAILED);
             }
         }
         return "updTypeProd";
@@ -135,9 +136,9 @@ public class ProductController {
     @PostMapping("/updPrice/{id}")
     public String updatePrice(double price, Model model, @PathVariable long id) {
         if (productService.updatePrice(price, id)) {
-            model.addAttribute("messageUpdPicture", "Product type successfully changed!");
+            model.addAttribute("messageUpdPicture", ControllerMessageManager.UPDATE_PRICE_SUCCESSFULLY);
         } else {
-            model.addAttribute("messageUpdPicture", "Operation failed!");
+            model.addAttribute("messageUpdPicture", ControllerMessageManager.OPERATION_FAILED);
         }
         return "updPriceProd";
     }
@@ -151,9 +152,9 @@ public class ProductController {
     public String updateRating(@PathVariable long id, double newPrice, Model model, HttpSession session){
         User user = (User) session.getAttribute("user");
         if(productService.updateScore(newPrice, id, user)){
-            model.addAttribute("messageUpdRating", "Rating successfully changed!");
+            model.addAttribute("messageUpdRating", ControllerMessageManager.UPDATE_RATING_SUCCESSFULLY);
         } else{
-            model.addAttribute("messageUpdRating", "Operation failed!");
+            model.addAttribute("messageUpdRating", ControllerMessageManager.OPERATION_FAILED);
         }
         return "updRatingProd";
     }

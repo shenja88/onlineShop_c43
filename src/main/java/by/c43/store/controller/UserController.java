@@ -7,6 +7,7 @@ import by.c43.store.entity.Telephone;
 import by.c43.store.entity.User;
 import by.c43.store.service.ProductBasket;
 import by.c43.store.service.UserService;
+import by.c43.store.utils.ControllerMessageManager;
 import by.c43.store.utils.ConverterOfDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -38,9 +39,9 @@ public class UserController {
         if (!bindingResult.hasErrors()) {
             User user = ConverterOfDTO.getAllArgUsersDTO(userDTO);
             if (userService.registration(user)) {
-                model.addAttribute("messageReg", "Registration successful!");
+                model.addAttribute("messageReg", ControllerMessageManager.REG_SUCCESSFULLY);
             } else {
-                model.addAttribute("messageReg", "Email already exists!");
+                model.addAttribute("messageReg", ControllerMessageManager.REG_FAIL);
             }
         }
         return "reg";
@@ -61,9 +62,9 @@ public class UserController {
             if (userOp.isPresent()) {
                 httpSession.setAttribute("user", userOp.get());
                 httpSession.setAttribute("basket", productBasket);
-                model.addAttribute("messageAuth", "Authorization was successful!");
+                model.addAttribute("messageAuth", ControllerMessageManager.AUTH_SUCCESSFULLY);
             } else {
-                model.addAttribute("messageAuth", "User not found!");
+                model.addAttribute("messageAuth", ControllerMessageManager.AUTH_FAIL);
             }
         }
         return "/auth";
@@ -83,9 +84,9 @@ public class UserController {
             if (userService.updateUserName(user, nameUserDTO.getName())) {
                 user.setName(nameUserDTO.getName());
                 httpSession.setAttribute("user", user);
-                model.addAttribute("messageName", "Name has been changed!");
+                model.addAttribute("messageName", ControllerMessageManager.UPDATE_NAME_SUCCESSFULLY);
             } else {
-                model.addAttribute("messageName", "Name has not been changed!");
+                model.addAttribute("messageName", ControllerMessageManager.UPDATE_NAME_FAIL);
             }
         }
         return "updName";
@@ -105,9 +106,9 @@ public class UserController {
             if (userService.updateUserEmail(user, emailUserDTO.getEmail())) {
                 user.setName(emailUserDTO.getEmail());
                 httpSession.setAttribute("user", user);
-                model.addAttribute("messageEmail", "Email has been changed!");
+                model.addAttribute("messageEmail", ControllerMessageManager.UPDATE_EMAIL_SUCCESSFULLY);
             } else {
-                model.addAttribute("messageEmail", "Email has not been changed!");
+                model.addAttribute("messageEmail", ControllerMessageManager.UPDATE_EMAIL_FAIL);
             }
         }
         return "updEmail";
@@ -127,9 +128,9 @@ public class UserController {
             if (userService.updateUserPassword(passwordUserDTO.getOldPassword(), passwordUserDTO.getNewPassword(), passwordUserDTO.getConfirmNewPassword(), user)) {
                 user.setName(passwordUserDTO.getNewPassword());
                 httpSession.setAttribute("user", user);
-                model.addAttribute("messagePassword", "Password has been changed!");
+                model.addAttribute("messagePassword", ControllerMessageManager.UPDATE_PASSWORD_SUCCESSFULLY);
             } else {
-                model.addAttribute("messagePassword", "Password has not been changed!");
+                model.addAttribute("messagePassword", ControllerMessageManager.UPDATE_PASSWORD_FAIL);
             }
         }
         return "updPassword";
@@ -149,9 +150,9 @@ public class UserController {
             if (userService.updateUserPicture(user, pictureUserDTO.getPicture())) {
                 user.setName(pictureUserDTO.getPicture());
                 httpSession.setAttribute("user", user);
-                model.addAttribute("messagePicture", "Picture has been changed!");
+                model.addAttribute("messagePicture", ControllerMessageManager.UPDATE_PICTURE_SUCCESSFULLY);
             } else {
-                model.addAttribute("messagePicture", "Picture has not been changed!");
+                model.addAttribute("messagePicture", ControllerMessageManager.UPDATE_PICTURE_FAIL);
             }
         }
         return "updPicture";
@@ -171,9 +172,9 @@ public class UserController {
             Telephone telephone = ConverterOfDTO.getTelDTO(telDTO);
             if (userService.updateTelephone(user, telephone)) {
                 user.getTelephone().setNumber(telephone.getNumber());
-                model.addAttribute("messageUpdNumber", "Number has been changed!");
+                model.addAttribute("messageUpdNumber", ControllerMessageManager.UPDATE_NUMBER_SUCCESSFULLY);
             } else {
-                model.addAttribute("messageUpdNumber", "Number has not been changed!");
+                model.addAttribute("messageUpdNumber", ControllerMessageManager.UPDATE_NUMBER_FAIL);
             }
         }
         return "updNumber";
@@ -183,9 +184,9 @@ public class UserController {
     public String deleteUser(@PathVariable long id, Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         if (userService.deleteUser(user, id)) {
-            model.addAttribute("messageDeleteUser", "User has been deleted!");
+            model.addAttribute("messageDeleteUser", ControllerMessageManager.DELETE_USER_SUCCESSFULLY);
         } else {
-            model.addAttribute("messageDeleteUser", "User has not been deleted!");
+            model.addAttribute("messageDeleteUser", ControllerMessageManager.DELETE_USER_FAIL);
         }
         return "deleteUser";
     }

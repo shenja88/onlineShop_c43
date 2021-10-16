@@ -7,6 +7,7 @@ import by.c43.store.entity.Product;
 import by.c43.store.entity.User;
 import by.c43.store.service.CommentService;
 import by.c43.store.service.ProductService;
+import by.c43.store.utils.ControllerMessageManager;
 import by.c43.store.utils.ConverterOfDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,10 +38,10 @@ public class CommentController {
     @PostMapping("/add")
     public String addComment(@Valid @ModelAttribute("newComment") DescriptionProductUserDTO commentDTO, BindingResult bindingResult, Model model, HttpSession httpSession){
         if (bindingResult.hasErrors()){
-            model.addAttribute("message_add_com", "Comment adding error");
+            model.addAttribute("message_add_com", ControllerMessageManager.ADD_COMM_FAIL);
         }else{
             commentService.saveComment(ConverterOfDTO.getDescriptionProductUserDTO(commentDTO));
-            model.addAttribute("message_add_com", "Comment added!");
+            model.addAttribute("message_add_com", ControllerMessageManager.ADD_COMM_SUCCESSFULLY);
         }
         return "comment";
     }
@@ -54,9 +55,9 @@ public class CommentController {
     public String updateComments(@ModelAttribute("updatedComment") DescriptionProductUserDTO commentDTO, String newDescription, HttpSession httpSession, Model model){
         User user = (User) httpSession.getAttribute("user");
         if (commentService.updateDescription(user.getId(), newDescription)){
-            model.addAttribute("message_update_com", "Successfully updated!");
+            model.addAttribute("message_update_com", ControllerMessageManager.UPDATE_COMM_SUCCESSFULLY);
         }else {
-            model.addAttribute("message_update_com", "Operation failed");
+            model.addAttribute("message_update_com", ControllerMessageManager.OPERATION_FAILED);
         }
         return "comment";
     }
@@ -64,9 +65,9 @@ public class CommentController {
     @PostMapping("/delete/{id}")
     public String deleteComment(@PathVariable long id, HttpSession httpSession, Model model){
         if (commentService.deleteById(id)){
-            model.addAttribute("message_remove_com", "Successfully deleted!");
+            model.addAttribute("message_remove_com", ControllerMessageManager.DELETE_COMM_SUCCESSFULLY);
         }else{
-            model.addAttribute("message_remove_com", "Operation failed");
+            model.addAttribute("message_remove_com", ControllerMessageManager.OPERATION_FAILED);
         }
         return "comment";
     }

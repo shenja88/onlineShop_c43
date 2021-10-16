@@ -40,11 +40,12 @@ public class ConverterOfDTO {
                 .build();
     }
 
-    public static Product getAllArgsProductDTO(AllArgsProductDTO allArgsProductDTO){
+    public static Product getAllArgsProductDTO(AllArgsProductDTO allArgsProductDTO, Producer producer){
         return Product.builder()
                 .name(allArgsProductDTO.getName())
                 .description(allArgsProductDTO.getDescription())
                 .category(allArgsProductDTO.getCategory())
+                .producer(producer)
                 .picture(allArgsProductDTO.getPicture())
                 .price(allArgsProductDTO.getPrice())
                 .build();

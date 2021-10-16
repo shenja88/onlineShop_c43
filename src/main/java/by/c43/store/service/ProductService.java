@@ -42,7 +42,7 @@ public class ProductService {
         return false;
     }
 
-    public boolean updateEmail(String newDescription, long productId) {
+    public boolean updateDescription(String newDescription, long productId) {
         Product product = productDao.getById(productId);
         if (!product.getDescription().equals(newDescription)) {
             productDao.updateDescription(newDescription, productId);

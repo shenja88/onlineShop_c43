@@ -36,7 +36,7 @@ public class CommentController {
     }
 
     @PostMapping("/add")
-    public String addComment(@Valid @ModelAttribute("newComment") DescriptionProductUserDTO commentDTO, BindingResult bindingResult, Model model, HttpSession httpSession){
+    public String addComment(@Valid @ModelAttribute("newComment") DescriptionProductUserDTO commentDTO, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()){
             model.addAttribute("message_add_com", ControllerMessageManager.ADD_COMM_FAIL);
         }else{
@@ -52,7 +52,8 @@ public class CommentController {
     }
 
     @PostMapping("/update")
-    public String updateComments(@ModelAttribute("updatedComment") DescriptionProductUserDTO commentDTO, String newDescription, HttpSession httpSession, Model model){
+    public String updateComments(@Valid @ModelAttribute("updatedComment") DescriptionProductUserDTO commentDTO,
+                                 String newDescription, HttpSession httpSession, Model model){
         User user = (User) httpSession.getAttribute("user");
         if (commentService.updateDescription(user.getId(), newDescription)){
             model.addAttribute("message_update_com", ControllerMessageManager.UPDATE_COMM_SUCCESSFULLY);
@@ -63,7 +64,7 @@ public class CommentController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteComment(@PathVariable long id, HttpSession httpSession, Model model){
+    public String deleteComment(@PathVariable long id, Model model){
         if (commentService.deleteById(id)){
             model.addAttribute("message_remove_com", ControllerMessageManager.DELETE_COMM_SUCCESSFULLY);
         }else{
@@ -73,7 +74,7 @@ public class CommentController {
     }
 
     @GetMapping("/allByProduct/{id}")
-    public String showAllCommentsByProductId (@PathVariable long id, HttpSession httpSession, Model model){
+    public String showAllCommentsByProductId (@PathVariable long id, Model model){
         List<Comment> commentsByIdProduct = commentService.getCommentsByIdProduct(id);
         model.addAttribute("allComments", commentsByIdProduct);
         Product byId = productService.getById(id);

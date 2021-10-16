@@ -74,7 +74,7 @@ public class ProductController {
         return "updNameProd";
     }
 
-    @GetMapping("/udpDesc/{id}")
+    @GetMapping("/updDesc/{id}")
     public String updateDescription(@ModelAttribute("descDTO") DescriptionProductDTO dto, @PathVariable long id) {
         return "updateDescriptionProd";
     }

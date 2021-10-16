@@ -67,7 +67,7 @@ public class UserController {
                 model.addAttribute("messageAuth", ControllerMessageManager.AUTH_FAIL);
             }
         }
-        return "/auth";
+        return "auth";
     }
 
     @GetMapping("/updName")
@@ -158,13 +158,13 @@ public class UserController {
         return "updPicture";
     }
 
-    @GetMapping("/addTel")
+    @GetMapping("/updTel")
     public String updateNumber(Model model) {
         model.addAttribute("numberTelDTO", new NumberTelDTO());
-        return "addTelephone";
+        return "updNumber";
     }
 
-    @PostMapping("/addTel")
+    @PostMapping("/updTel")
     public String updateNumber(@Valid @ModelAttribute("numberTelDTO") NumberTelDTO telDTO,
                                BindingResult bindingResult, Model model, HttpSession session) {
         if (!bindingResult.hasErrors()) {
@@ -198,6 +198,6 @@ public class UserController {
             productBasket.resetReservedStatusAfterLogOutOrPurchase();
         }
         httpSession.invalidate();
-        return "redirect:/store";
+        return "redirect:/home";
     }
 }

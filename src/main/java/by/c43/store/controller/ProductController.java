@@ -41,7 +41,7 @@ public class ProductController {
                 model.addAttribute("messageAddProd", "Product addition error");
             }
         }
-        return "addProduct";
+        return "addProd";
     }
 
     @PostMapping("/delete/{id}")
@@ -71,7 +71,7 @@ public class ProductController {
                 model.addAttribute("messageUpdName", "Operation failed!");
             }
         }
-        return "updNameProd";
+        return "updateNameProd";
     }
 
     @GetMapping("/updDesc/{id}")
@@ -89,7 +89,7 @@ public class ProductController {
                 model.addAttribute("messageUpdDescription", "Operation failed!");
             }
         }
-        return "updDescriptionProd";
+        return "updateDescriptionProd";
     }
 
     @GetMapping("/udpPicture/{id}")
@@ -107,7 +107,7 @@ public class ProductController {
                 model.addAttribute("messageUpdPicture", "Operation failed!");
             }
         }
-        return "updPictureProd";
+        return "updatePictureProd";
     }
 
     @GetMapping("/udpType/{id}")
@@ -125,7 +125,7 @@ public class ProductController {
                 model.addAttribute("messageUpdType", "Operation failed!");
             }
         }
-        return "updTypeProd";
+        return "updateTypeProd";
     }
 
     @GetMapping("/udpPrice/{id}")
@@ -140,7 +140,7 @@ public class ProductController {
         } else {
             model.addAttribute("messageUpdPicture", "Operation failed!");
         }
-        return "updPriceProd";
+        return "updatePriceProd";
     }
 
     @GetMapping("/updRating/{id}")

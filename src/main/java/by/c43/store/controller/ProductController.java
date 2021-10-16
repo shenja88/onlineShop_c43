@@ -136,7 +136,7 @@ public class ProductController {
     @PostMapping("/updPrice/{id}")
     public String updatePrice(double price, Model model, @PathVariable long id) {
         if (productService.updatePrice(price, id)) {
-            model.addAttribute("messageUpdPicture", "The price of the product successfully changed!");
+            model.addAttribute("messageUpdPicture", "Product type successfully changed!");
         } else {
             model.addAttribute("messageUpdPicture", "Operation failed!");
         }
@@ -152,7 +152,7 @@ public class ProductController {
     public String updateRating(@PathVariable long id, double newRating, Model model, HttpSession session){
         User user = (User) session.getAttribute("user");
         if(productService.updateScore(newRating, id, user)){
-            model.addAttribute("messageUpdRating", "Rating successfully changed!");
+            model.addAttribute("messageUpdRating", "Rating has been changed!");
         } else{
             model.addAttribute("messageUpdRating", "Operation failed!");
         }

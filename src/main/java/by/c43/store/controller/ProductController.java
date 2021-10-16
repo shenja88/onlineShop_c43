@@ -151,11 +151,6 @@ public class ProductController {
     @PostMapping("/updRating/{id}")
     public String updateRating(@PathVariable long id, double newPrice, Model model, HttpSession session){
         User user = (User) session.getAttribute("user");
-        if(productService.updateScore(newPrice, id, user)){
-            model.addAttribute("messageUpdRating1", "Rating changed");
-        } else{
-            model.addAttribute("messageUpdRating2", "Failed!");
-        }
         return "updRatingProd";
     }
 

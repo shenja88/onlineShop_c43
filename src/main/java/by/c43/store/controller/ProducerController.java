@@ -7,6 +7,7 @@ import by.c43.store.entity.Producer;
 import by.c43.store.entity.Telephone;
 import by.c43.store.entity.User;
 import by.c43.store.service.ProducerService;
+import by.c43.store.utils.ControllerMessageManager;
 import by.c43.store.utils.ConverterOfDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -37,8 +38,8 @@ public class ProducerController {
         if(!bindingResult.hasErrors()){
             Producer producer = ConverterOfDTO.getAllArgsProducerDTO(allArgsProducerDTO);
             if(producerService.saveProducer(producer)){
-                model.addAttribute("message", "Registration successfully passed!");
-            }else model.addAttribute("message", "Registration failed!");
+                model.addAttribute("message", ControllerMessageManager.REG_SUCCESSFULLY);
+            }else model.addAttribute("message", ControllerMessageManager.REG_PRODUCER_FAIL);
         }
         return "regProducer";
     }
@@ -59,8 +60,8 @@ public class ProducerController {
             Optional<Producer> producerOptional = producerService.getProductByEmail(producer.getEmail());
             if(producerOptional.isPresent()){
                 httpSession.setAttribute("producer", producerOptional.get());
-                model.addAttribute("message", "Authorization successfully passed!");
-            }else model.addAttribute("message", "Authorization failed!");
+                model.addAttribute("message", ControllerMessageManager.AUTH_SUCCESSFULLY);
+            }else model.addAttribute("message", ControllerMessageManager.AUTH_PRODUCER_FAIL);
         }
         return "authProducer";
     }
@@ -79,8 +80,8 @@ public class ProducerController {
             Producer producer =(Producer) httpSession.getAttribute("producer");
             if(producerService.updateName(producer, producerNameDTO.getName())){
                 producer.setName(producerNameDTO.getName());
-                model.addAttribute("message", "Update name successfully passed");
-            }else model.addAttribute("message", "Update name failed!");
+                model.addAttribute("message", ControllerMessageManager.UPDATE_NAME_SUCCESSFULLY);
+            }else model.addAttribute("message", ControllerMessageManager.UPDATE_NAME_FAIL);
         }
         return "udpateNameProducer";
     }
@@ -98,8 +99,8 @@ public class ProducerController {
             Producer producer =(Producer) httpSession.getAttribute("producer");
             if(producerService.updateEmail(producer, producerEmailDTO.getEmail())){
                 producer.setEmail(producerEmailDTO.getEmail());
-                model.addAttribute("message", "Update email successfully passed");
-            }else model.addAttribute("message", "Update email failed!");
+                model.addAttribute("message", ControllerMessageManager.UPDATE_EMAIL_SUCCESSFULLY);
+            }else model.addAttribute("message", ControllerMessageManager.UPDATE_EMAIL_FAIL);
         }
         return "udpateEmailProducer";
     }
@@ -118,8 +119,8 @@ public class ProducerController {
             Producer producer =(Producer) httpSession.getAttribute("producer");
             if(producerService.updatePassword(producer, passwordDTO.getNewPassword(), passwordDTO.getOldPassword())){
                 producer.setPassword(passwordDTO.getNewPassword());
-                model.addAttribute("message", "Update password successfully passed");
-            }else model.addAttribute("message", "Update password failed!");
+                model.addAttribute("message", ControllerMessageManager.UPDATE_PASSWORD_SUCCESSFULLY);
+            }else model.addAttribute("message", ControllerMessageManager.UPDATE_PASSWORD_FAIL);
         }
         return "udpatePasswordProducer";
     }
@@ -137,8 +138,8 @@ public class ProducerController {
             Producer producer =(Producer) httpSession.getAttribute("producer");
             if(producerService.updatePicture(producer, pictureDTO.getPicture())){
                 producer.setPicture(pictureDTO.getPicture());
-                model.addAttribute("message", "Update picture successfully passed");
-            }else model.addAttribute("message", "Update picture failed!");
+                model.addAttribute("message", ControllerMessageManager.UPDATE_PICTURE_SUCCESSFULLY);
+            }else model.addAttribute("message", ControllerMessageManager.UPDATE_PICTURE_FAIL);
         }
         return "udpatePictureProduce";
     }
@@ -157,8 +158,8 @@ public class ProducerController {
             Producer producer =(Producer) httpSession.getAttribute("producer");
             if(producerService.updateDescription(producer, descriptionDTO.getDescription())){
                 producer.setDescription(descriptionDTO.getDescription());
-                model.addAttribute("message", "Update description successfully passed");
-            }else model.addAttribute("message", "Update description failed!");
+                model.addAttribute("message", ControllerMessageManager.UPDATE_DESCRIPTION_SUCCESSFULLY);
+            }else model.addAttribute("message", ControllerMessageManager.OPERATION_FAILED);
         }
         return "udpateDescriptionProduce";
     }
@@ -166,8 +167,8 @@ public class ProducerController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable long id, HttpSession httpSession, Model model){
         if(producerService.deleteProducer(id, (User) httpSession.getAttribute("user"))){
-            model.addAttribute("message", "Producer successfully deleted");
-        }else model.addAttribute("message", "Delete of producer failed");
+            model.addAttribute("message", ControllerMessageManager.DELETE_PRODUCER_SUCCESSFULLY);
+        }else model.addAttribute("message", ControllerMessageManager.DELETE_PRODUCER_FAIL);
         return "";
     }
 
@@ -184,8 +185,8 @@ public class ProducerController {
             Producer producer =(Producer) httpSession.getAttribute("producer");
             if(producerService.addTelephone(producer, ConverterOfDTO.getTelDTO(numberTelDTO))){
                 producer.getTelephones().add(ConverterOfDTO.getTelDTO(numberTelDTO));
-                model.addAttribute("message", "Telephone successfully added");
-            }else model.addAttribute("message", "The adding of the telephone failed!");
+                model.addAttribute("message", ControllerMessageManager.ADD_TEL_SUCCESSFULLY);
+            }else model.addAttribute("message", ControllerMessageManager.ADD_TEL_FAIL);
         }
         return "addTelephoneProducer";
     }
@@ -205,8 +206,8 @@ public class ProducerController {
             Telephone telephone = ConverterOfDTO.getTelDTO(numberTelDTO);
             if(producerService.updateTelephone(producer, telephone)){
                 producer.getTelephones().set(producer.getTelephones().indexOf(telephone), telephone );
-                model.addAttribute("message", "Telephone successfully updated");
-            }else model.addAttribute("message", "The update of the telephone failed!");
+                model.addAttribute("message", ControllerMessageManager.UPDATE_TEL_SUCCESSFULLY);
+            }else model.addAttribute("message", ControllerMessageManager.UPDATE_TEL_FAIL);
         }
         return "updateTelephoneProducer";
     }
@@ -225,8 +226,8 @@ public class ProducerController {
             Producer producer =(Producer) httpSession.getAttribute("producer");
             if(producerService.updateAddress(producer, ConverterOfDTO.getAllArgAddressDTO(addressDTO))){
                 producer.setAddress(ConverterOfDTO.getAllArgAddressDTO(addressDTO));
-                model.addAttribute("message", "Address successfully updated");
-            }else model.addAttribute("message", "The update of the address failed!");
+                model.addAttribute("message", ControllerMessageManager.UPDATE_ADDRESS_SUCCESSFULLY);
+            }else model.addAttribute("message", ControllerMessageManager.UPDATE_ADDRESS_FAIL);
         }
         return "updateAddressProducer";
     }

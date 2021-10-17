@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html th:fragment="header" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light mb-5" style="background-color: #e3f2fd;">
+    <div class="container-fluid ">
+        <a class="navbar-brand" href="/home" style="font-family: 'Berkshire Swash', cursive; margin-left: 40px">
+            <img src="/images/STORE.jpg"
+                 alt="" height="30" class="d-inline-block align-text-top">
+            OnlineStore
+        </a>
+        <div style="padding-right: 150px">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li th:if="${session.user == null}" class="nav-item">
+                    <a class="nav-link active" href="#"><p
+                            style="font-family: 'Berkshire Swash', cursive; margin-left: 40px">User</p></a>
+                </li>
+                <li th:if="${session.user == null}" class="nav-item">
+                    <a class="nav-link active" th:href="@{/user/auth}">Login</a>
+                </li>
+                <li th:if="${session.user == null}" class="nav-item">
+                    <a class="nav-link active" th:href="@{/user/reg}">Sign-up</a>
+                </li>
+                <li th:if="${session.producer == null}" class="nav-item">
+                    <a class="nav-link active" href="#"><p
+                            style="font-family: 'Berkshire Swash', cursive; margin-left: 40px">Producer</p></a>
+                </li>
+                <li th:if="${session.producer == null}" class="nav-item">
+                    <a class="nav-link active" th:href="@{/producer/auth}">Login</a>
+                </li>
+                <li th:if="${session.producer == null}" class="nav-item">
+                    <a class="nav-link active" th:href="@{/producer/reg}">Sign-up</a>
+                </li>
+                <li style="margin-left:  150px">
+                    <div class="pull-right navbar-text">
+                        <a th:if="${session.user == null}" class="pull-right navbar-text" href="#"
+                           style="padding-right: 5px">Guest</a>
+                        <a th:if="${session.user != null}" class="pull-right navbar-text" href="#"
+                           style="padding-right: 5px"><span th:text="${session.user.name}"></span></a>
+                        <a th:if="${session.producer != null}" class="pull-right navbar-text" href="#"
+                           style="padding-right: 5px"><span th:text="${session.producer.name}"></span></a>
+                        <img src="/images/avatar_circle.jpg" width="30px" height="30px" style="border-radius: 100px">
+                    </div>
+                <li th:if="${session.user != null}" class="nav-item dropdown"
+                    style="padding-top: 13px; padding-left: 0">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false"></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" th:href="@{/user/account}">Account</a></li>
+                        <li><a class="dropdown-item" th:href="@{/product/byOwner}">My products</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" th:href="@{/user/logout}">Sign-out</a></li>
+                    </ul>
+                </li>
+                <li th:if="${session.producer != null}" class="nav-item dropdown"
+                    style="padding-top: 13px; padding-left: 0">
+                    <a class="nav-link dropdown-toggle" href="#" id="navDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false"></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navDropdown">
+                        <li><a class="dropdown-item" th:href="@{/producer/account}">Account</a></li>
+                        <li><a class="dropdown-item" th:href="@{/product/byProducer}">My products</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" th:href="@{/producer/logOut}">Sign-out</a></li>
+                    </ul>
+                </li>
+                <a th:if="${session.user != null}" class="pull-right navbar-text" style="padding-left: 30px" href="">
+                    <img src="/images/basket_2.png" width="30px" height="30px">
+                </a>
+                <a th:if="${session.producer != null}" class="pull-right navbar-text" style="padding-left: 30px" href="">
+                    <img src="/images/basket_2.png" width="30px" height="30px">
+                </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+</body>
+</html>

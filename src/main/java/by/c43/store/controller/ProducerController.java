@@ -238,6 +238,10 @@ public class ProducerController {
         return "redirect:/home";
     }
 
+    @GetMapping("account")
+    public String account(){
+        return "accountProducer";
+    }
 
 
 }

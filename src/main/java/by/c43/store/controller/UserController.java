@@ -200,4 +200,9 @@ public class UserController {
         httpSession.invalidate();
         return "redirect:/home";
     }
+
+    @GetMapping("account")
+    public String account(){
+        return "account";
+    }
 }

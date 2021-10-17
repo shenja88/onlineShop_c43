@@ -13,6 +13,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
@@ -30,6 +31,13 @@ import java.util.Properties;
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     private final UserAndProducerInterceptor userAndProducerInterceptor;
+
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/images/**")
+                .addResourceLocations("/images/");
+    }
 
     @Bean
     public SpringResourceTemplateResolver templateResolver(){
@@ -72,7 +80,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/onlineStore?serverTimezone=UTC");
         dataSource.setUsername("root");
-        dataSource.setPassword("root");
+        dataSource.setPassword("rootroot");
         return dataSource;
     }
 
@@ -87,7 +95,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     private Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect.class");
+        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
         hibernateProperties.setProperty("hibernate.show_sql", "true");
         return hibernateProperties;
     }

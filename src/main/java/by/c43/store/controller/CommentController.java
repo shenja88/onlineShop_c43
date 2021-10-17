@@ -46,19 +46,20 @@ public class CommentController {
         return "comment";
     }
 
-    @GetMapping("/update")
-    public String showListOfCommentsForUpdate(@ModelAttribute("updatedComment") DescriptionProductUserDTO commentDTO){
+    @GetMapping("/update/{id}")
+    public String showListOfCommentsForUpdate(@ModelAttribute("updatedComment") DescriptionProductUserDTO commentDTO, @PathVariable String id){
         return "comment";
     }
 
-    @PostMapping("/update")
-    public String updateComments(@Valid @ModelAttribute("updatedComment") DescriptionProductUserDTO commentDTO,
+    @PostMapping("/update/{id}")
+    public String updateComments(@PathVariable long id, @Valid @ModelAttribute("updatedComment") DescriptionProductUserDTO commentDTO, BindingResult bindingResult,
                                  String newDescription, HttpSession httpSession, Model model){
-        User user = (User) httpSession.getAttribute("user");
-        if (commentService.updateDescription(user.getId(), newDescription)){
-            model.addAttribute("message_update_com", ControllerMessageManager.UPDATE_COMM_SUCCESSFULLY);
-        }else {
-            model.addAttribute("message_update_com", ControllerMessageManager.OPERATION_FAILED);
+        if(!bindingResult.hasErrors()) {
+            if (commentService.updateDescription(id, newDescription)) {
+                model.addAttribute("message_update_com", ControllerMessageManager.UPDATE_COMM_SUCCESSFULLY);
+            } else {
+                model.addAttribute("message_update_com", ControllerMessageManager.OPERATION_FAILED);
+            }
         }
         return "comment";
     }

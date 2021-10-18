@@ -32,6 +32,7 @@ public class ProductDaoImpl implements ProductDao {
     private static final String GET_BY_INFO = "from Product where name =: name and category =: category and Producer.id =: prodId";
     private static final String GET_BY_CATEGORY = "from Product where category =: category";
     private static final String GET_BY_SALE_STATUS = "from Product where saleStatus =: status";
+    private static final String GET_ALL = "from Product";
 
     @Override
     public void save(Product product) {
@@ -237,6 +238,15 @@ public class ProductDaoImpl implements ProductDao {
         Session session = sessionFactory.openSession();
         List<Product> products = session.createQuery(GET_BY_CATEGORY, Product.class)
                 .setParameter("category", category)
+                .getResultList();
+        session.close();
+        return products;
+    }
+
+    @Override
+    public List<Product> getAll() {
+        Session session = sessionFactory.openSession();
+        List<Product> products = session.createQuery(GET_ALL, Product.class)
                 .getResultList();
         session.close();
         return products;

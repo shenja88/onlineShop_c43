@@ -50,6 +50,8 @@ public interface ProductDao {
 
     List<Product> getByCategory(CategoryOfProduct category);
 
+    List<Product> getAll();
+
     boolean isExistById(long id);
 
     boolean isExistByInfo(Product product);

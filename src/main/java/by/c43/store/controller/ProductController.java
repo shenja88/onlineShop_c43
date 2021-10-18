@@ -198,4 +198,11 @@ public class ProductController {
         model.addAttribute("listProd", products);
         return "store";
     }
+
+    @GetMapping("/all")
+    public String getAll(Model model){
+        model.addAttribute("listProd", productService.getAll());
+        return "store";
+    }
+
 }

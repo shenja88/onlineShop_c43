@@ -89,6 +89,9 @@ public class ProductService {
         return true;
     }
 
+    public List<Product> getAll(){
+        return productDao.getAll();
+    }
     public Product getById(long id) {
         return productDao.getById(id);
     }

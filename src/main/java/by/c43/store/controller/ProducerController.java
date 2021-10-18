@@ -169,7 +169,7 @@ public class ProducerController {
         if(producerService.deleteProducer(id, (User) httpSession.getAttribute("user"))){
             model.addAttribute("message", ControllerMessageManager.DELETE_PRODUCER_SUCCESSFULLY);
         }else model.addAttribute("message", ControllerMessageManager.DELETE_PRODUCER_FAIL);
-        return "";
+        return "redirect:/home";
     }
 
     @GetMapping("/addTelephone")

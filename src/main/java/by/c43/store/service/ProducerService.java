@@ -96,7 +96,7 @@ public class ProducerService {
         return Optional.of(producerDao.getById(id));
     }
 
-    public Optional<Producer> getProductByEmail(String email){
+    public Optional<Producer> getProducerByEmail(String email){
         return Optional.of(producerDao.getByEmail(email));
     }
 

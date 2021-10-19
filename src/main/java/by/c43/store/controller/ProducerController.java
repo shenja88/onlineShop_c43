@@ -1,6 +1,6 @@
 package by.c43.store.controller;
 
-import by.c43.store.dto.addressDTO.AllArgAddressDTO;
+import by.c43.store.dto.addressDTO.ArgNoIdAddressDTO;
 import by.c43.store.dto.producerDTO.*;
 import by.c43.store.dto.telephonesDTO.NumberTelDTO;
 import by.c43.store.entity.Producer;
@@ -26,7 +26,6 @@ public class ProducerController {
 
     private final ProducerService producerService;
 
-
     @GetMapping("/reg")
     public String registration(@ModelAttribute("newProducer")AllArgsProducerDTO allArgsProducerDTO){
         return "regProducer";
@@ -44,20 +43,17 @@ public class ProducerController {
         return "regProducer";
     }
 
-
     @GetMapping("/auth")
     public String authorization(@ModelAttribute("oldProducer") EmailPasswordProducerDTO emailPasswordProducerDTO){
         return "authProducer";
     }
-
-
 
     @PostMapping ("/auth")
     public String authorization(@Valid @ModelAttribute("oldProducer") EmailPasswordProducerDTO producerDTO,
                                 BindingResult bindingResult, HttpSession httpSession, Model model){
         if(!bindingResult.hasErrors()){
             Producer producer = ConverterOfDTO.getEmailPasswordProducerDTO(producerDTO);
-            Optional<Producer> producerOptional = producerService.getProductByEmail(producer.getEmail());
+            Optional<Producer> producerOptional = producerService.getProducerByEmail(producer.getEmail());
             if(producerOptional.isPresent()){
                 httpSession.setAttribute("producer", producerOptional.get());
                 model.addAttribute("message", ControllerMessageManager.AUTH_SUCCESSFULLY);
@@ -91,7 +87,6 @@ public class ProducerController {
         return "udpateEmailProducer";
     }
 
-
     @PostMapping ("/updateEmail")
     public String updateEmail(@Valid @ModelAttribute("producerEmail") ProducerEmailDTO producerEmailDTO, BindingResult bindingResult,
                              Model model, HttpSession httpSession){
@@ -105,12 +100,10 @@ public class ProducerController {
         return "udpateEmailProducer";
     }
 
-
     @GetMapping("/updatePassword")
     public String updatePassword(@ModelAttribute("producerPassword")ProducerPasswordDTO passwordDTO){
         return "udpatePasswordProducer";
     }
-
 
     @PostMapping ("/updatePassword")
     public String updatePassword(@Valid @ModelAttribute("producerPassword") ProducerPasswordDTO passwordDTO, BindingResult bindingResult,
@@ -144,12 +137,10 @@ public class ProducerController {
         return "udpatePictureProduce";
     }
 
-
     @GetMapping("/updateDescription")
     public String updateDescription(@ModelAttribute("producerDescription") ProducerDescriptionDTO descriptionDTO){
         return "udpateDescriptionProducer";
     }
-
 
     @PostMapping ("/updateDescription")
     public String updateDescription(@Valid @ModelAttribute("producerDescription") ProducerDescriptionDTO descriptionDTO, BindingResult bindingResult,
@@ -177,7 +168,6 @@ public class ProducerController {
         return "addTelephoneProducer";
     }
 
-
     @PostMapping ("/addTelephone")
     public String addTelephone(@Valid @ModelAttribute("newTelephone") NumberTelDTO numberTelDTO, BindingResult bindingResult,
                                     Model model, HttpSession httpSession){
@@ -197,7 +187,6 @@ public class ProducerController {
         return "updateTelephoneProducer";
     }
 
-
     @PostMapping ("/updateTelephone")
     public String updateTelephone(@Valid @ModelAttribute("telephone") NumberTelDTO numberTelDTO, BindingResult bindingResult,
                                   Model model, HttpSession httpSession){
@@ -212,16 +201,14 @@ public class ProducerController {
         return "updateTelephoneProducer";
     }
 
-
     @GetMapping("/updateAddress")
-    public String updateAddress(@ModelAttribute("address")AllArgAddressDTO allArgAddressDTO){
+    public String updateAddress(@ModelAttribute("address") ArgNoIdAddressDTO argNoIdAddressDTO){
         return "updateAddressProducer";
     }
 
-
     @PostMapping ("/updateAddress")
-    public String updateAddress(@Valid @ModelAttribute("address") AllArgAddressDTO addressDTO, BindingResult bindingResult,
-                                  Model model, HttpSession httpSession){
+    public String updateAddress(@Valid @ModelAttribute("address") ArgNoIdAddressDTO addressDTO, BindingResult bindingResult,
+                                Model model, HttpSession httpSession){
         if(!bindingResult.hasErrors()){
             Producer producer =(Producer) httpSession.getAttribute("producer");
             if(producerService.updateAddress(producer, ConverterOfDTO.getAllArgAddressDTO(addressDTO))){
@@ -237,11 +224,4 @@ public class ProducerController {
         httpSession.invalidate();
         return "redirect:/home";
     }
-
-    @GetMapping("account")
-    public String account(){
-        return "accountProducer";
-    }
-
-
 }

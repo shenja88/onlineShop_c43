@@ -58,15 +58,16 @@ public class ProductController {
     }
 
     @GetMapping("/udpName/{id}")
-    public String updateName(@ModelAttribute("nameDTO") NameProductDTO dto, @PathVariable long id) {
+    public String updateName(@ModelAttribute("nameDTO") NameProductDTO dto, @PathVariable long id, Model model) {
+        model.addAttribute("prodId", id);
         return "updateNameProd";
     }
 
-    @PostMapping("/updName/{id}")
+    @PostMapping("/updName")
     public String updateName(@Valid @ModelAttribute("nameDTO") NameProductDTO dto, BindingResult bindingResult,
-                             Model model, @PathVariable long id) {
+                             Model model) {
         if (!bindingResult.hasErrors()) {
-            if (productService.updateName(dto.getName(), id)) {
+            if (productService.updateName(dto.getName(), dto.getId())) {
                 model.addAttribute("messageUpdName", ControllerMessageManager.UPDATE_PRODUCT_NAME_SUCCESSFULLY);
             } else {
                 model.addAttribute("messageUpdName", ControllerMessageManager.OPERATION_FAILED);
@@ -76,15 +77,16 @@ public class ProductController {
     }
 
     @GetMapping("/udpDesc/{id}")
-    public String updateDescription(@ModelAttribute("descDTO") DescriptionProductDTO dto, @PathVariable long id) {
+    public String updateDescription(@ModelAttribute("descDTO") DescriptionProductDTO dto, @PathVariable long id, Model model) {
+        model.addAttribute("prodId", id);
         return "updateDescriptionProd";
     }
 
-    @PostMapping("/updDesc/{id}")
+    @PostMapping("/updDesc")
     public String updateDescription(@Valid @ModelAttribute("descDTO") DescriptionProductDTO dto, BindingResult bindingResult,
-                                    Model model, @PathVariable long id) {
+                                    Model model) {
         if (!bindingResult.hasErrors()) {
-            if (productService.updateDescription(dto.getDescription(), id)) {
+            if (productService.updateDescription(dto.getDescription(), dto.getId())) {
                 model.addAttribute("messageUpdDescription", ControllerMessageManager.UPDATE_DESCRIPTION_SUCCESSFULLY);
             } else {
                 model.addAttribute("messageUpdDescription", ControllerMessageManager.OPERATION_FAILED);
@@ -94,15 +96,16 @@ public class ProductController {
     }
 
     @GetMapping("/udpPicture/{id}")
-    public String updatePicture(@ModelAttribute("pictureDTO") PictureProductDTO dto, @PathVariable long id) {
+    public String updatePicture(@ModelAttribute("pictureDTO") PictureProductDTO dto, @PathVariable long id, Model model) {
+        model.addAttribute("prodId", id);
         return "updatePictureProd";
     }
 
-    @PostMapping("/updPicture/{id}")
+    @PostMapping("/updPicture")
     public String updatePicture(@Valid @ModelAttribute("pictureDTO") PictureProductDTO dto, BindingResult bindingResult,
-                                Model model, @PathVariable long id) {
+                                Model model) {
         if (!bindingResult.hasErrors()) {
-            if (productService.updatePicture(dto.getPicture(), id)) {
+            if (productService.updatePicture(dto.getPicture(), dto.getId())) {
                 model.addAttribute("messageUpdPicture", ControllerMessageManager.UPDATE_PICTURE_SUCCESSFULLY);
             } else {
                 model.addAttribute("messageUpdPicture", ControllerMessageManager.OPERATION_FAILED);
@@ -112,15 +115,16 @@ public class ProductController {
     }
 
     @GetMapping("/udpType/{id}")
-    public String updateType(@ModelAttribute("typeDTO") TypeProductDTO dto, @PathVariable long id) {
+    public String updateType(@ModelAttribute("typeDTO") TypeProductDTO dto, @PathVariable long id, Model model) {
+        model.addAttribute("prodId", id);
         return "updateTypeProd";
     }
 
-    @PostMapping("/updType/{id}")
+    @PostMapping("/updType")
     public String updateType(@Valid @ModelAttribute("typeDTO") TypeProductDTO dto, BindingResult bindingResult,
-                             Model model, @PathVariable long id) {
+                             Model model) {
         if (!bindingResult.hasErrors()) {
-            if (productService.updateTypeProduct(dto.getCategory(), id)) {
+            if (productService.updateTypeProduct(dto.getCategory(), dto.getId())) {
                 model.addAttribute("messageUpdType", ControllerMessageManager.UPDATE_TYPE_SUCCESSFULLY);
             } else {
                 model.addAttribute("messageUpdType", ControllerMessageManager.OPERATION_FAILED);
@@ -130,32 +134,38 @@ public class ProductController {
     }
 
     @GetMapping("/udpPrice/{id}")
-    public String updatePrice(@PathVariable long id) {
+    public String updatePrice(@ModelAttribute("newPrice") NewPriceDTO priceDTO, @PathVariable long id, Model model) {
+        model.addAttribute("prodId", id);
         return "updatePriceProd";
     }
 
-    @PostMapping("/updPrice/{id}")
-    public String updatePrice(double price, Model model, @PathVariable long id) {
-        if (productService.updatePrice(price, id)) {
-            model.addAttribute("messageUpdPicture", ControllerMessageManager.UPDATE_PRICE_SUCCESSFULLY);
-        } else {
-            model.addAttribute("messageUpdPicture", ControllerMessageManager.OPERATION_FAILED);
+    @PostMapping("/updPrice")
+    public String updatePrice(@Valid @ModelAttribute("newPrice") NewPriceDTO priceDTO, BindingResult bindingResult, Model model) {
+        if(!bindingResult.hasErrors()) {
+            if (productService.updatePrice(priceDTO.getPrice(), priceDTO.getProdId())) {
+                model.addAttribute("messageUpdPicture", ControllerMessageManager.UPDATE_PRICE_SUCCESSFULLY);
+            } else {
+                model.addAttribute("messageUpdPicture", ControllerMessageManager.OPERATION_FAILED);
+            }
         }
         return "updatePriceProd";
     }
 
     @GetMapping("/updRating/{id}")
-    public String updateRating(@PathVariable long id){
+    public String updateRating(@PathVariable long id, @ModelAttribute("newRating") NewRatingDTO ratingDTO, Model model){
+        model.addAttribute("prodId", id);
         return "updRatingProd";
     }
 
-    @PostMapping("/updRating/{id}")
-    public String updateRating(@PathVariable long id, double newRating, Model model, HttpSession session){
-        User user = (User) session.getAttribute("user");
-        if(productService.updateScore(newRating, id, user)){
-            model.addAttribute("messageUpdRating", ControllerMessageManager.UPDATE_RATING_SUCCESSFULLY);
-        } else{
-            model.addAttribute("messageUpdRating", ControllerMessageManager.OPERATION_FAILED);
+    @PostMapping("/updRating")
+    public String updateRating(@Valid @ModelAttribute("newRating") NewRatingDTO ratingDTO, BindingResult bindingResult, Model model, HttpSession session){
+        if(!bindingResult.hasErrors()) {
+            User user = (User) session.getAttribute("user");
+            if (productService.updateScore(ratingDTO.getScore(), ratingDTO.getProdId(), user)) {
+                model.addAttribute("messageUpdRating", ControllerMessageManager.UPDATE_RATING_SUCCESSFULLY);
+            } else {
+                model.addAttribute("messageUpdRating", ControllerMessageManager.OPERATION_FAILED);
+            }
         }
         return "updRatingProd";
     }

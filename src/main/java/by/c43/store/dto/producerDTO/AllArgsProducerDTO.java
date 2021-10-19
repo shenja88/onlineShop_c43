@@ -3,6 +3,7 @@ package by.c43.store.dto.producerDTO;
 import by.c43.store.utils.ConstraintsMessageManager;
 import by.c43.store.utils.Patterns;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +14,7 @@ import javax.validation.constraints.Size;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+@Data
 public class AllArgsProducerDTO {
     @NotBlank
     @Size(min = 3, max = 30, message = ConstraintsMessageManager.NAME_ERROR)
@@ -31,7 +32,6 @@ public class AllArgsProducerDTO {
     @NotEmpty
     @NotBlank(message = ConstraintsMessageManager.NOT_EMPTY_ERROR)
     private String description;
-
 
     @NotEmpty
     @NotBlank(message = ConstraintsMessageManager.PICTURE_ERROR)

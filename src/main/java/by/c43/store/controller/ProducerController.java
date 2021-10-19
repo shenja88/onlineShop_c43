@@ -27,201 +27,206 @@ public class ProducerController {
     private final ProducerService producerService;
 
     @GetMapping("/reg")
-    public String registration(@ModelAttribute("newProducer")AllArgsProducerDTO allArgsProducerDTO){
+    public String registration(@ModelAttribute("newProducer") AllArgsProducerDTO allArgsProducerDTO) {
         return "regProducer";
     }
 
     @PostMapping("/reg")
     public String registration(@Valid @ModelAttribute("newProducer") AllArgsProducerDTO allArgsProducerDTO,
-                               BindingResult bindingResult, Model model){
-        if(!bindingResult.hasErrors()){
+                               BindingResult bindingResult, Model model) {
+        if (!bindingResult.hasErrors()) {
             Producer producer = ConverterOfDTO.getAllArgsProducerDTO(allArgsProducerDTO);
-            if(producerService.saveProducer(producer)){
+            if (producerService.saveProducer(producer)) {
                 model.addAttribute("message", ControllerMessageManager.REG_SUCCESSFULLY);
-            }else model.addAttribute("message", ControllerMessageManager.REG_PRODUCER_FAIL);
+            } else model.addAttribute("message", ControllerMessageManager.REG_PRODUCER_FAIL);
         }
         return "regProducer";
     }
 
     @GetMapping("/auth")
-    public String authorization(@ModelAttribute("oldProducer") EmailPasswordProducerDTO emailPasswordProducerDTO){
+    public String authorization(@ModelAttribute("oldProducer") EmailPasswordProducerDTO emailPasswordProducerDTO) {
         return "authProducer";
     }
 
-    @PostMapping ("/auth")
+    @PostMapping("/auth")
     public String authorization(@Valid @ModelAttribute("oldProducer") EmailPasswordProducerDTO producerDTO,
-                                BindingResult bindingResult, HttpSession httpSession, Model model){
-        if(!bindingResult.hasErrors()){
+                                BindingResult bindingResult, HttpSession httpSession, Model model) {
+        if (!bindingResult.hasErrors()) {
             Producer producer = ConverterOfDTO.getEmailPasswordProducerDTO(producerDTO);
             Optional<Producer> producerOptional = producerService.getProducerByEmail(producer.getEmail());
-            if(producerOptional.isPresent()){
+            if (producerOptional.isPresent()) {
                 httpSession.setAttribute("producer", producerOptional.get());
                 model.addAttribute("message", ControllerMessageManager.AUTH_SUCCESSFULLY);
-            }else model.addAttribute("message", ControllerMessageManager.AUTH_PRODUCER_FAIL);
+            } else model.addAttribute("message", ControllerMessageManager.AUTH_PRODUCER_FAIL);
         }
         return "authProducer";
     }
 
 
     @GetMapping("/updateName")
-    public String updateName(@ModelAttribute("producerName") ProducerNameDTO producerNameDTO){
+    public String updateName(@ModelAttribute("producerName") ProducerNameDTO producerNameDTO) {
         return "udpateNameProducer";
     }
 
 
-    @PostMapping ("/updateName")
+    @PostMapping("/updateName")
     public String updateName(@Valid @ModelAttribute("producerName") ProducerNameDTO producerNameDTO, BindingResult bindingResult,
-                             Model model, HttpSession httpSession){
-        if(!bindingResult.hasErrors()){
-            Producer producer =(Producer) httpSession.getAttribute("producer");
-            if(producerService.updateName(producer, producerNameDTO.getName())){
+                             Model model, HttpSession httpSession) {
+        if (!bindingResult.hasErrors()) {
+            Producer producer = (Producer) httpSession.getAttribute("producer");
+            if (producerService.updateName(producer, producerNameDTO.getName())) {
                 producer.setName(producerNameDTO.getName());
                 model.addAttribute("message", ControllerMessageManager.UPDATE_NAME_SUCCESSFULLY);
-            }else model.addAttribute("message", ControllerMessageManager.UPDATE_NAME_FAIL);
+            } else model.addAttribute("message", ControllerMessageManager.UPDATE_NAME_FAIL);
         }
         return "udpateNameProducer";
     }
 
     @GetMapping("/updateEmail")
-    public String updateEmail(@ModelAttribute("producerEmail")ProducerEmailDTO producerEmailDTO){
+    public String updateEmail(@ModelAttribute("producerEmail") ProducerEmailDTO producerEmailDTO) {
         return "udpateEmailProducer";
     }
 
-    @PostMapping ("/updateEmail")
+    @PostMapping("/updateEmail")
     public String updateEmail(@Valid @ModelAttribute("producerEmail") ProducerEmailDTO producerEmailDTO, BindingResult bindingResult,
-                             Model model, HttpSession httpSession){
-        if(!bindingResult.hasErrors()){
-            Producer producer =(Producer) httpSession.getAttribute("producer");
-            if(producerService.updateEmail(producer, producerEmailDTO.getEmail())){
+                              Model model, HttpSession httpSession) {
+        if (!bindingResult.hasErrors()) {
+            Producer producer = (Producer) httpSession.getAttribute("producer");
+            if (producerService.updateEmail(producer, producerEmailDTO.getEmail())) {
                 producer.setEmail(producerEmailDTO.getEmail());
                 model.addAttribute("message", ControllerMessageManager.UPDATE_EMAIL_SUCCESSFULLY);
-            }else model.addAttribute("message", ControllerMessageManager.UPDATE_EMAIL_FAIL);
+            } else model.addAttribute("message", ControllerMessageManager.UPDATE_EMAIL_FAIL);
         }
         return "udpateEmailProducer";
     }
 
     @GetMapping("/updatePassword")
-    public String updatePassword(@ModelAttribute("producerPassword")ProducerPasswordDTO passwordDTO){
+    public String updatePassword(@ModelAttribute("producerPassword") ProducerPasswordDTO passwordDTO) {
         return "udpatePasswordProducer";
     }
 
-    @PostMapping ("/updatePassword")
+    @PostMapping("/updatePassword")
     public String updatePassword(@Valid @ModelAttribute("producerPassword") ProducerPasswordDTO passwordDTO, BindingResult bindingResult,
-                              Model model, HttpSession httpSession){
-        if(!bindingResult.hasErrors()){
-            Producer producer =(Producer) httpSession.getAttribute("producer");
-            if(producerService.updatePassword(producer, passwordDTO.getNewPassword(), passwordDTO.getOldPassword())){
+                                 Model model, HttpSession httpSession) {
+        if (!bindingResult.hasErrors()) {
+            Producer producer = (Producer) httpSession.getAttribute("producer");
+            if (producerService.updatePassword(producer, passwordDTO.getNewPassword(), passwordDTO.getOldPassword())) {
                 producer.setPassword(passwordDTO.getNewPassword());
                 model.addAttribute("message", ControllerMessageManager.UPDATE_PASSWORD_SUCCESSFULLY);
-            }else model.addAttribute("message", ControllerMessageManager.UPDATE_PASSWORD_FAIL);
+            } else model.addAttribute("message", ControllerMessageManager.UPDATE_PASSWORD_FAIL);
         }
         return "udpatePasswordProducer";
     }
 
     @GetMapping("/updatePicture")
-    public String updatePicture(@ModelAttribute("producerPicture") ProducerPictureDTO producerPictureDTO){
+    public String updatePicture(@ModelAttribute("producerPicture") ProducerPictureDTO producerPictureDTO) {
         return "udpatePictureProducer";
     }
 
 
-    @PostMapping ("/updatePicture")
+    @PostMapping("/updatePicture")
     public String updatePicture(@Valid @ModelAttribute("producerPicture") ProducerPictureDTO pictureDTO, BindingResult bindingResult,
-                                 Model model, HttpSession httpSession){
-        if(!bindingResult.hasErrors()){
-            Producer producer =(Producer) httpSession.getAttribute("producer");
-            if(producerService.updatePicture(producer, pictureDTO.getPicture())){
+                                Model model, HttpSession httpSession) {
+        if (!bindingResult.hasErrors()) {
+            Producer producer = (Producer) httpSession.getAttribute("producer");
+            if (producerService.updatePicture(producer, pictureDTO.getPicture())) {
                 producer.setPicture(pictureDTO.getPicture());
                 model.addAttribute("message", ControllerMessageManager.UPDATE_PICTURE_SUCCESSFULLY);
-            }else model.addAttribute("message", ControllerMessageManager.UPDATE_PICTURE_FAIL);
+            } else model.addAttribute("message", ControllerMessageManager.UPDATE_PICTURE_FAIL);
         }
         return "udpatePictureProduce";
     }
 
     @GetMapping("/updateDescription")
-    public String updateDescription(@ModelAttribute("producerDescription") ProducerDescriptionDTO descriptionDTO){
+    public String updateDescription(@ModelAttribute("producerDescription") ProducerDescriptionDTO descriptionDTO) {
         return "udpateDescriptionProducer";
     }
 
-    @PostMapping ("/updateDescription")
+    @PostMapping("/updateDescription")
     public String updateDescription(@Valid @ModelAttribute("producerDescription") ProducerDescriptionDTO descriptionDTO, BindingResult bindingResult,
-                                Model model, HttpSession httpSession){
-        if(!bindingResult.hasErrors()){
-            Producer producer =(Producer) httpSession.getAttribute("producer");
-            if(producerService.updateDescription(producer, descriptionDTO.getDescription())){
+                                    Model model, HttpSession httpSession) {
+        if (!bindingResult.hasErrors()) {
+            Producer producer = (Producer) httpSession.getAttribute("producer");
+            if (producerService.updateDescription(producer, descriptionDTO.getDescription())) {
                 producer.setDescription(descriptionDTO.getDescription());
                 model.addAttribute("message", ControllerMessageManager.UPDATE_DESCRIPTION_SUCCESSFULLY);
-            }else model.addAttribute("message", ControllerMessageManager.OPERATION_FAILED);
+            } else model.addAttribute("message", ControllerMessageManager.OPERATION_FAILED);
         }
         return "udpateDescriptionProduce";
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable long id, HttpSession httpSession, Model model){
-        if(producerService.deleteProducer(id, (User) httpSession.getAttribute("user"))){
+    public String delete(@PathVariable long id, HttpSession httpSession, Model model) {
+        if (producerService.deleteProducer(id, (User) httpSession.getAttribute("user"))) {
             model.addAttribute("message", ControllerMessageManager.DELETE_PRODUCER_SUCCESSFULLY);
-        }else model.addAttribute("message", ControllerMessageManager.DELETE_PRODUCER_FAIL);
+        } else model.addAttribute("message", ControllerMessageManager.DELETE_PRODUCER_FAIL);
         return "redirect:/home";
     }
 
     @GetMapping("/addTelephone")
-    public String addTelephone(@ModelAttribute("newTelephone")NumberTelDTO numberTelDTO){
+    public String addTelephone(@ModelAttribute("newTelephone") NumberTelDTO numberTelDTO) {
         return "addTelephoneProducer";
     }
 
-    @PostMapping ("/addTelephone")
+    @PostMapping("/addTelephone")
     public String addTelephone(@Valid @ModelAttribute("newTelephone") NumberTelDTO numberTelDTO, BindingResult bindingResult,
-                                    Model model, HttpSession httpSession){
-        if(!bindingResult.hasErrors()){
-            Producer producer =(Producer) httpSession.getAttribute("producer");
-            if(producerService.addTelephone(producer, ConverterOfDTO.getTelDTO(numberTelDTO))){
+                               Model model, HttpSession httpSession) {
+        if (!bindingResult.hasErrors()) {
+            Producer producer = (Producer) httpSession.getAttribute("producer");
+            if (producerService.addTelephone(producer, ConverterOfDTO.getTelDTO(numberTelDTO))) {
                 producer.getTelephones().add(ConverterOfDTO.getTelDTO(numberTelDTO));
                 model.addAttribute("message", ControllerMessageManager.ADD_TEL_SUCCESSFULLY);
-            }else model.addAttribute("message", ControllerMessageManager.ADD_TEL_FAIL);
+            } else model.addAttribute("message", ControllerMessageManager.ADD_TEL_FAIL);
         }
         return "addTelephoneProducer";
     }
 
 
     @GetMapping("/updateTelephone")
-    public String updateTelephone(@ModelAttribute("telephone")NumberTelDTO numberTelDTO){
+    public String updateTelephone(@ModelAttribute("telephone") NumberTelDTO numberTelDTO) {
         return "updateTelephoneProducer";
     }
 
-    @PostMapping ("/updateTelephone")
+    @PostMapping("/updateTelephone")
     public String updateTelephone(@Valid @ModelAttribute("telephone") NumberTelDTO numberTelDTO, BindingResult bindingResult,
-                                  Model model, HttpSession httpSession){
-        if(!bindingResult.hasErrors()){
-            Producer producer =(Producer) httpSession.getAttribute("producer");
+                                  Model model, HttpSession httpSession) {
+        if (!bindingResult.hasErrors()) {
+            Producer producer = (Producer) httpSession.getAttribute("producer");
             Telephone telephone = ConverterOfDTO.getTelDTO(numberTelDTO);
-            if(producerService.updateTelephone(producer, telephone)){
-                producer.getTelephones().set(producer.getTelephones().indexOf(telephone), telephone );
+            if (producerService.updateTelephone(producer, telephone)) {
+                producer.getTelephones().set(producer.getTelephones().indexOf(telephone), telephone);
                 model.addAttribute("message", ControllerMessageManager.UPDATE_TEL_SUCCESSFULLY);
-            }else model.addAttribute("message", ControllerMessageManager.UPDATE_TEL_FAIL);
+            } else model.addAttribute("message", ControllerMessageManager.UPDATE_TEL_FAIL);
         }
         return "updateTelephoneProducer";
     }
 
     @GetMapping("/updateAddress")
-    public String updateAddress(@ModelAttribute("address") ArgNoIdAddressDTO argNoIdAddressDTO){
+    public String updateAddress(@ModelAttribute("address") ArgNoIdAddressDTO argNoIdAddressDTO) {
         return "updateAddressProducer";
     }
 
-    @PostMapping ("/updateAddress")
+    @PostMapping("/updateAddress")
     public String updateAddress(@Valid @ModelAttribute("address") ArgNoIdAddressDTO addressDTO, BindingResult bindingResult,
-                                Model model, HttpSession httpSession){
-        if(!bindingResult.hasErrors()){
-            Producer producer =(Producer) httpSession.getAttribute("producer");
-            if(producerService.updateAddress(producer, ConverterOfDTO.getAllArgAddressDTO(addressDTO))){
+                                Model model, HttpSession httpSession) {
+        if (!bindingResult.hasErrors()) {
+            Producer producer = (Producer) httpSession.getAttribute("producer");
+            if (producerService.updateAddress(producer, ConverterOfDTO.getAllArgAddressDTO(addressDTO))) {
                 producer.setAddress(ConverterOfDTO.getAllArgAddressDTO(addressDTO));
                 model.addAttribute("message", ControllerMessageManager.UPDATE_ADDRESS_SUCCESSFULLY);
-            }else model.addAttribute("message", ControllerMessageManager.UPDATE_ADDRESS_FAIL);
+            } else model.addAttribute("message", ControllerMessageManager.UPDATE_ADDRESS_FAIL);
         }
         return "updateAddressProducer";
     }
 
     @PostMapping("/logOut")
-    public String logOut(HttpSession httpSession){
+    public String logOut(HttpSession httpSession) {
         httpSession.invalidate();
         return "redirect:/home";
+    }
+
+    @GetMapping("account")
+    public String account() {
+        return "accountProducer";
     }
 }

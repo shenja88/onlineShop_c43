@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Account user</title>
+</head>
+<body>
+<div th:insert="fragments/header.html :: header"></div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-3" style="padding: 20px 20px 20px; border-radius:8px; background: #e3f2fd; margin-top: 10px">
+            <form th:action="@{/user/account}">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-header" style="text-align: center">
+                        User account
+                    </div>
+                    <img th:if="${session.user.picture == null}" src="images/accountAvatar.png" class="card-img-top">
+                    <img th:if="${session.user.picture != null}" th:src="${session.user.picture}" class="card-img-top">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><b>name:</b> <span th:text="${session.user.name}"></span><a
+                                style="float:right " th:href="@{/user/updName}" class="card-link"><img
+                                style="height: 20px; width: 20px" src="/images/edit.jpg"></a></li>
+                        <li class="list-group-item"><b>login:</b><span th:text="${session.user.email}"></span><a
+                                style="float:right " th:href="@{/user/updEmail}" class="card-link"><img
+                                style="height: 20px; width: 20px" src="/images/edit.jpg"></a></li>
+                        <li class="list-group-item"><b>type:</b> <span
+                                th:text="${session.user.typeOfUser.toString()}"></span></li>
+                        <li class="list-group-item"><b>picture:</b> <span th:text="${session.user.picture}"></span><a
+                                style="float:right " th:href="@{/user/updPicture}" class="card-link"><img
+                                style="height: 20px; width: 20px" src="/images/edit.jpg"></a></li>
+                        <li class="list-group-item"><b>telephone:</b> <span
+                                th:text="${session.user.telephone.number}"></span><a style="float:right "
+                                                                                     th:href="@{/user/updTel}"
+                                                                                     class="card-link"><img
+                                style="height: 20px; width: 20px" src="/images/edit.jpg"></a></li>
+                        <li class="list-group-item"><b>password:</b> *********<a style="float:right "
+                                                                                 th:href="@{/user/updPassword}"
+                                                                                 class="card-link"><img
+                                style="height: 20px; width: 20px" src="/images/edit.jpg"></a></li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 package by.c43.store.utils;
 
-import by.c43.store.dto.addressDTO.AllArgAddressDTO;
+import by.c43.store.dto.addressDTO.ArgNoIdAddressDTO;
 import by.c43.store.dto.cardDTO.CardDTO;
 import by.c43.store.dto.commentDTO.DescriptionProductUserDTO;
 import by.c43.store.dto.producerDTO.AllArgsProducerDTO;
@@ -77,12 +77,12 @@ public class ConverterOfDTO {
                 .build();
     }
 
-    public static Address getAllArgAddressDTO(AllArgAddressDTO allArgAddressDTO){
+    public static Address getAllArgAddressDTO(ArgNoIdAddressDTO argNoIdAddressDTO){
         return Address.builder()
-                .country(allArgAddressDTO.getCountry())
-                .city(allArgAddressDTO.getCity())
-                .street(allArgAddressDTO.getStreet())
-                .home(allArgAddressDTO.getHome())
+                .country(argNoIdAddressDTO.getCountry())
+                .city(argNoIdAddressDTO.getCity())
+                .street(argNoIdAddressDTO.getStreet())
+                .home(argNoIdAddressDTO.getHome())
                 .build();
     }
 
@@ -109,7 +109,7 @@ public class ConverterOfDTO {
                                 .build())
                         .build())
                 .product(Product.builder()
-                        .id(descriptionProductUserDTO.getId())
+                        .id(descriptionProductUserDTO.getProductId())
                         .build())
                 .build();
     }

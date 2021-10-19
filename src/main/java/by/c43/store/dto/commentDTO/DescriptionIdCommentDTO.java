@@ -1,4 +1,4 @@
-package by.c43.store.dto.productDTO;
+package by.c43.store.dto.commentDTO;
 
 import by.c43.store.utils.ConstraintsMessageManager;
 import lombok.AllArgsConstructor;
@@ -9,13 +9,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class NameProductDTO {
-    private long id;
+public class DescriptionIdCommentDTO {
+    private long commentId;
+
     @NotBlank(message = ConstraintsMessageManager.NOT_EMPTY_ERROR)
-    @NotEmpty
     @NotNull
-    private String name;
+    @NotEmpty
+    private String description;
 }

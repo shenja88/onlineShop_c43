@@ -2,6 +2,7 @@ package by.c43.store.dto.addressDTO;
 
 import by.c43.store.utils.ConstraintsMessageManager;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,9 +12,9 @@ import javax.validation.constraints.Size;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-public class AllArgAddressDTO {
-
+@Data
+public class AllArgsAddressDTO {
+    private long id;
     @NotBlank
     @Size(min = 3, max = 16, message = ConstraintsMessageManager.NAME_OF_COUNTRY_ERROR)
     private String country;

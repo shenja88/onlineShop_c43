@@ -1,6 +1,8 @@
 package by.c43.store.dto.productDTO;
 
+import by.c43.store.utils.ConstraintsMessageManager;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,9 +12,10 @@ import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+@Data
 public class DescriptionProductDTO {
-    @NotBlank
+    private long id;
+    @NotBlank(message = ConstraintsMessageManager.NOT_EMPTY_ERROR)
     @NotNull
     @NotEmpty
     private String description;

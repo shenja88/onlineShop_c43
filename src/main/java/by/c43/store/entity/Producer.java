@@ -12,6 +12,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 @Entity
+@Table(name = "producers")
 public class Producer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,16 +30,13 @@ public class Producer {
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 5000)
     private String picture;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "address_id")
-    @Column(nullable = false)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Address address;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "telephone_id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @Singular
     private List<Telephone> telephones;
 

@@ -4,6 +4,7 @@ package by.c43.store.controller;
 import by.c43.store.dto.telephonesDTO.NumberTelDTO;
 import by.c43.store.dto.usersDTO.*;
 import by.c43.store.entity.Telephone;
+import by.c43.store.entity.TypeOfUser;
 import by.c43.store.entity.User;
 import by.c43.store.service.ProductBasket;
 import by.c43.store.service.UserService;
@@ -37,6 +38,7 @@ public class UserController {
                                BindingResult bindingResult, Model model) {
         if (!bindingResult.hasErrors()) {
             User user = ConverterOfDTO.getAllArgUsersDTO(userDTO);
+            user.setTypeOfUser(TypeOfUser.USER);
             if (userService.registration(user)) {
                 model.addAttribute("messageReg", ControllerMessageManager.REG_SUCCESSFULLY);
             } else {

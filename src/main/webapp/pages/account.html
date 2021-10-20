@@ -25,7 +25,7 @@
                                 style="height: 20px; width: 20px" src="/images/edit.jpg"></a></li>
                         <li class="list-group-item"><b>type:</b> <span
                                 th:text="${session.user.typeOfUser.toString()}"></span></li>
-                        <li class="list-group-item"><b>picture:</b> <span th:text="${session.user.picture}"></span><a
+                        <li class="list-group-item"><b>picture:</b> <span th:href="${session.user.picture}"></span><a
                                 style="float:right " th:href="@{/user/updPicture}" class="card-link"><img
                                 style="height: 20px; width: 20px" src="/images/edit.jpg"></a></li>
                         <li class="list-group-item"><b>telephone:</b> <span

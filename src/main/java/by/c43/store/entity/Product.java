@@ -12,7 +12,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 @Entity
-
+@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +29,6 @@ public class Product {
     private CategoryOfProduct category;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "producer_id")
-    @Column(nullable = false)
     private Producer producer;
 
     @Column(nullable = false)
@@ -40,7 +38,6 @@ public class Product {
     private double price;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
     private User owner;
 
     @OneToOne(fetch = FetchType.EAGER)

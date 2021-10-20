@@ -12,6 +12,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 @Entity
+@Table(name = "ratings")
 public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

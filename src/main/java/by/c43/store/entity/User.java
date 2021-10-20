@@ -11,6 +11,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,12 +30,10 @@ public class User {
     @Column(nullable = false)
     private TypeOfUser typeOfUser;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 5000)
     private String picture;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "telephone_id")
-    @Column(nullable = false)
     private Telephone telephone;
 
     @Override

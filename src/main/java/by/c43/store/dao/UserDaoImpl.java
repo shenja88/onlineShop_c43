@@ -19,8 +19,8 @@ public class UserDaoImpl implements UserDao {
         this.sessionFactory = sessionFactory;
     }
 
-    private static final String GET_BY_ID = "from User where id =: id";
-    private static final String GET_BY_EMAIL = "from User where email =: email";
+    private static final String GET_BY_ID = "from User where id = :id";
+    private static final String GET_BY_EMAIL = "from User where email = :email";
 
     @Override
     public void save(User user) {

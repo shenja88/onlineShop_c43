@@ -1,24 +1,19 @@
 package by.c43.store.controller;
 
-import by.c43.store.dto.cardDTO.CardDTO;
 import by.c43.store.dto.commentDTO.DescriptionIdCommentDTO;
 import by.c43.store.dto.commentDTO.DescriptionProductUserDTO;
 import by.c43.store.entity.Comment;
 import by.c43.store.entity.Product;
-import by.c43.store.entity.User;
 import by.c43.store.service.CommentService;
 import by.c43.store.service.ProductService;
 import by.c43.store.utils.ControllerMessageManager;
 import by.c43.store.utils.ConverterOfDTO;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -29,7 +24,6 @@ public class CommentController {
 
     private final CommentService commentService;
     private final ProductService productService;
-
 
     @GetMapping("/add")
     public String showListOfComments(@ModelAttribute("newComment") DescriptionProductUserDTO descriptionProductUserDTO) {

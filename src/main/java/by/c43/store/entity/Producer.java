@@ -11,7 +11,8 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name = "producers")
+@Entity
+@Table(name = "producers")
 public class Producer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -82,7 +82,7 @@ public class UserLogAspect {
     }
 
     @After(value = "delete(id)", argNames = "id")
-    public void del(long id){
+    public void remove(long id){
         logger.info("User with id ({}) deleted.", id);
     }
 

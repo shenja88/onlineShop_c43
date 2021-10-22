@@ -26,24 +26,24 @@
         </a>
         <div style="padding-right: 150px">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li th:if="${session.user == null}" class="nav-item">
+                <li th:if="${session.user == null && session.producer == null}" class="nav-item">
                     <a class="nav-link active" href="#"><p
                             style="font-family: 'Berkshire Swash', cursive; margin-left: 40px">User</p></a>
                 </li>
-                <li th:if="${session.user == null}" class="nav-item">
+                <li th:if="${session.user == null && session.producer == null}" class="nav-item">
                     <a class="nav-link active" th:href="@{/user/auth}">Login</a>
                 </li>
-                <li th:if="${session.user == null}" class="nav-item">
+                <li th:if="${session.user == null && session.producer == null}" class="nav-item">
                     <a class="nav-link active" th:href="@{/user/reg}">Sign-up</a>
                 </li>
-                <li th:if="${session.producer == null}" class="nav-item">
+                <li th:if="${session.producer == null && session.user == null}" class="nav-item">
                     <a class="nav-link active" href="#"><p
                             style="font-family: 'Berkshire Swash', cursive; margin-left: 40px">Producer</p></a>
                 </li>
-                <li th:if="${session.producer == null}" class="nav-item">
+                <li th:if="${session.producer == null  && session.user == null}" class="nav-item">
                     <a class="nav-link active" th:href="@{/producer/auth}">Login</a>
                 </li>
-                <li th:if="${session.producer == null}" class="nav-item">
+                <li th:if="${session.producer == null  && session.user == null}" class="nav-item">
                     <a class="nav-link active" th:href="@{/producer/reg}">Sign-up</a>
                 </li>
                 <li style="margin-left:  150px">

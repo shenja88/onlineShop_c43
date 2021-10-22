@@ -152,4 +152,12 @@ public class ProducerDaoImpl implements  ProducerDao{
         session.close();
         return optionalProducer.isPresent();
     }
+
+    @Override
+    public void deleteTelephone(Telephone telephone, long id) {
+        Session session = sessionFactory.openSession();
+        Producer producer = session.get(Producer.class, id);
+        producer.getTelephones().remove(telephone);
+        session.close();
+    }
 }

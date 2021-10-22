@@ -20,6 +20,8 @@ public class ControllerMessageManager {
     public static final String UPDATE_NUMBER_FAIL = "Number has not been changed!";
     public static final String DELETE_USER_SUCCESSFULLY = "User has been deleted!";
     public static final String DELETE_USER_FAIL = "User has not been deleted!";
+    public static final String DELETE_TELEPHONE_FAIL = "Telephone has not been deleted!";
+    public static final String DELETE_TELEPHONE_SUCCESSFULLY = "Telephone has been deleted!";
     public static final String DELETE_PRODUCT_SUCCESSFULLY = "Product has been deleted!";
     public static final String DELETE_PRODUCT_FAIL = "Product has not been deleted!";
     public static final String ADD_PRODUCT_SUCCESSFULLY = "Product successfully added!";

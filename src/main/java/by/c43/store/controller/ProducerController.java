@@ -1,7 +1,9 @@
 package by.c43.store.controller;
 
+import by.c43.store.dto.addressDTO.AllArgsAddressDTO;
 import by.c43.store.dto.addressDTO.ArgNoIdAddressDTO;
 import by.c43.store.dto.producerDTO.*;
+import by.c43.store.dto.telephonesDTO.NumberIdTelDTO;
 import by.c43.store.dto.telephonesDTO.NumberTelDTO;
 import by.c43.store.entity.Producer;
 import by.c43.store.entity.Telephone;
@@ -65,7 +67,7 @@ public class ProducerController {
 
     @GetMapping("/updateName")
     public String updateName(@ModelAttribute("producerName") ProducerNameDTO producerNameDTO) {
-        return "udpateNameProducer";
+        return "updateNameProducer";
     }
 
 
@@ -79,12 +81,12 @@ public class ProducerController {
                 model.addAttribute("message", ControllerMessageManager.UPDATE_NAME_SUCCESSFULLY);
             } else model.addAttribute("message", ControllerMessageManager.UPDATE_NAME_FAIL);
         }
-        return "udpateNameProducer";
+        return "updateNameProducer";
     }
 
     @GetMapping("/updateEmail")
     public String updateEmail(@ModelAttribute("producerEmail") ProducerEmailDTO producerEmailDTO) {
-        return "udpateEmailProducer";
+        return "updateEmailProducer";
     }
 
     @PostMapping("/updateEmail")
@@ -97,12 +99,12 @@ public class ProducerController {
                 model.addAttribute("message", ControllerMessageManager.UPDATE_EMAIL_SUCCESSFULLY);
             } else model.addAttribute("message", ControllerMessageManager.UPDATE_EMAIL_FAIL);
         }
-        return "udpateEmailProducer";
+        return "updateEmailProducer";
     }
 
     @GetMapping("/updatePassword")
     public String updatePassword(@ModelAttribute("producerPassword") ProducerPasswordDTO passwordDTO) {
-        return "udpatePasswordProducer";
+        return "updatePasswordProducer";
     }
 
     @PostMapping("/updatePassword")
@@ -115,12 +117,12 @@ public class ProducerController {
                 model.addAttribute("message", ControllerMessageManager.UPDATE_PASSWORD_SUCCESSFULLY);
             } else model.addAttribute("message", ControllerMessageManager.UPDATE_PASSWORD_FAIL);
         }
-        return "udpatePasswordProducer";
+        return "updatePasswordProducer";
     }
 
     @GetMapping("/updatePicture")
     public String updatePicture(@ModelAttribute("producerPicture") ProducerPictureDTO producerPictureDTO) {
-        return "udpatePictureProducer";
+        return "updatePictureProducer";
     }
 
 
@@ -134,12 +136,12 @@ public class ProducerController {
                 model.addAttribute("message", ControllerMessageManager.UPDATE_PICTURE_SUCCESSFULLY);
             } else model.addAttribute("message", ControllerMessageManager.UPDATE_PICTURE_FAIL);
         }
-        return "udpatePictureProduce";
+        return "updatePictureProducer";
     }
 
     @GetMapping("/updateDescription")
     public String updateDescription(@ModelAttribute("producerDescription") ProducerDescriptionDTO descriptionDTO) {
-        return "udpateDescriptionProducer";
+        return "updateDescriptionProducer";
     }
 
     @PostMapping("/updateDescription")
@@ -152,7 +154,7 @@ public class ProducerController {
                 model.addAttribute("message", ControllerMessageManager.UPDATE_DESCRIPTION_SUCCESSFULLY);
             } else model.addAttribute("message", ControllerMessageManager.OPERATION_FAILED);
         }
-        return "udpateDescriptionProduce";
+        return "updateDescriptionProducer";
     }
 
     @PostMapping("/delete/{id}")
@@ -160,7 +162,7 @@ public class ProducerController {
         if (producerService.deleteProducer(id, (User) httpSession.getAttribute("user"))) {
             model.addAttribute("message", ControllerMessageManager.DELETE_PRODUCER_SUCCESSFULLY);
         } else model.addAttribute("message", ControllerMessageManager.DELETE_PRODUCER_FAIL);
-        return "redirect:/home";
+        return "redirect:/producer/account";
     }
 
     @GetMapping("/addTelephone")
@@ -182,17 +184,18 @@ public class ProducerController {
     }
 
 
-    @GetMapping("/updateTelephone")
-    public String updateTelephone(@ModelAttribute("telephone") NumberTelDTO numberTelDTO) {
+    @GetMapping("/updateTelephone/{id}")
+    public String updateTelephone(@ModelAttribute("telephone") NumberIdTelDTO numberTelDTO,
+                                  @ModelAttribute("id") @PathVariable long id) {
         return "updateTelephoneProducer";
     }
 
     @PostMapping("/updateTelephone")
-    public String updateTelephone(@Valid @ModelAttribute("telephone") NumberTelDTO numberTelDTO, BindingResult bindingResult,
+    public String updateTelephone(@Valid @ModelAttribute("telephone") NumberIdTelDTO numberTelDTO, BindingResult bindingResult,
                                   Model model, HttpSession httpSession) {
         if (!bindingResult.hasErrors()) {
             Producer producer = (Producer) httpSession.getAttribute("producer");
-            Telephone telephone = ConverterOfDTO.getTelDTO(numberTelDTO);
+            Telephone telephone = ConverterOfDTO.getIdTelIdDTO(numberTelDTO);
             if (producerService.updateTelephone(producer, telephone)) {
                 producer.getTelephones().set(producer.getTelephones().indexOf(telephone), telephone);
                 model.addAttribute("message", ControllerMessageManager.UPDATE_TEL_SUCCESSFULLY);
@@ -201,23 +204,43 @@ public class ProducerController {
         return "updateTelephoneProducer";
     }
 
-    @GetMapping("/updateAddress")
-    public String updateAddress(@ModelAttribute("address") ArgNoIdAddressDTO argNoIdAddressDTO) {
+    @GetMapping("/updateAddress/{id}")
+    public String updateAddress(@ModelAttribute("address") AllArgsAddressDTO argAddressDTO,
+                                @ModelAttribute("id") long id ){
         return "updateAddressProducer";
     }
 
     @PostMapping("/updateAddress")
-    public String updateAddress(@Valid @ModelAttribute("address") ArgNoIdAddressDTO addressDTO, BindingResult bindingResult,
+    public String updateAddress(@Valid @ModelAttribute("address") AllArgsAddressDTO addressDTO, BindingResult bindingResult,
                                 Model model, HttpSession httpSession) {
         if (!bindingResult.hasErrors()) {
             Producer producer = (Producer) httpSession.getAttribute("producer");
-            if (producerService.updateAddress(producer, ConverterOfDTO.getAllArgAddressDTO(addressDTO))) {
-                producer.setAddress(ConverterOfDTO.getAllArgAddressDTO(addressDTO));
+            if (producerService.updateAddress(producer, ConverterOfDTO.getAllArgAddressIdDTO(addressDTO))) {
+                producer.setAddress(ConverterOfDTO.getAllArgAddressIdDTO(addressDTO));
                 model.addAttribute("message", ControllerMessageManager.UPDATE_ADDRESS_SUCCESSFULLY);
             } else model.addAttribute("message", ControllerMessageManager.UPDATE_ADDRESS_FAIL);
         }
         return "updateAddressProducer";
     }
+
+
+
+    @GetMapping("/allTelephones")
+    public String getTelephones(Model model, HttpSession httpSession){
+        Producer producer = (Producer) httpSession.getAttribute("producer");
+        model.addAttribute("telephones", producer.getTelephones());
+        return "allTelephones";
+    }
+
+    @PostMapping("/deleteTelephone/{id}")
+    public String deleteNumber(@PathVariable long id, HttpSession httpSession, Model model){
+        Producer producer = (Producer) httpSession.getAttribute("producer");
+        if(producerService.deleteTelephone(producer, id)){
+            model.addAttribute("message", ControllerMessageManager.DELETE_TELEPHONE_SUCCESSFULLY);
+        }else model.addAttribute("message", ControllerMessageManager.DELETE_TELEPHONE_FAIL);
+        return "accountProducer";
+    }
+
 
     @PostMapping("/logOut")
     public String logOut(HttpSession httpSession) {
@@ -225,7 +248,7 @@ public class ProducerController {
         return "redirect:/home";
     }
 
-    @GetMapping("account")
+    @GetMapping("/account")
     public String account() {
         return "accountProducer";
     }

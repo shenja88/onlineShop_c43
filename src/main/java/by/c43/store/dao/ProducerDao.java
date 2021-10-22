@@ -34,4 +34,6 @@ public interface ProducerDao {
 
     boolean isExistByEmail(String email);
 
+    void deleteTelephone(Telephone telephone, long id);
+
 }

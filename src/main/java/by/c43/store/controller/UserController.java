@@ -84,7 +84,6 @@ public class UserController {
             User user = (User) httpSession.getAttribute("user");
             if (userService.updateUserName(user, nameUserDTO.getName())) {
                 user.setName(nameUserDTO.getName());
-                httpSession.setAttribute("user", user);
                 model.addAttribute("messageName", ControllerMessageManager.UPDATE_NAME_SUCCESSFULLY);
             } else {
                 model.addAttribute("messageName", ControllerMessageManager.UPDATE_NAME_FAIL);
@@ -106,7 +105,6 @@ public class UserController {
             User user = (User) httpSession.getAttribute("user");
             if (userService.updateUserEmail(user, emailUserDTO.getEmail())) {
                 user.setName(emailUserDTO.getEmail());
-                httpSession.setAttribute("user", user);
                 model.addAttribute("messageEmail", ControllerMessageManager.UPDATE_EMAIL_SUCCESSFULLY);
             } else {
                 model.addAttribute("messageEmail", ControllerMessageManager.UPDATE_EMAIL_FAIL);
@@ -128,7 +126,6 @@ public class UserController {
             User user = (User) httpSession.getAttribute("user");
             if (userService.updateUserPassword(passwordUserDTO.getOldPassword(), passwordUserDTO.getNewPassword(), passwordUserDTO.getConfirmNewPassword(), user)) {
                 user.setName(passwordUserDTO.getNewPassword());
-                httpSession.setAttribute("user", user);
                 model.addAttribute("messagePassword", ControllerMessageManager.UPDATE_PASSWORD_SUCCESSFULLY);
             } else {
                 model.addAttribute("messagePassword", ControllerMessageManager.UPDATE_PASSWORD_FAIL);
@@ -150,7 +147,6 @@ public class UserController {
             User user = (User) httpSession.getAttribute("user");
             if (userService.updateUserPicture(user, pictureUserDTO.getPicture())) {
                 user.setName(pictureUserDTO.getPicture());
-                httpSession.setAttribute("user", user);
                 model.addAttribute("messagePicture", ControllerMessageManager.UPDATE_PICTURE_SUCCESSFULLY);
             } else {
                 model.addAttribute("messagePicture", ControllerMessageManager.UPDATE_PICTURE_FAIL);
@@ -159,9 +155,10 @@ public class UserController {
         return "updPicture";
     }
 
-    @GetMapping("/updTel")
-    public String updateNumber(Model model) {
+    @GetMapping("/updTel/{id}")
+    public String updateNumber(@PathVariable long id,  Model model) {
         model.addAttribute("numberTelDTO", new NumberTelDTO());
+        model.addAttribute("id", id);
         return "updNumber";
     }
 

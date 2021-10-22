@@ -2,6 +2,7 @@ package by.c43.store.service;
 
 
 import by.c43.store.dao.ProducerDao;
+import by.c43.store.dao.TelephoneDao;
 import by.c43.store.entity.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.Optional;
 public class ProducerService {
 
     private final ProducerDao producerDao;
+    private final TelephoneDao telephoneDao;
 
     public boolean saveProducer(Producer producer) {
         if (!producerDao.isExistByEmail(producer.getEmail())) {
@@ -109,5 +111,13 @@ public class ProducerService {
 
     private boolean equalsByNumber(Producer producer, Telephone telephone) {
         return producer.getTelephones().stream().anyMatch(t -> t.getNumber().equals(telephone.getNumber()));
+    }
+
+    public boolean deleteTelephone(Producer producer, long id){
+        if(producer.getTelephones().size() > 1){
+            Telephone telephone = telephoneDao.getById(id);
+            producerDao.deleteTelephone(telephone, producer.getId());
+            return true;
+        }else return false;
     }
 }

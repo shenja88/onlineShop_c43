@@ -23,9 +23,6 @@ public class AllArgsProductDTO {
     @NotEmpty
     @NotBlank(message = ConstraintsMessageManager.NOT_EMPTY_ERROR)
     private String description;
-
-    @NotEmpty
-    @NotBlank(message = ConstraintsMessageManager.NOT_EMPTY_ERROR)
     private CategoryOfProduct category;
 
     @NotEmpty

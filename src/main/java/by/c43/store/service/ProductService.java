@@ -6,8 +6,8 @@ import by.c43.store.entity.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -162,5 +162,8 @@ public class ProductService {
         return products;
     }
 
+    public List<CategoryOfProduct> getCategories(){
+        return Arrays.asList(CategoryOfProduct.values());
+    }
 
 }

@@ -26,7 +26,8 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/add")
-    public String addProduct(@ModelAttribute("product") AllArgsProductDTO dto) {
+    public String addProduct(@ModelAttribute("product") AllArgsProductDTO dto, Model model) {
+        model.addAttribute("categories", productService.getCategories());
         return "addProd";
     }
 
@@ -117,6 +118,7 @@ public class ProductController {
     @GetMapping("/udpType/{id}")
     public String updateType(@ModelAttribute("typeDTO") TypeProductDTO dto, @PathVariable long id, Model model) {
         model.addAttribute("prodId", id);
+        model.addAttribute("category", productService.getCategories());
         return "updateTypeProd";
     }
 
@@ -143,9 +145,9 @@ public class ProductController {
     public String updatePrice(@Valid @ModelAttribute("newPrice") NewPriceDTO priceDTO, BindingResult bindingResult, Model model) {
         if(!bindingResult.hasErrors()) {
             if (productService.updatePrice(priceDTO.getPrice(), priceDTO.getProdId())) {
-                model.addAttribute("messageUpdPicture", ControllerMessageManager.UPDATE_PRICE_SUCCESSFULLY);
+                model.addAttribute("messageUpdPrice", ControllerMessageManager.UPDATE_PRICE_SUCCESSFULLY);
             } else {
-                model.addAttribute("messageUpdPicture", ControllerMessageManager.OPERATION_FAILED);
+                model.addAttribute("messageUpdPrice", ControllerMessageManager.OPERATION_FAILED);
             }
         }
         return "updatePriceProd";

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update description product</title>
+</head>
+<body>
+<div th:insert="fragments/header.html :: header"></div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-3" style="padding: 30px 20px 20px; border-radius:8px; background: #e3f2fd; margin-top: 40px">
+            <legend style="text-align: center; padding-bottom: 20px">Please enter new description for product</legend>
+            <form th:action="@{product/udpDesc}" th:object="${descDTO}" method="post">
+                <input type="hidden" th:field="*{id}" th:attr="id = ${prodId}">
+                <input type="text" th:field="*{description}" class="form-control m-2" aria-describedby="emailHelp"
+                       required
+                       placeholder="New product description:">
+                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+                <div style="text-align:center">
+                    <button type="submit" class="btn btn-success m-3" style="">Submit</button>
+                </div>
+            </form>
+            <div th:if="${messageUpdDescription != null}" class="alert alert-warning" role="alert">
+                <p th:text="*{messageUpdDescription}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

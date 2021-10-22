@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update product rating</title>
+</head>
+<body>
+<div th:insert="fragments/header.html :: header"></div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-10">
+            <img src="/images/ratingstar.png" alt="" height="300" class="rounded mx-auto d-block">
+        </div>
+        <div class="col-sm-3" style="padding: 30px 20px 20px; border-radius:8px; background: #e3f2fd; margin-top: 40px">
+            <legend style="text-align: center; padding-bottom: 20px">Please choice your grade</legend>
+            <form th:action="@{product/updRating}" th:object="${newRating}" method="post">
+                <input type="hidden" th:field="*{prodId}" th:attr="id = ${prodId}">
+                <ul>
+                    <li th:each="i: ${#numbers.sequence(1, 5)}">
+                        <input type="radio" th:field="*{score}" th:value="${i}" id="ratio" />
+                        <label th:for="ratio" th:text="${i}"></label>
+                    </li>
+                </ul>
+                <div style="text-align:center">
+                    <button type="submit" class="btn btn-success m-3" style="">Submit</button>
+                </div>
+            </form>
+            <div th:if="${messageUpdRating != null}" class="alert alert-warning" role="alert">
+                <p th:text="*{messageUpdRating}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

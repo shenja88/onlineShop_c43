@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NumberIdTelDTO {
+
     private long id;
     @NotBlank
     @Size(min = 9, message = ConstraintsMessageManager.NUMBER_USER_ERROR)

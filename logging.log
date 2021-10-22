@@ -1,0 +1,21 @@
+[INFO ] 2021-10-21 12:24:27.099 [RMI TCP Connection(3)-127.0.0.1] DispatcherServlet - Initializing Servlet 'dispatcher'
+[INFO ] 2021-10-21 12:24:29.968 [RMI TCP Connection(3)-127.0.0.1] Version - HHH000412: Hibernate ORM core version 5.4.32.Final
+[INFO ] 2021-10-21 12:24:30.669 [RMI TCP Connection(3)-127.0.0.1] Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[INFO ] 2021-10-21 12:24:31.960 [RMI TCP Connection(3)-127.0.0.1] Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+[INFO ] 2021-10-21 12:24:33.220 [RMI TCP Connection(3)-127.0.0.1] Version - HV000001: Hibernate Validator 6.0.10.Final
+[INFO ] 2021-10-21 12:24:35.800 [RMI TCP Connection(3)-127.0.0.1] JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[INFO ] 2021-10-21 12:24:37.830 [RMI TCP Connection(3)-127.0.0.1] DispatcherServlet - Completed initialization in 10711 ms
+[WARN ] 2021-10-21 12:24:56.469 [http-nio-8081-exec-4] PageNotFound - No mapping for GET /favicon.ico
+[INFO ] 2021-10-21 12:25:12.065 [http-nio-8081-exec-6] UserLogAspect - User with login evgen.matvee1986@gmail.com registered.
+[INFO ] 2021-10-21 12:27:06.135 [http-nio-8081-exec-1] UserLogAspect - User with login evgen.matvee1986@gmail.com authorized
+[WARN ] 2021-10-21 12:27:13.434 [http-nio-8081-exec-4] DefaultHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported]
+[INFO ] 2021-10-21 12:29:19.927 [http-nio-8081-exec-8] UserLogAspect - User with email (evgen.matvee1986@gmail.com) out!
+[INFO ] 2021-10-21 12:29:55.485 [http-nio-8081-exec-3] ProducerLogAspect - Register new producer with name - Evgeniy.
+[INFO ] 2021-10-21 12:30:13.285 [http-nio-8081-exec-4] ProducerLogAspect - Authorization for the user with the email - evgen.matvee1986@gmail.com, is done.
+[INFO ] 2021-10-21 12:30:20.896 [http-nio-8081-exec-5] ProducerLogAspect - Authorization for the user with the email - evgen.matvee1986@gmail.com, is done.
+[INFO ] 2021-10-21 12:30:30.268 [http-nio-8081-exec-6] ProducerLogAspect - Authorization for the user with the email - evgen.matvee1986@gmail.com, is done.
+[INFO ] 2021-10-21 12:32:52.510 [http-nio-8081-exec-1] ProducerLogAspect - Authorization for the user with the email - evgen.matvee@gmail.com, is done.
+[INFO ] 2021-10-21 12:33:03.203 [http-nio-8081-exec-3] ProducerLogAspect - Authorization for the user with the email - evgen.matvee@gmail.com, is done.
+[INFO ] 2021-10-21 12:33:14.845 [http-nio-8081-exec-2] ProducerLogAspect - Authorization for the user with the email - evgen.matvee@gmail.com, is done.
+[INFO ] 2021-10-21 12:33:30.757 [http-nio-8081-exec-7] ProducerLogAspect - Authorization for the user with the email - evgen.matvee1986@gmail.com, is done.
+[INFO ] 2021-10-21 12:37:36.612 [main] SchemaDropperImpl$DelayedDropActionImpl - HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'

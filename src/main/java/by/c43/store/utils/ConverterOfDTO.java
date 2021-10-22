@@ -1,11 +1,13 @@
 package by.c43.store.utils;
 
+import by.c43.store.dto.addressDTO.AllArgsAddressDTO;
 import by.c43.store.dto.addressDTO.ArgNoIdAddressDTO;
 import by.c43.store.dto.cardDTO.CardDTO;
 import by.c43.store.dto.commentDTO.DescriptionProductUserDTO;
 import by.c43.store.dto.producerDTO.AllArgsProducerDTO;
 import by.c43.store.dto.producerDTO.EmailPasswordProducerDTO;
 import by.c43.store.dto.productDTO.AllArgsProductDTO;
+import by.c43.store.dto.telephonesDTO.NumberIdTelDTO;
 import by.c43.store.dto.telephonesDTO.NumberTelDTO;
 import by.c43.store.dto.usersDTO.AllArgUsersDTO;
 import by.c43.store.dto.usersDTO.EmailPasswordUsersDTO;
@@ -36,6 +38,13 @@ public class ConverterOfDTO {
 
     public static Telephone getTelDTO(NumberTelDTO numberTelDTO){
         return Telephone.builder()
+                .number(numberTelDTO.getNumber())
+                .build();
+    }
+
+    public static Telephone getIdTelIdDTO(NumberIdTelDTO numberTelDTO){
+        return Telephone.builder()
+                .id(numberTelDTO.getId())
                 .number(numberTelDTO.getNumber())
                 .build();
     }
@@ -83,6 +92,16 @@ public class ConverterOfDTO {
                 .city(argNoIdAddressDTO.getCity())
                 .street(argNoIdAddressDTO.getStreet())
                 .home(argNoIdAddressDTO.getHome())
+                .build();
+    }
+
+    public static Address getAllArgAddressIdDTO(AllArgsAddressDTO argAddressDTO){
+        return Address.builder()
+                .id(argAddressDTO.getId())
+                .country(argAddressDTO.getCountry())
+                .city(argAddressDTO.getCity())
+                .street(argAddressDTO.getStreet())
+                .home(argAddressDTO.getHome())
                 .build();
     }
 

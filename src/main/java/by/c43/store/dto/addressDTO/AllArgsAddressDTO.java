@@ -14,6 +14,8 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Data
 public class AllArgsAddressDTO {
+
+
     private long id;
     @NotBlank
     @Size(min = 3, max = 16, message = ConstraintsMessageManager.NAME_OF_COUNTRY_ERROR)

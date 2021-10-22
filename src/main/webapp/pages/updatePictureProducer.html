@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update picture</title>
+</head>
+<body>
+<div th:insert="fragments/header.html :: header"></div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-3" style="padding: 30px 20px 20px; border-radius:8px; background: #e3f2fd; margin-top: 40px">
+            <legend style="text-align: center; padding-bottom: 20px">Please enter new picture</legend>
+            <form th:action="@{/producer/updatePicture}" th:object="${producerPicture}" method="post">
+                <input type="text" th:field="*{picture}" class="form-control m-2" aria-describedby="emailHelp" required
+                       placeholder="Picture">
+                <p th:if="${#fields.hasErrors('picture')}" th:errors="*{picture}"></p>
+                <button type="submit" class="btn btn-success m-3" style="">Submit</button>
+            </form>
+            <div th:if="${message != null}" class="alert alert-warning" role="alert">
+                <p th:text="*{message}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

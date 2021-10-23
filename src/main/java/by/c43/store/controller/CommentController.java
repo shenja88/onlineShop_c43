@@ -27,7 +27,7 @@ public class CommentController {
 
     @GetMapping("/add")
     public String showListOfComments(@ModelAttribute("newComment") DescriptionProductUserDTO descriptionProductUserDTO) {
-        return "comment";
+        return "addComment";
     }
 
     @PostMapping("/add")
@@ -39,7 +39,7 @@ public class CommentController {
                 model.addAttribute("message_add_com", ControllerMessageManager.ADD_COMM_SUCCESSFULLY);
             }
         }
-        return "comment";
+        return "addComment";
     }
 
     @GetMapping("/update/{id}")

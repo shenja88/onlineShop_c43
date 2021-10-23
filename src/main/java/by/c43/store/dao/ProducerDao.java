@@ -4,6 +4,8 @@ import by.c43.store.entity.Address;
 import by.c43.store.entity.Producer;
 import by.c43.store.entity.Telephone;
 
+import java.util.Optional;
+
 public interface ProducerDao {
 
     void addProducer(Producer producer);
@@ -24,7 +26,7 @@ public interface ProducerDao {
 
     Producer getById(long id);
 
-    Producer getByEmail(String email);
+    Optional<Producer> getByEmailAndPass(String email, String password);
 
     void updateTelephone(long producerId, Telephone telephone);
 

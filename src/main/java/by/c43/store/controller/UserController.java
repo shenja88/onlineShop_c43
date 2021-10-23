@@ -1,6 +1,7 @@
 package by.c43.store.controller;
 
 
+import by.c43.store.dto.cardDTO.UserCardInfoDTO;
 import by.c43.store.dto.telephonesDTO.NumberTelDTO;
 import by.c43.store.dto.usersDTO.*;
 import by.c43.store.entity.Telephone;
@@ -202,5 +203,16 @@ public class UserController {
     @GetMapping("account")
     public String account(){
         return "account";
+    }
+
+    @GetMapping("/userInfo/{id}")
+    public String getUserInfo(@PathVariable long id, Model model){
+        if(userService.getUserById(id).isPresent()){
+            UserCardInfoDTO userCard = ConverterOfDTO.getUserCard(userService.getUserById(id).get());
+            model.addAttribute("userCard", userCard);
+        }else{
+            model.addAttribute("messageUserCard", ControllerMessageManager.USER_NOT_FOUND);
+        }
+        return "userInfo";
     }
 }

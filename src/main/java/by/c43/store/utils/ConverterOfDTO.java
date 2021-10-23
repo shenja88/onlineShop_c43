@@ -3,6 +3,8 @@ package by.c43.store.utils;
 import by.c43.store.dto.addressDTO.AllArgsAddressDTO;
 import by.c43.store.dto.addressDTO.ArgNoIdAddressDTO;
 import by.c43.store.dto.cardDTO.CardDTO;
+import by.c43.store.dto.cardDTO.ProducerCardDTO;
+import by.c43.store.dto.cardDTO.UserCardInfoDTO;
 import by.c43.store.dto.commentDTO.DescriptionProductUserDTO;
 import by.c43.store.dto.producerDTO.AllArgsProducerDTO;
 import by.c43.store.dto.producerDTO.EmailPasswordProducerDTO;
@@ -110,6 +112,26 @@ public class ConverterOfDTO {
                 .product(product)
                 .comments(comments)
                 .rating(rating)
+                .build();
+    }
+
+    public static UserCardInfoDTO getUserCard(User user){
+        return UserCardInfoDTO.builder()
+                .nameUser(user.getName())
+                .emailUser(user.getEmail())
+                .pictureUser(user.getPicture())
+                .numberUser(user.getTelephone().getNumber())
+                .build();
+    }
+
+    public static ProducerCardDTO getProducerCard(Producer producer){
+        return ProducerCardDTO.builder()
+                .nameProducer(producer.getName())
+                .emailProducer(producer.getEmail())
+                .descriptionProducer(producer.getDescription())
+                .pictureProducer(producer.getPicture())
+                .addressProducer(producer.getAddress())
+                .telephonesProducer(producer.getTelephones())
                 .build();
     }
 

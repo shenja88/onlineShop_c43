@@ -70,7 +70,6 @@ public class ProducerController {
         return "updateNameProducer";
     }
 
-
     @PostMapping("/updateName")
     public String updateName(@Valid @ModelAttribute("producerName") ProducerNameDTO producerNameDTO, BindingResult bindingResult,
                              Model model, HttpSession httpSession) {
@@ -125,7 +124,6 @@ public class ProducerController {
         return "updatePictureProducer";
     }
 
-
     @PostMapping("/updatePicture")
     public String updatePicture(@Valid @ModelAttribute("producerPicture") ProducerPictureDTO pictureDTO, BindingResult bindingResult,
                                 Model model, HttpSession httpSession) {
@@ -176,17 +174,20 @@ public class ProducerController {
         if (!bindingResult.hasErrors()) {
             Producer producer = (Producer) httpSession.getAttribute("producer");
             if (producerService.addTelephone(producer, ConverterOfDTO.getTelDTO(numberTelDTO))) {
-                producer.getTelephones().add(ConverterOfDTO.getTelDTO(numberTelDTO));
-                model.addAttribute("message", ControllerMessageManager.ADD_TEL_SUCCESSFULLY);
+                Optional<Producer> updProducer = producerService.getProducerById(producer.getId());
+                if(updProducer.isPresent()){
+                    producer.setTelephones(updProducer.get().getTelephones());
+                    model.addAttribute("message", ControllerMessageManager.ADD_TEL_SUCCESSFULLY);
+                }
+
             } else model.addAttribute("message", ControllerMessageManager.ADD_TEL_FAIL);
         }
         return "addTelephoneProducer";
     }
 
-
     @GetMapping("/updateTelephone/{id}")
     public String updateTelephone(@ModelAttribute("telephone") NumberIdTelDTO numberTelDTO,
-                                  @ModelAttribute("id") @PathVariable long id) {
+                                  @ModelAttribute("telId") @PathVariable long id) {
         return "updateTelephoneProducer";
     }
 
@@ -206,7 +207,7 @@ public class ProducerController {
 
     @GetMapping("/updateAddress/{id}")
     public String updateAddress(@ModelAttribute("address") AllArgsAddressDTO argAddressDTO,
-                                @ModelAttribute("id") long id ){
+                                @ModelAttribute("addrId") long id ){
         return "updateAddressProducer";
     }
 
@@ -216,14 +217,15 @@ public class ProducerController {
         if (!bindingResult.hasErrors()) {
             Producer producer = (Producer) httpSession.getAttribute("producer");
             if (producerService.updateAddress(producer, ConverterOfDTO.getAllArgAddressIdDTO(addressDTO))) {
-                producer.setAddress(ConverterOfDTO.getAllArgAddressIdDTO(addressDTO));
-                model.addAttribute("message", ControllerMessageManager.UPDATE_ADDRESS_SUCCESSFULLY);
+                Optional<Producer> updProducer = producerService.getProducerById(producer.getId());
+                if(updProducer.isPresent()){
+                    producer.setAddress(updProducer.get().getAddress());
+                    model.addAttribute("message", ControllerMessageManager.UPDATE_ADDRESS_SUCCESSFULLY);
+                }
             } else model.addAttribute("message", ControllerMessageManager.UPDATE_ADDRESS_FAIL);
         }
         return "updateAddressProducer";
     }
-
-
 
     @GetMapping("/allTelephones")
     public String getTelephones(Model model, HttpSession httpSession){
@@ -236,13 +238,16 @@ public class ProducerController {
     public String deleteNumber(@PathVariable long id, HttpSession httpSession, Model model){
         Producer producer = (Producer) httpSession.getAttribute("producer");
         if(producerService.deleteTelephone(producer, id)){
-            model.addAttribute("message", ControllerMessageManager.DELETE_TELEPHONE_SUCCESSFULLY);
+            Optional<Producer> updProducer = producerService.getProducerById(producer.getId());
+            if(updProducer.isPresent()){
+                producer.setTelephones(updProducer.get().getTelephones());
+                model.addAttribute("message", ControllerMessageManager.DELETE_TELEPHONE_SUCCESSFULLY);
+            }
         }else model.addAttribute("message", ControllerMessageManager.DELETE_TELEPHONE_FAIL);
         return "accountProducer";
     }
 
-
-    @PostMapping("/logOut")
+    @GetMapping("/logOut")
     public String logOut(HttpSession httpSession) {
         httpSession.invalidate();
         return "redirect:/home";

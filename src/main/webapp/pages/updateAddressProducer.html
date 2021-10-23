@@ -11,7 +11,7 @@
         <div class="col-sm-3" style="padding: 30px 20px 20px; border-radius:8px; background: #e3f2fd; margin-top: 40px">
             <legend style="text-align: center; padding-bottom: 20px">Please enter new address</legend>
             <form th:action="@{/producer/updateAddress}" th:object="${address}" method="post">
-                <input type="hidden" th:field="${id}">
+                <input type="hidden" th:field="${id}" th:attr="id = ${addrId}">
                 <input type="text" th:field="*{country}" class="form-control m-2" aria-describedby="emailHelp" required
                        placeholder="Country">
                 <p th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></p>

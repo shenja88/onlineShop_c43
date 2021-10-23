@@ -26,6 +26,7 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @EnableAspectJAutoProxy
+@EnableTransactionManagement
 @ComponentScan("by.c43.store")
 @AllArgsConstructor
 public class WebConfiguration extends WebMvcConfigurerAdapter {
@@ -68,7 +69,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("by.c43.store.entity");
+        sessionFactory.setPackagesToScan("by.c43.store");
         sessionFactory.setHibernateProperties(hibernateProperties());
 
         return sessionFactory;
@@ -85,7 +86,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public PlatformTransactionManager hibernateTransactionManager() {
+    public HibernateTransactionManager transactionManager() {
         HibernateTransactionManager transactionManager
                 = new HibernateTransactionManager();
         transactionManager.setSessionFactory(sessionFactory().getObject());

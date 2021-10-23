@@ -23,29 +23,22 @@ public class RatingDaoImpl implements RatingDao{
     @Transactional(readOnly = true)
     @Override
     public Rating getById(long id) {
-        Session session = sessionFactory.openSession();
-        Rating rating = session.get(Rating.class, id);
-        session.close();
-        return rating;
+        return sessionFactory.getCurrentSession().get(Rating.class, id);
     }
 
     @Override
     public void setNewScore(double newScore, long ratingId, long userId) {
-        Session session = sessionFactory.openSession();
-        Rating rating = session.get(Rating.class, ratingId);
+        Rating rating = sessionFactory.getCurrentSession().get(Rating.class, ratingId);
         rating.setScore(newScore);
         rating.getUsers().add(userId);
-        session.update(rating);
-        session.close();
+        sessionFactory.getCurrentSession().update(rating);
     }
 
     @Override
     public boolean isExistById(long id) {
-        Session session = sessionFactory.openSession();
-        Optional<Rating> optionalRating = session.createQuery(GET_BY_ID, Rating.class)
+        Optional<Rating> optionalRating = sessionFactory.getCurrentSession().createQuery(GET_BY_ID, Rating.class)
                 .setParameter("id", id)
                 .uniqueResultOptional();
-        session.close();
         return optionalRating.isPresent();
     }
 }

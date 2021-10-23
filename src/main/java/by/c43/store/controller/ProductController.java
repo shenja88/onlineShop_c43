@@ -1,10 +1,12 @@
 package by.c43.store.controller;
 
+import by.c43.store.dto.cardDTO.CardDTO;
 import by.c43.store.dto.productDTO.*;
 import by.c43.store.entity.CategoryOfProduct;
 import by.c43.store.entity.Producer;
 import by.c43.store.entity.Product;
 import by.c43.store.entity.User;
+import by.c43.store.service.CommentService;
 import by.c43.store.service.ProductService;
 import by.c43.store.utils.ControllerMessageManager;
 import by.c43.store.utils.ConverterOfDTO;
@@ -18,12 +20,14 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/product")
 @AllArgsConstructor
 public class ProductController {
     private final ProductService productService;
+    private final CommentService commentService;
 
     @GetMapping("/add")
     public String addProduct(@ModelAttribute("product") AllArgsProductDTO dto, Model model) {
@@ -49,11 +53,13 @@ public class ProductController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable long id, Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        Product product = productService.getById(id);
-        if (productService.delete(user, product)) {
-            model.addAttribute("messageRemoveProd", ControllerMessageManager.DELETE_PRODUCT_SUCCESSFULLY);
-        } else {
-            model.addAttribute("messageRemoveProd", ControllerMessageManager.DELETE_PRODUCT_FAIL);
+        Optional<Product> product = productService.getById(id);
+        if(product.isPresent()) {
+            if (productService.delete(user, product.get())) {
+                model.addAttribute("messageRemoveProd", ControllerMessageManager.DELETE_PRODUCT_SUCCESSFULLY);
+            } else {
+                model.addAttribute("messageRemoveProd", ControllerMessageManager.DELETE_PRODUCT_FAIL);
+            }
         }
         return "store";
     }
@@ -211,10 +217,24 @@ public class ProductController {
         return "store";
     }
 
+    @GetMapping("/getProductById/{id}")
+    public String getProductById(@PathVariable long id, Model model){
+        Optional<Product> product = productService.getById(id);
+        if(product.isPresent()){
+            CardDTO cardDTO = CardDTO.builder()
+                    .product(product.get())
+                    .comments(commentService.getCommentsByIdProduct(id))
+                    .build();
+            model.addAttribute("card", cardDTO);
+            return "product";
+        }else return "store";
+    }
+
     @GetMapping("/all")
     public String getAll(Model model){
         model.addAttribute("listProd", productService.getAll());
         return "store";
     }
+
 
 }

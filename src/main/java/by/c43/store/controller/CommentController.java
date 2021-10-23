@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/comment")
@@ -73,11 +74,13 @@ public class CommentController {
 
     @GetMapping("/allByProduct/{id}")
     public String showAllCommentsByProductId(@PathVariable long id, Model model) {
-        List<Comment> commentsByIdProduct = commentService.getCommentsByIdProduct(id);
-        model.addAttribute("allComments", commentsByIdProduct);
-        Product byId = productService.getById(id);
-        model.addAttribute("productById", byId);
-        return "comment";
+        Optional<Product> byId = productService.getById(id);
+        if(byId.isPresent()) {
+            List<Comment> commentsByIdProduct = commentService.getCommentsByIdProduct(id);
+            model.addAttribute("allComments", commentsByIdProduct);
+            model.addAttribute("productById", byId.get());
+            return "comment";
+        }else return "store";
     }
 
 }

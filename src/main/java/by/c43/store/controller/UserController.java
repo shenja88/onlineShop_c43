@@ -1,6 +1,7 @@
 package by.c43.store.controller;
 
 
+import by.c43.store.dto.telephonesDTO.NumberIdTelDTO;
 import by.c43.store.dto.telephonesDTO.NumberTelDTO;
 import by.c43.store.dto.usersDTO.*;
 import by.c43.store.entity.Telephone;
@@ -104,7 +105,7 @@ public class UserController {
         if (!bindingResult.hasErrors()) {
             User user = (User) httpSession.getAttribute("user");
             if (userService.updateUserEmail(user, emailUserDTO.getEmail())) {
-                user.setName(emailUserDTO.getEmail());
+                user.setEmail(emailUserDTO.getEmail());
                 model.addAttribute("messageEmail", ControllerMessageManager.UPDATE_EMAIL_SUCCESSFULLY);
             } else {
                 model.addAttribute("messageEmail", ControllerMessageManager.UPDATE_EMAIL_FAIL);
@@ -125,7 +126,7 @@ public class UserController {
         if (!bindingResult.hasErrors()) {
             User user = (User) httpSession.getAttribute("user");
             if (userService.updateUserPassword(passwordUserDTO.getOldPassword(), passwordUserDTO.getNewPassword(), passwordUserDTO.getConfirmNewPassword(), user)) {
-                user.setName(passwordUserDTO.getNewPassword());
+                user.setPassword(passwordUserDTO.getNewPassword());
                 model.addAttribute("messagePassword", ControllerMessageManager.UPDATE_PASSWORD_SUCCESSFULLY);
             } else {
                 model.addAttribute("messagePassword", ControllerMessageManager.UPDATE_PASSWORD_FAIL);
@@ -146,7 +147,7 @@ public class UserController {
         if (!bindingResult.hasErrors()) {
             User user = (User) httpSession.getAttribute("user");
             if (userService.updateUserPicture(user, pictureUserDTO.getPicture())) {
-                user.setName(pictureUserDTO.getPicture());
+                user.setPicture(pictureUserDTO.getPicture());
                 model.addAttribute("messagePicture", ControllerMessageManager.UPDATE_PICTURE_SUCCESSFULLY);
             } else {
                 model.addAttribute("messagePicture", ControllerMessageManager.UPDATE_PICTURE_FAIL);
@@ -157,17 +158,17 @@ public class UserController {
 
     @GetMapping("/updTel/{id}")
     public String updateNumber(@PathVariable long id,  Model model) {
-        model.addAttribute("numberTelDTO", new NumberTelDTO());
-        model.addAttribute("id", id);
+        model.addAttribute("numberTelDTO", new NumberIdTelDTO());
+        model.addAttribute("telId", id);
         return "updNumber";
     }
 
     @PostMapping("/updTel")
-    public String updateNumber(@Valid @ModelAttribute("numberTelDTO") NumberTelDTO telDTO,
+    public String updateNumber(@Valid @ModelAttribute("numberTelDTO") NumberIdTelDTO telDTO,
                                BindingResult bindingResult, Model model, HttpSession session) {
         if (!bindingResult.hasErrors()) {
             User user = (User) session.getAttribute("user");
-            Telephone telephone = ConverterOfDTO.getTelDTO(telDTO);
+            Telephone telephone = ConverterOfDTO.getIdTelIdDTO(telDTO);
             if (userService.updateTelephone(user, telephone)) {
                 user.getTelephone().setNumber(telephone.getNumber());
                 model.addAttribute("messageUpdNumber", ControllerMessageManager.UPDATE_NUMBER_SUCCESSFULLY);

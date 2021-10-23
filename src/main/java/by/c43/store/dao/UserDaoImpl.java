@@ -82,7 +82,7 @@ public class UserDaoImpl implements UserDao {
                 .createQuery(GET_BY_ID, User.class)
                 .setParameter("id", userId)
                 .getSingleResult();
-        user.setTelephone(telephone);
+        user.getTelephone().setNumber(telephone.getNumber());
         sessionFactory.getCurrentSession().update(user);
     }
 

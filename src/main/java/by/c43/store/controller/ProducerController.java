@@ -1,7 +1,7 @@
 package by.c43.store.controller;
 
 import by.c43.store.dto.addressDTO.AllArgsAddressDTO;
-import by.c43.store.dto.addressDTO.ArgNoIdAddressDTO;
+import by.c43.store.dto.cardDTO.ProducerCardDTO;
 import by.c43.store.dto.producerDTO.*;
 import by.c43.store.dto.telephonesDTO.NumberIdTelDTO;
 import by.c43.store.dto.telephonesDTO.NumberTelDTO;
@@ -55,7 +55,7 @@ public class ProducerController {
                                 BindingResult bindingResult, HttpSession httpSession, Model model) {
         if (!bindingResult.hasErrors()) {
             Producer producer = ConverterOfDTO.getEmailPasswordProducerDTO(producerDTO);
-            Optional<Producer> producerOptional = producerService.getProducerByEmail(producer.getEmail());
+            Optional<Producer> producerOptional = producerService.getProducerByEmailAndPass(producer);
             if (producerOptional.isPresent()) {
                 httpSession.setAttribute("producer", producerOptional.get());
                 model.addAttribute("message", ControllerMessageManager.AUTH_SUCCESSFULLY);
@@ -207,7 +207,7 @@ public class ProducerController {
 
     @GetMapping("/updateAddress/{id}")
     public String updateAddress(@ModelAttribute("address") AllArgsAddressDTO argAddressDTO,
-                                @ModelAttribute("addrId") long id ){
+                                @PathVariable @ModelAttribute("addrId") long id ){
         return "updateAddressProducer";
     }
 
@@ -234,7 +234,7 @@ public class ProducerController {
         return "allTelephones";
     }
 
-    @PostMapping("/deleteTelephone/{id}")
+    @GetMapping("/deleteTelephone/{id}")
     public String deleteNumber(@PathVariable long id, HttpSession httpSession, Model model){
         Producer producer = (Producer) httpSession.getAttribute("producer");
         if(producerService.deleteTelephone(producer, id)){
@@ -244,7 +244,7 @@ public class ProducerController {
                 model.addAttribute("message", ControllerMessageManager.DELETE_TELEPHONE_SUCCESSFULLY);
             }
         }else model.addAttribute("message", ControllerMessageManager.DELETE_TELEPHONE_FAIL);
-        return "accountProducer";
+        return "allTelephones";
     }
 
     @GetMapping("/logOut")
@@ -256,5 +256,18 @@ public class ProducerController {
     @GetMapping("/account")
     public String account() {
         return "accountProducer";
+    }
+
+    @GetMapping("/producerInfo/{id}")
+    public String producerInfo(@PathVariable long id, Model model){
+        Optional<Producer> producer = producerService.getProducerById(id);
+        if(producer.isPresent()){
+            ProducerCardDTO producerCard = ConverterOfDTO.getProducerCard(producer.get());
+            model.addAttribute("producerCard", producerCard);
+            model.addAttribute("producerId", id);
+        }else{
+            model.addAttribute("messageProducerCard", ControllerMessageManager.PRODUCER_NOT_FOUND);
+        }
+        return "producerInfo";
     }
 }

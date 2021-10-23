@@ -236,5 +236,10 @@ public class ProductController {
         return "store";
     }
 
-
+    @GetMapping("/byProducer/{id}")
+    public String getByProducer(Model model, @PathVariable long id){
+        List<Product> products = productService.getByProducer(Producer.builder().id(id).build());
+        model.addAttribute("producerProducts", products);
+        return "producerProducts";
+    }
 }

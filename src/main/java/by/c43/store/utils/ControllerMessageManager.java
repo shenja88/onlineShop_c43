@@ -44,7 +44,8 @@ public class ControllerMessageManager {
     public static final String ADD_COMM_FAIL = "Comment adding error";
     public static final String UPDATE_COMM_SUCCESSFULLY = "Successfully updated!";
     public static final String DELETE_COMM_SUCCESSFULLY = "Successfully deleted!";
-
+    public static final String USER_NOT_FOUND = "There is no information about the requested user!";
+    public static final String PRODUCER_NOT_FOUND = "There is no information about the requested producer!";
 
 
 }

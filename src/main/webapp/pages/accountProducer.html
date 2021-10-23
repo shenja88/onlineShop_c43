@@ -8,9 +8,9 @@
 <div th:insert="fragments/header.html :: header"></div>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-sm-3" style="padding: 20px 20px 20px; border-radius:8px; background: #e3f2fd; margin-top: 10px">
+        <div class="col-sm-5" style="padding: 20px 20px 20px; border-radius:8px; background: #e3f2fd; margin-top: 10px">
             <form th:action="@{/producer/account}">
-                <div class="card" style="width: 18rem;">
+                <div class="card">
                     <div class="card-header" style="text-align: center">
                         Producer account
                     </div>
@@ -19,52 +19,45 @@
                     <img th:if="${session.producer.picture != null}" th:src="${session.producer.picture}"
                          class="card-img-top">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><b>name:</b> <span th:text="${session.producer.name}"></span><a
+                        <li class="list-group-item"><b>name:</b><a
                                 style="float:right " th:href="@{/producer/updateName}" class="card-link"><img
-                                style="height: 20px; width: 20px" src="/images/edit.jpg"></a></li>
-                        <li class="list-group-item"><b>login:</b><span th:text="${session.producer.email}"></span><a
+                                style="height: 20px; width: 20px" src="/images/edit.jpg"></a>
+                            <span th:text="${session.producer.name}"></span></li>
+                        <li class="list-group-item"><b>login:</b><a
                                 style="float:right " th:href="@{/producer/updateEmail}" class="card-link"><img
-                                style="height: 20px; width: 20px" src="/images/edit.jpg"></a></li>
+                                style="height: 20px; width: 20px" src="/images/edit.jpg"></a>
+                            <span th:text="${session.producer.email}"></span></li>
                         <li class="list-group-item"><b>update picture:</b> <a
                                 style="float:right " th:href="@{/producer/updatePicture}" class="card-link"><img
                                 style="height: 20px; width: 20px" src="/images/edit.jpg"></a></li>
-                        <li class="list-group-item"><b>description:</b> <span
-                                th:text="${session.producer.description}"></span><a
+                        <li class="list-group-item"><b>description:</b> <a
                                 style="float:right " th:href="@{/producer/updateDescription}" class="card-link"><img
-                                style="height: 20px; width: 20px" src="/images/edit.jpg"></a></li>
+                                style="height: 20px; width: 20px" src="/images/edit.jpg"></a>
+                            <span th:text="${session.producer.description}"></span></li>
                         <li class="list-group-item"><b>telephones:</b>
                             <div th:each="telephone : ${session.producer.telephones}">
                                 <span th:text="*{telephone.number}"></span>
-                                <a style="float:right " th:href="@{/producer/updateTelephone/{id}(id = *{telephone.id})}" class="card-link"><img
-                                        style="height: 20px; width: 20px" src="/images/edit.jpg"></a>
                             </div>
                             <div class="col-sm-3">
                                 <a style="float:left "
                                    th:href="@{/producer/allTelephones}"
-                                   class="card-link">View all</a>
-                            </div>
-                            <div class="col-sm-3">
+                                   class="btn btn-outline-primary m-1">View all</a>
                                 <a style="float:left "
                                    th:href="@{/producer/addTelephone}"
-                                   class="card-link">Add new</a>
+                                   class="btn btn-outline-primary m-1">Add new</a>
                             </div>
                         </li>
                         <li class="list-group-item"><b>address:</b> <span
                                 th:text="${session.producer.address}"></span><a
                                 style="float:right "
-                                th:href="@{/producer/updateAddress/{id}(id = ${session.producer.address.getId()})}"
+                                th:href="@{/producer/updateAddress/{id}(id = ${session.producer.address.id})}"
                                 class="card-link"><img
                                 style="height: 20px; width: 20px" src="/images/edit.jpg"></a></li>
-                        <li class="list-group-item"><b>password:</b> *********<a style="float:right "
-                                                                                 th:href="@{/producer/updatePassword}"
-                                                                                 class="card-link"><img
-                                style="height: 20px; width: 20px" src="/images/edit.jpg"></a></li>
+                        <li class="list-group-item"><b>password:</b> *********<a style="float:right " th:href="@{/producer/updatePassword}" class="card-link">
+                            <img style="height: 20px; width: 20px" src="/images/edit.jpg"></a></li>
                     </ul>
                 </div>
             </form>
-            <div th:if="${message != null}" class="alert alert-warning mt-3" role="alert">
-                <p th:text="*{message}"></p>
-            </div>
         </div>
     </div>
 </div>

@@ -46,7 +46,7 @@ public class CommentController {
     @GetMapping("/update/{id}")
     public String showListOfCommentsForUpdate(@ModelAttribute("updatedComment") DescriptionProductUserDTO commentDTO, @PathVariable String id, Model model) {
         model.addAttribute("comId", id);
-        return "comment";
+        return "updateComment";
     }
 
     @PostMapping("/update")
@@ -59,7 +59,7 @@ public class CommentController {
                 model.addAttribute("message_update_com", ControllerMessageManager.OPERATION_FAILED);
             }
         }
-        return "comment";
+        return "updateComment";
     }
 
     @PostMapping("/delete/{id}")

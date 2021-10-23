@@ -4,6 +4,8 @@ import by.c43.store.entity.Telephone;
 import by.c43.store.entity.User;
 import org.hibernate.Session;
 
+import java.util.Optional;
+
 public interface UserDao {
 
     void save(User user);
@@ -20,7 +22,7 @@ public interface UserDao {
 
     void updateTelephone(long userId, Telephone telephone);
 
-    User getById(long id);
+    Optional<User> getById(long id);
 
     User getByEmail(String email);
 

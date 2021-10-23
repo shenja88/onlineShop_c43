@@ -87,6 +87,10 @@ public class UserService {
         return false;
     }
 
+    public Optional<User> getUserById(long id){
+        return userDAO.getById(id);
+    }
+
     private boolean checkPassword(String newPassword, String confirmPassword) {
         return newPassword.equals(confirmPassword);
     }

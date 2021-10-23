@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Info of User</title>
+</head>
+<body>
+<div th:insert="fragments/header.html :: header"></div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-4">
+            <div class="card-header fw-bold fs-2" style="text-align: center">
+                Owner info
+            </div>
+            <img th:if="${userCard.pictureUser == null}" src="images/accountAvatar.png" class="card-img-top">
+            <img th:if="${userCard.pictureUser != null}" th:src="${userCard.pictureUser}" class="card-img-top">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <b class="fw-bold">Name: </b>
+                    <span th:text="${userCard.nameUser}"></span>
+                </li>
+                <li class="list-group-item">
+                    <b class="fw-bold">E-mail: </b>
+                    <span th:text="${userCard.emailUser}"></span>
+                </li>
+                <li class="list-group-item">
+                    <b class="fw-bold">Telephone: </b>
+                    <span th:text="${userCard.numberUser}"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

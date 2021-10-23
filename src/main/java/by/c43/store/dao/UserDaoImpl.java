@@ -2,7 +2,6 @@ package by.c43.store.dao;
 
 import by.c43.store.entity.Telephone;
 import by.c43.store.entity.User;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,11 +87,11 @@ public class UserDaoImpl implements UserDao {
 
     @Transactional(readOnly = true)
     @Override
-    public User getById(long id) {
+    public Optional<User> getById(long id) {
         return sessionFactory.getCurrentSession()
                 .createQuery(GET_BY_ID, User.class)
                 .setParameter("id", id)
-                .getSingleResult();
+                .uniqueResultOptional();
     }
 
     @Transactional(readOnly = true)

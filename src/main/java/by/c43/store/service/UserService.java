@@ -46,6 +46,7 @@ public class UserService {
         if (checkPassword(user.getPassword(), oldPassword) && !oldPassword.equals(newPassword)) {
             if (checkPassword(newPassword, confirmPassword)) {
                 userDAO.updatePassword(newPassword, user.getId());
+                return true;
             }
         }
         return false;
@@ -74,8 +75,8 @@ public class UserService {
             return false;
         } else {
             userDAO.updateTelephone(user.getId(), telephone);
+            return true;
         }
-        return true;
     }
 
     public boolean deleteUser(User user, long id) {

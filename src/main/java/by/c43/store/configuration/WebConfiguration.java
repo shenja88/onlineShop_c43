@@ -81,7 +81,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/onlineStore?serverTimezone=UTC");
         dataSource.setUsername("root");
-        dataSource.setPassword("root");
+        dataSource.setPassword("rootroot");
         return dataSource;
     }
 

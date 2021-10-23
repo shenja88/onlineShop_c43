@@ -11,4 +11,5 @@ public class ExceptionController {
 //    public String allEx(){
 //        return "error";
 //    }
+
 }

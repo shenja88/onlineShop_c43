@@ -1,6 +1,7 @@
 package by.c43.store.controller;
 
 import by.c43.store.dto.addressDTO.AllArgsAddressDTO;
+import by.c43.store.dto.cardDTO.ProducerCardDTO;
 import by.c43.store.dto.producerDTO.*;
 import by.c43.store.dto.telephonesDTO.NumberIdTelDTO;
 import by.c43.store.dto.telephonesDTO.NumberTelDTO;
@@ -255,5 +256,18 @@ public class ProducerController {
     @GetMapping("/account")
     public String account() {
         return "accountProducer";
+    }
+
+    @GetMapping("/producerInfo/{id}")
+    public String producerInfo(@PathVariable long id, Model model){
+        Optional<Producer> producer = producerService.getProducerById(id);
+        if(producer.isPresent()){
+            ProducerCardDTO producerCard = ConverterOfDTO.getProducerCard(producer.get());
+            model.addAttribute("producerCard", producerCard);
+            model.addAttribute("producerId", id);
+        }else{
+            model.addAttribute("messageProducerCard", ControllerMessageManager.PRODUCER_NOT_FOUND);
+        }
+        return "producerInfo";
     }
 }

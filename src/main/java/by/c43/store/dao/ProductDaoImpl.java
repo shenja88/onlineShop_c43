@@ -36,243 +36,181 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public void save(Product product) {
-        Session session = sessionFactory.openSession();
-        session.save(product);
-        session.close();
+        sessionFactory.getCurrentSession().save(product);
     }
 
     @Override
     public void deleteProduct(long id) {
-        Session session = sessionFactory.openSession();
-        Product product = session.get(Product.class, id);
-        session.delete(product);
-        session.close();
+        Product product = sessionFactory.getCurrentSession().get(Product.class, id);
+        sessionFactory.getCurrentSession().delete(product);
     }
 
     @Override
     public void updateName(String newName, long id) {
-        Session session = sessionFactory.openSession();
-        Product product = session.get(Product.class, id);
+        Product product = sessionFactory.getCurrentSession().get(Product.class, id);
         product.setName(newName);
-        session.update(product);
-        session.close();
+        sessionFactory.getCurrentSession().update(product);
     }
 
     @Override
     public void updateDescription(String newDescription, long id) {
-        Session session = sessionFactory.openSession();
-        Product product = session.get(Product.class, id);
+        Product product = sessionFactory.getCurrentSession().get(Product.class, id);
         product.setDescription(newDescription);
-        session.update(product);
-        session.close();
+        sessionFactory.getCurrentSession().update(product);
     }
 
     @Override
     public void updatePrice(double newPrice, long id) {
-        Session session = sessionFactory.openSession();
-        Product product = session.get(Product.class, id);
+        Product product = sessionFactory.getCurrentSession().get(Product.class, id);
         product.setPrice(newPrice);
-        session.update(product);
-        session.close();
+        sessionFactory.getCurrentSession().update(product);
     }
 
     @Override
     public void updateProductCategory(CategoryOfProduct newProductCategory, long id) {
-        Session session = sessionFactory.openSession();
-        Product product = session.get(Product.class, id);
+        Product product = sessionFactory.getCurrentSession().get(Product.class, id);
         product.setCategory(newProductCategory);
-        session.update(product);
-        session.close();
+        sessionFactory.getCurrentSession().update(product);
     }
 
     @Override
     public void updatePicture(String newPicture, long id) {
-        Session session = sessionFactory.openSession();
-        Product product = session.get(Product.class, id);
+        Product product = sessionFactory.getCurrentSession().get(Product.class, id);
         product.setPicture(newPicture);
-        session.update(product);
-        session.close();
+        sessionFactory.getCurrentSession().update(product);
     }
 
     @Override
     public void setOwner(User user, long productId) {
-        Session session = sessionFactory.openSession();
-        Product product = session.get(Product.class, productId);
+        Product product = sessionFactory.getCurrentSession().get(Product.class, productId);
         product.setOwner(user);
-        session.update(product);
-        session.close();
+        sessionFactory.getCurrentSession().update(product);
     }
 
     @Override
     public void setReservedStatus(boolean status, long id) {
-        Session session = sessionFactory.openSession();
-        Product product = session.get(Product.class, id);
+        Product product = sessionFactory.getCurrentSession().get(Product.class, id);
         product.setReservedStatus(status);
-        session.update(product);
-        session.close();
+        sessionFactory.getCurrentSession().update(product);
     }
 
     @Override
     public void setForSaleStatus(boolean status, long id) {
-        Session session = sessionFactory.openSession();
-        Product product = session.get(Product.class, id);
+        Product product = sessionFactory.getCurrentSession().get(Product.class, id);
         product.setSaleStatus(status);
-        session.update(product);
-        session.close();
+        sessionFactory.getCurrentSession().update(product);
     }
 
     @Transactional(readOnly = true)
     @Override
     public Product getById(long id) {
-        Session session = sessionFactory.openSession();
-        Product product = session.get(Product.class, id);
-        session.close();
-        return product;
+        return sessionFactory.getCurrentSession().get(Product.class, id);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Product> getAllByOwner(long ownerId) {
-        Session session = sessionFactory.openSession();
-        List<Product> products = session.createQuery(GET_BY_OWNER_ID, Product.class)
+        return sessionFactory.getCurrentSession().createQuery(GET_BY_OWNER_ID, Product.class)
                 .setParameter("ownerId", ownerId)
                 .getResultList();
-        session.close();
-        return products;
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Product> getAllByProducer(long producerId) {
-        Session session = sessionFactory.openSession();
-        List<Product> products = session.createQuery(GET_BY_PRODUCER_ID, Product.class)
+        return sessionFactory.getCurrentSession().createQuery(GET_BY_PRODUCER_ID, Product.class)
                 .setParameter("producerId", producerId)
                 .getResultList();
-        session.close();
-        return products;
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Product> getAllByPrice(int lowerLimit, int upperLimit) {
-        Session session = sessionFactory.openSession();
-        List<Product> products = session.createQuery(GET_BY_PRICE_LOW_UP, Product.class)
+        return sessionFactory.getCurrentSession().createQuery(GET_BY_PRICE_LOW_UP, Product.class)
                 .setParameter("low", lowerLimit)
                 .setParameter("up", upperLimit)
                 .getResultList();
-        session.close();
-        return products;
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Product> getAllByPriceLowerLimit(int lowerLimit) {
-        Session session = sessionFactory.openSession();
-        List<Product> products = session.createQuery(GET_BY_PRICE_LOW, Product.class)
+        return sessionFactory.getCurrentSession().createQuery(GET_BY_PRICE_LOW, Product.class)
                 .setParameter("low", lowerLimit)
                 .getResultList();
-        session.close();
-        return products;
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Product> getAllByPriceUpLimit(int upperLimit) {
-        Session session = sessionFactory.openSession();
-        List<Product> products = session.createQuery(GET_BY_PRICE_UP, Product.class)
+        return sessionFactory.getCurrentSession().createQuery(GET_BY_PRICE_UP, Product.class)
                 .setParameter("up", upperLimit)
                 .getResultList();
-        session.close();
-        return products;
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Product> getAllByScoreLowerLimit(int lowerLimit) {
-        Session session = sessionFactory.openSession();
-        List<Product> products = session.createQuery(GET_BY_RATING_LOW, Product.class)
+        return sessionFactory.getCurrentSession().createQuery(GET_BY_RATING_LOW, Product.class)
                 .setParameter("low", lowerLimit)
                 .getResultList();
-        session.close();
-        return products;
     }
-
 
     @Transactional(readOnly = true)
     @Override
     public List<Product> getAllByScore(int lowerLimit, int upperLimit) {
-        Session session = sessionFactory.openSession();
-        List<Product> products = session.createQuery(GET_BY_RATING_LOW_UP, Product.class)
+        return sessionFactory.getCurrentSession().createQuery(GET_BY_RATING_LOW_UP, Product.class)
                 .setParameter("low", lowerLimit)
                 .setParameter("up", upperLimit)
                 .getResultList();
-        session.close();
-        return products;
     }
-
 
     @Transactional(readOnly = true)
     @Override
     public List<Product> getAllByScoreUpLimit(int upperLimit) {
-        Session session = sessionFactory.openSession();
-        List<Product> products = session.createQuery(GET_BY_RATING_UP, Product.class)
+        return sessionFactory.getCurrentSession().createQuery(GET_BY_RATING_UP, Product.class)
                 .setParameter("up", upperLimit)
                 .getResultList();
-        session.close();
-        return products;
     }
 
     @Override
     public List<Product> getSaleStatus(boolean status) {
-        Session session = sessionFactory.openSession();
-        List<Product> products = session.createQuery(GET_BY_SALE_STATUS, Product.class)
+        return sessionFactory.getCurrentSession().createQuery(GET_BY_SALE_STATUS, Product.class)
                 .setParameter("status", status)
                 .getResultList();
-        session.close();
-        return products;
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Product> getByCategory(CategoryOfProduct category) {
-        Session session = sessionFactory.openSession();
-        List<Product> products = session.createQuery(GET_BY_CATEGORY, Product.class)
+        return sessionFactory.getCurrentSession().createQuery(GET_BY_CATEGORY, Product.class)
                 .setParameter("category", category)
                 .getResultList();
-        session.close();
-        return products;
     }
 
     @Override
     public List<Product> getAll() {
-        Session session = sessionFactory.openSession();
-        List<Product> products = session.createQuery(GET_ALL, Product.class)
+        return sessionFactory.getCurrentSession().createQuery(GET_ALL, Product.class)
                 .getResultList();
-        session.close();
-        return products;
     }
 
     @Override
     public boolean isExistById(long id) {
-        Session session = sessionFactory.openSession();
-        Optional<Product> optionalProduct = session
+        Optional<Product> optionalProduct = sessionFactory.getCurrentSession()
                 .createQuery(GET_BY_ID, Product.class)
                 .setParameter("id", id)
                 .uniqueResultOptional();
-        session.close();
         return optionalProduct.isPresent();
     }
 
     @Override
     public boolean isExistByInfo(Product product) {
-        Session session = sessionFactory.openSession();
-        Optional<Product> optionalProduct = session
+        Optional<Product> optionalProduct = sessionFactory.getCurrentSession()
                 .createQuery(GET_BY_INFO, Product.class)
                 .setParameter("name", product.getName())
                 .setParameter("category", product.getCategory())
                 .setParameter("prodId", product.getProducer().getId())
                 .uniqueResultOptional();
-        session.close();
         return optionalProduct.isPresent();
     }
 }

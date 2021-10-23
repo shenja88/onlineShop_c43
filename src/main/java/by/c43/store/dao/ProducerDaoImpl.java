@@ -28,136 +28,104 @@ public class ProducerDaoImpl implements  ProducerDao{
 
     @Override
     public void addProducer(Producer producer) {
-        Session session = sessionFactory.openSession();
-        session.save(producer);
-        session.close();
+        sessionFactory.getCurrentSession().save(producer);
     }
 
     @Override
     public void deleteProducer(long id) {
-        Session session = sessionFactory.openSession();
-        Producer producer = session.get(Producer.class, id);
-        session.delete(producer);
-        session.close();
+        Producer producer = sessionFactory.getCurrentSession().get(Producer.class, id);
+        sessionFactory.getCurrentSession().delete(producer);
     }
 
     @Override
     public void updateName(String newName, long id) {
-        Session session = sessionFactory.openSession();
-        Producer producer = session.get(Producer.class, id);
+        Producer producer = sessionFactory.getCurrentSession().get(Producer.class, id);
         producer.setName(newName);
-        session.update(producer);
-        session.close();
+        sessionFactory.getCurrentSession().update(producer);
     }
 
     @Override
     public void updateEmail(String newEmail, long id) {
-        Session session = sessionFactory.openSession();
-        Producer producer = session.get(Producer.class, id);
+        Producer producer = sessionFactory.getCurrentSession().get(Producer.class, id);
         producer.setEmail(newEmail);
-        session.update(producer);
-        session.close();
+        sessionFactory.getCurrentSession().update(producer);
     }
 
     @Override
     public void updatePassword(String newPassword, long id) {
-        Session session = sessionFactory.openSession();
-        Producer producer = session.get(Producer.class, id);
+        Producer producer = sessionFactory.getCurrentSession().get(Producer.class, id);
         producer.setPassword(newPassword);
-        session.save(producer);
-        session.close();
+        sessionFactory.getCurrentSession().save(producer);
     }
 
     @Override
     public void updatePicture(String newPicture, long id) {
-        Session session = sessionFactory.openSession();
-        Producer producer = session.get(Producer.class, id);
+        Producer producer = sessionFactory.getCurrentSession().get(Producer.class, id);
         producer.setPicture(newPicture);
-        session.update(producer);
-        session.close();
+        sessionFactory.getCurrentSession().update(producer);
     }
 
     @Override
     public void updateDescription(String newDescription, long id) {
-        Session session = sessionFactory.openSession();
-        Producer producer = session.get(Producer.class, id);
+        Producer producer = sessionFactory.getCurrentSession().get(Producer.class, id);
         producer.setDescription(newDescription);
-        session.update(producer);
-        session.close();
+        sessionFactory.getCurrentSession().update(producer);
     }
 
     @Override
     public void updateAddress(Address address, long id) {
-        Session session = sessionFactory.openSession();
-        Producer producer = session.get(Producer.class, id);
+        Producer producer = sessionFactory.getCurrentSession().get(Producer.class, id);
         producer.setAddress(address);
-        session.update(producer);
-        session.close();
+        sessionFactory.getCurrentSession().update(producer);
     }
 
     @Transactional(readOnly = true)
     @Override
     public Producer getById(long id) {
-        Session session = sessionFactory.openSession();
-        Producer producer = session.get(Producer.class, id);
-        session.close();
-        return producer;
+        return sessionFactory.getCurrentSession().get(Producer.class, id);
     }
 
     @Override
     public Producer getByEmail(String email) {
-        Session session = sessionFactory.openSession();
-        Producer producer = session.createQuery(GET_BY_EMAIL, Producer.class)
+        return sessionFactory.getCurrentSession().createQuery(GET_BY_EMAIL, Producer.class)
                 .setParameter("email", email)
                 .getSingleResult();
-        session.close();
-        return producer;
     }
 
     @Override
     public void updateTelephone(long producerId, Telephone telephone) {
-        Session session = sessionFactory.openSession();
-        Producer producer = session.get(Producer.class, producerId);
+        Producer producer = sessionFactory.getCurrentSession().get(Producer.class, producerId);
         producer.getTelephones().set(producer.getTelephones().indexOf(telephone), telephone);
-        session.update(producer);
-        session.close();
+        sessionFactory.getCurrentSession().update(producer);
     }
 
     @Override
     public void addTelephone(long producerId, Telephone telephone) {
-        Session session = sessionFactory.openSession();
-        Producer producer = session.get(Producer.class, producerId);
+        Producer producer = sessionFactory.getCurrentSession().get(Producer.class, producerId);
         producer.getTelephones().add(telephone);
-        session.update(producer);
-        session.close();
+        sessionFactory.getCurrentSession().update(producer);
     }
 
 
     @Override
     public boolean isExistById(long id) {
-        Session session = sessionFactory.openSession();
-        Optional<Producer> optionalProducer = session.createQuery(GET_BY_ID, Producer.class)
+        Optional<Producer> optionalProducer = sessionFactory.getCurrentSession().createQuery(GET_BY_ID, Producer.class)
                 .setParameter("id", id)
                 .uniqueResultOptional();
-        session.close();
         return optionalProducer.isPresent();
     }
 
     @Override
     public boolean isExistByEmail(String email) {
-        Session session = sessionFactory.openSession();
-        Optional<Producer> optionalProducer = session.createQuery(GET_BY_EMAIL, Producer.class)
+        Optional<Producer> optionalProducer = sessionFactory.getCurrentSession().createQuery(GET_BY_EMAIL, Producer.class)
                 .setParameter("email", email)
                 .uniqueResultOptional();
-        session.close();
         return optionalProducer.isPresent();
     }
 
     @Override
     public void deleteTelephone(Telephone telephone, long id) {
-        Session session = sessionFactory.openSession();
-        Producer producer = session.get(Producer.class, id);
+        Producer producer = sessionFactory.getCurrentSession().get(Producer.class, id);
         producer.getTelephones().remove(telephone);
-        session.close();
     }
 }

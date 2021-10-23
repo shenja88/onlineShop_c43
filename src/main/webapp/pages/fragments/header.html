@@ -48,7 +48,7 @@
                 </li>
                 <li style="margin-left:  150px">
                     <div class="pull-right navbar-text">
-                        <a th:if="${session.user == null}" class="pull-right navbar-text" href="#"
+                        <a th:if="${session.user == null && session.producer == null}" class="pull-right navbar-text" href="#"
                            style="padding-right: 5px">Guest</a>
                         <a th:if="${session.user != null}" class="pull-right navbar-text" href="#"
                            style="padding-right: 5px"><span th:text="${session.user.name}"></span></a>

@@ -24,125 +24,101 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void save(User user) {
-        Session session = sessionFactory.openSession();
-        session.save(user);
-        session.close();
+        sessionFactory.getCurrentSession().save(user);
     }
 
     @Override
     public void delete(long id) {
-        Session session = sessionFactory.openSession();
-        User user = session
+        User user = sessionFactory.getCurrentSession()
                 .createQuery(GET_BY_ID, User.class)
                 .setParameter("id", id)
                 .getSingleResult();
-        session.delete(user);
-        session.close();
+        sessionFactory.getCurrentSession().delete(user);
     }
 
     @Override
     public void updateName(String newName, long id) {
-        Session session = sessionFactory.openSession();
-        User user = session
+        User user = sessionFactory.getCurrentSession()
                 .createQuery(GET_BY_ID, User.class)
                 .setParameter("id", id)
                 .getSingleResult();
         user.setName(newName);
-        session.update(user);
-        session.close();
+        sessionFactory.getCurrentSession().update(user);
     }
 
     @Override
     public void updateEmail(String newEmail, long id) {
-        Session session = sessionFactory.openSession();
-        User user = session
+        User user = sessionFactory.getCurrentSession()
                 .createQuery(GET_BY_ID, User.class)
                 .setParameter("id", id)
                 .getSingleResult();
         user.setEmail(newEmail);
-        session.update(user);
-        session.close();
+        sessionFactory.getCurrentSession().update(user);
     }
 
     @Override
     public void updatePassword(String newPassword, long id) {
-        Session session = sessionFactory.openSession();
-        User user = session
+        User user = sessionFactory.getCurrentSession()
                 .createQuery(GET_BY_ID, User.class)
                 .setParameter("id", id)
                 .getSingleResult();
         user.setPassword(newPassword);
-        session.update(user);
-        session.close();
+        sessionFactory.getCurrentSession().update(user);
     }
 
     @Override
     public void updatePicture(String newPicture, long id) {
-        Session session = sessionFactory.openSession();
-        User user = session
+        User user = sessionFactory.getCurrentSession()
                 .createQuery(GET_BY_ID, User.class)
                 .setParameter("id", id)
                 .getSingleResult();
         user.setPicture(newPicture);
-        session.update(user);
-        session.close();
+        sessionFactory.getCurrentSession().update(user);
     }
 
     @Override
     public void updateTelephone(long userId, Telephone telephone) {
-        Session session = sessionFactory.openSession();
-        User user = session
+        User user = sessionFactory.getCurrentSession()
                 .createQuery(GET_BY_ID, User.class)
                 .setParameter("id", userId)
                 .getSingleResult();
         user.setTelephone(telephone);
-        session.update(user);
-        session.close();
+        sessionFactory.getCurrentSession().update(user);
     }
 
     @Transactional(readOnly = true)
     @Override
     public User getById(long id) {
-        Session session = sessionFactory.openSession();
-        User user = session
+        return sessionFactory.getCurrentSession()
                 .createQuery(GET_BY_ID, User.class)
                 .setParameter("id", id)
                 .getSingleResult();
-        session.close();
-        return user;
     }
 
     @Transactional(readOnly = true)
     @Override
     public User getByEmail(String email) {
-        Session session = sessionFactory.openSession();
-        User user = session
+        return sessionFactory.getCurrentSession()
                 .createQuery(GET_BY_EMAIL, User.class)
                 .setParameter("email", email)
                 .getSingleResult();
-        session.close();
-        return user;
     }
 
     @Override
     public boolean isExistById(long id) {
-        Session session = sessionFactory.openSession();
-        Optional<User> optionalUser = session
+        Optional<User> optionalUser = sessionFactory.getCurrentSession()
                 .createQuery(GET_BY_ID, User.class)
                 .setParameter("id", id)
                 .uniqueResultOptional();
-        session.close();
         return optionalUser.isPresent();
     }
 
     @Override
     public boolean isExistByEmail(String email) {
-        Session session = sessionFactory.openSession();
-        Optional<User> optionalUser = session
+        Optional<User> optionalUser = sessionFactory.getCurrentSession()
                 .createQuery(GET_BY_EMAIL, User.class)
                 .setParameter("email", email)
                 .uniqueResultOptional();
-        session.close();
         return optionalUser.isPresent();
     }
 }

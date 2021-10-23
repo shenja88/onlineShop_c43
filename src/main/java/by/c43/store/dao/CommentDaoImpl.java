@@ -24,42 +24,33 @@ public class CommentDaoImpl implements CommentDao {
 
     @Override
     public void save(Comment comment) {
-        Session session = sessionFactory.openSession();
-        session.save(comment);
-        session.close();
+        sessionFactory.getCurrentSession().save(comment);
     }
 
 
     @Override
     public void update(long id, String newDescription) {
-        Session session = sessionFactory.openSession();
-        Comment comment = session.load(Comment.class, id);
+        Comment comment = sessionFactory.getCurrentSession().load(Comment.class, id);
         comment.setDescription(newDescription);
-        session.update(comment);
-        session.close();
+        sessionFactory.getCurrentSession().update(comment);
     }
 
 
     @Override
     public void delete(long id) {
-        Session session = sessionFactory.openSession();
-        Comment comment = session.get(Comment.class, id);
-        session.delete(comment);
-        session.close();
+        Comment comment = sessionFactory.getCurrentSession().get(Comment.class, id);
+        sessionFactory.getCurrentSession().delete(comment);
     }
 
     @Override
     public boolean isExistById(long id) {
-        Session session = sessionFactory.openSession();
-        Optional<Comment> comment = Optional.ofNullable(session.get(Comment.class, id));
+        Optional<Comment> comment = Optional.ofNullable(sessionFactory.getCurrentSession().get(Comment.class, id));
         return comment.isPresent();
     }
 
-
     @Override
     public boolean isExistByInfo(Comment comment) {
-        Session session = sessionFactory.openSession();
-        Optional<Comment> commentOpt = session.createQuery(GET_BY_INFO, Comment.class)
+        Optional<Comment> commentOpt = sessionFactory.getCurrentSession().createQuery(GET_BY_INFO, Comment.class)
                 .setParameter("checkDescription", comment.getDescription())
                 .setParameter("checkUserEmail", comment.getUser().getEmail())
                 .uniqueResultOptional();
@@ -70,20 +61,14 @@ public class CommentDaoImpl implements CommentDao {
     @Transactional(readOnly = true)
     @Override
     public Optional<Comment> getById(long id) {
-        Session session = sessionFactory.openSession();
-        return Optional.ofNullable(session.get(Comment.class, id));
+        return Optional.ofNullable(sessionFactory.getCurrentSession().get(Comment.class, id));
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Comment> getByIdProduct(long id) {
-        Session session = sessionFactory.openSession();
-        List<Comment> commentList = session.createQuery(GET_BY_PRODUCT_ID, Comment.class)
+        return sessionFactory.getCurrentSession().createQuery(GET_BY_PRODUCT_ID, Comment.class)
                 .setParameter("id_product", id)
                 .getResultList();
-        session.close();
-        return commentList;
     }
-
-
 }

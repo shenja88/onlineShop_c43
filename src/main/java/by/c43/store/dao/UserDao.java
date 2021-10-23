@@ -29,4 +29,7 @@ public interface UserDao {
     boolean isExistById(long id);
 
     boolean isExistByEmail(String email);
+
+    boolean isExistByEmailAndPassword(String email, String password);
+
 }

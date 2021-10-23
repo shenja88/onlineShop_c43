@@ -190,7 +190,7 @@ public class ProductController {
         User user = (User) session.getAttribute("user");
         List<Product> products = productService.getByOwner(user);
         model.addAttribute("listProd", products);
-        return "store";
+        return "userProducts";
     }
 
     @PostMapping("/byProducer")

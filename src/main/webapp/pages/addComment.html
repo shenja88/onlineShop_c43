@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Comments</title>
+</head>
+<body>
+<div th:insert="fragments/header.html :: header"></div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-4 m5 bg-success p-2 text-dark bg-opacity-10 rounded">
+            <legend style="text-align: center; padding-bottom: 20px">Write your comment</legend>
+            <form th:action="@{/comment/add}" th:object="${newComment}" method="post">
+                <div class="form-floating">
+                    <input type="text" th:field="*{description}" class="form-control m-2"  required
+                           placeholder="New comment">
+                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+                    <div style="text-align:center">
+                        <button type="submit" class="btn btn-success m-3" style="">Add comment</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div th:if="${message_add_com != null}" class="alert alert-warning" role="alert">
+        <div class="col-sm-3 text-center m-3">
+            <div class="alert alert-warning" role="alert">
+                <p th:text="*{message_add_com}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

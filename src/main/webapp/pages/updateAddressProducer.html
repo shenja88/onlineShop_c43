@@ -11,21 +11,24 @@
         <div class="col-sm-3" style="padding: 30px 20px 20px; border-radius:8px; background: #e3f2fd; margin-top: 40px">
             <legend style="text-align: center; padding-bottom: 20px">Please enter new address</legend>
             <form th:action="@{/producer/updateAddress}" th:object="${address}" method="post">
-                <input type="hidden" th:field="${id}" th:attr="id = ${addrId}">
+                <input type="hidden" th:field="*{id}" th:attr="id = ${addrId}">
+
                 <input type="text" th:field="*{country}" class="form-control m-2" aria-describedby="emailHelp" required
                        placeholder="Country">
                 <p th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></p>
+
                 <input type="text" th:field="*{city}" class="form-control m-2" aria-describedby="emailHelp" required
                        placeholder="City">
                 <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
-                <div style="text-align:center">
-                    <input type="text" th:field="*{street}" class="form-control m-2" aria-describedby="emailHelp" required
-                           placeholder="Street">
-                    <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></p>
-                </div>
+
+                <input type="text" th:field="*{street}" class="form-control m-2" aria-describedby="emailHelp" required
+                       placeholder="Street">
+                <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></p>
+
                 <input type="text" th:field="*{home}" class="form-control m-2" aria-describedby="emailHelp" required
                        placeholder="Home">
                 <p th:if="${#fields.hasErrors('home')}" th:errors="*{home}"></p>
+
                 <button type="submit" class="btn btn-success m-3" style="">Submit</button>
             </form>
             <div th:if="${message != null}" class="alert alert-warning" role="alert">

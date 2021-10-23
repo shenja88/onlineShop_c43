@@ -18,6 +18,7 @@ public class ProducerDaoImpl implements  ProducerDao{
 
     private  static final String GET_BY_ID = "from Producer where id =: id";
     private  static final String GET_BY_EMAIL = "from Producer where email =: email";
+    private  static final String GET_BY_EMAIL_PASS = "from Producer where email =: email and password =: password";
 
 
     private final SessionFactory sessionFactory;
@@ -75,7 +76,10 @@ public class ProducerDaoImpl implements  ProducerDao{
     @Override
     public void updateAddress(Address address, long id) {
         Producer producer = sessionFactory.getCurrentSession().get(Producer.class, id);
-        producer.setAddress(address);
+        producer.getAddress().setCountry(address.getCountry());
+        producer.getAddress().setCity(address.getCity());
+        producer.getAddress().setStreet(address.getStreet());
+        producer.getAddress().setHome(address.getHome());
         sessionFactory.getCurrentSession().update(producer);
     }
 
@@ -86,16 +90,17 @@ public class ProducerDaoImpl implements  ProducerDao{
     }
 
     @Override
-    public Producer getByEmail(String email) {
-        return sessionFactory.getCurrentSession().createQuery(GET_BY_EMAIL, Producer.class)
+    public Optional<Producer> getByEmailAndPass(String email, String password) {
+        return sessionFactory.getCurrentSession().createQuery(GET_BY_EMAIL_PASS, Producer.class)
                 .setParameter("email", email)
-                .getSingleResult();
+                .setParameter("password", password)
+                .uniqueResultOptional();
     }
 
     @Override
     public void updateTelephone(long producerId, Telephone telephone) {
         Producer producer = sessionFactory.getCurrentSession().get(Producer.class, producerId);
-        producer.getTelephones().set(producer.getTelephones().indexOf(telephone), telephone);
+        producer.getTelephones().get(producer.getTelephones().indexOf(telephone)).setNumber(telephone.getNumber());
         sessionFactory.getCurrentSession().update(producer);
     }
 

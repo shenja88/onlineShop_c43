@@ -98,8 +98,8 @@ public class ProducerService {
         return Optional.of(producerDao.getById(id));
     }
 
-    public Optional<Producer> getProducerByEmail(String email){
-        return Optional.of(producerDao.getByEmail(email));
+    public Optional<Producer> getProducerByEmailAndPass(Producer producer){
+        return producerDao.getByEmailAndPass(producer.getEmail(), producer.getPassword());
     }
 
     private boolean equalsFields(Producer producer, Address address) {

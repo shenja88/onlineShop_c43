@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Data
 public class DescriptionProductDTO {
+
     private long id;
     @NotBlank(message = ConstraintsMessageManager.NOT_EMPTY_ERROR)
     @NotNull

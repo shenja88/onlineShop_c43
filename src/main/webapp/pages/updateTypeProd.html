@@ -10,7 +10,7 @@
   <div class="row justify-content-center">
     <div class="col-sm-3" style="padding: 30px 20px 20px; border-radius:8px; background: #e3f2fd; margin-top: 40px">
       <legend style="text-align: center; padding-bottom: 20px">Please enter new product name</legend>
-      <form th:action="@{product/updType}" th:object="${typeDTO}" method="post">
+      <form th:action="@{/product/updType}" th:object="${typeDTO}" method="post">
         <input type="hidden" th:field="*{id}" th:attr="id = ${prodId}">
         <label for="type" class="col-sm col-form-label">New product category:</label>
         <select th:field="*{category}" required class="form-select form-select-sm-3"

@@ -232,7 +232,8 @@ public class ProductController {
 
     @GetMapping("/all")
     public String getAll(Model model){
-        model.addAttribute("listProd", productService.getAll());
+        Optional<List<Product>> products = Optional.ofNullable(productService.getAll());
+        products.ifPresent(productList -> model.addAttribute("listProd", productList));
         return "store";
     }
 

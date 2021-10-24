@@ -43,10 +43,8 @@ public class Product {
     @OneToOne(fetch = FetchType.EAGER)
     private Rating rating;
 
-    @Column(nullable = false)
     private boolean reservedStatus;
 
-    @Column(nullable = false)
     private boolean saleStatus;
 
     @Override

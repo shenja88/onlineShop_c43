@@ -185,7 +185,7 @@ public class ProductController {
         return "store";
     }
 
-    @PostMapping("/byOwner")
+    @GetMapping("/byOwner")
     public String getByOwner(Model model, HttpSession session){
         User user = (User) session.getAttribute("user");
         List<Product> products = productService.getByOwner(user);

@@ -4,7 +4,7 @@
     <Property name="log-path">logging.log</Property>
 </Properties>
 <Appenders>
-    <File name="File" fileName="C:\Users\UserOk\IdeaProjects\onlineShop_c43\logging.log" >
+    <File name="File" fileName="logging.log" >
         <PatternLayout>
             <pattern>
                 [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n

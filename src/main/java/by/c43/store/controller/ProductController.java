@@ -242,4 +242,24 @@ public class ProductController {
         model.addAttribute("producerProducts", products);
         return "producerProducts";
     }
+
+    @GetMapping("/updProdPage/{id}")
+    public String getUpdProductPage(@PathVariable long id, Model model){
+        Optional<Product> product = productService.getById(id);
+        if(product.isPresent()) {
+            CardDTO cardDTO = CardDTO.builder()
+                    .product(product.get())
+                    .comments(commentService.getCommentsByIdProduct(id))
+                    .build();
+            model.addAttribute("card", cardDTO);
+            return "productUpdPage";
+        }
+        return "store";
+    }
+
+    @GetMapping("/setSaleStatus/{status},{id}")
+    public String setForSaleStatus(@PathVariable(name = "status") boolean status, @PathVariable(name = "id") long id){
+        productService.setSaleStatus(status, id);
+        return "userProducts";
+    }
 }

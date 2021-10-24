@@ -167,4 +167,8 @@ public class ProductService {
         return Arrays.asList(CategoryOfProduct.values());
     }
 
+    public void setSaleStatus(boolean status, long prodId){
+        productDao.setForSaleStatus(status, prodId);
+    }
+
 }

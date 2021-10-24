@@ -79,7 +79,7 @@ public class CommentController {
             List<Comment> commentsByIdProduct = commentService.getCommentsByIdProduct(id);
             model.addAttribute("allComments", commentsByIdProduct);
             model.addAttribute("productById", byId.get());
-            return "productComments";
+            return "comment";
         }else return "store";
     }
 

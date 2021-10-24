@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/product")
@@ -213,7 +214,8 @@ public class ProductController {
 
     @GetMapping("/all")
     public String getAll(Model model){
-        model.addAttribute("listProd", productService.getAll());
+        Optional<List<Product>> products = Optional.ofNullable(productService.getAll());
+        products.ifPresent(productList -> model.addAttribute("listProd", productList));
         return "store";
     }
 

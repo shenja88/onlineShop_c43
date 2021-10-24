@@ -69,7 +69,7 @@ public class CommentController {
         } else {
             model.addAttribute("message_remove_com", ControllerMessageManager.OPERATION_FAILED);
         }
-        return "comment";
+        return "productComments";
     }
 
     @GetMapping("/allByProduct/{id}")
@@ -79,7 +79,7 @@ public class CommentController {
             List<Comment> commentsByIdProduct = commentService.getCommentsByIdProduct(id);
             model.addAttribute("allComments", commentsByIdProduct);
             model.addAttribute("productById", byId.get());
-            return "comment";
+            return "productComments";
         }else return "store";
     }
 

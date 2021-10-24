@@ -20,6 +20,7 @@ public class UserDaoImpl implements UserDao {
 
     private static final String GET_BY_ID = "from User where id = :id";
     private static final String GET_BY_EMAIL = "from User where email = :email";
+    private static final String GET_BY_EMAIL_PASSWORD = "from User where email = :email and password =: password";
 
     @Override
     public void save(User user) {
@@ -117,6 +118,16 @@ public class UserDaoImpl implements UserDao {
         Optional<User> optionalUser = sessionFactory.getCurrentSession()
                 .createQuery(GET_BY_EMAIL, User.class)
                 .setParameter("email", email)
+                .uniqueResultOptional();
+        return optionalUser.isPresent();
+    }
+
+    @Override
+    public boolean isExistByEmailAndPassword(String email, String password) {
+        Optional<User> optionalUser = sessionFactory.getCurrentSession()
+                .createQuery(GET_BY_EMAIL_PASSWORD, User.class)
+                .setParameter("email", email)
+                .setParameter("password", password)
                 .uniqueResultOptional();
         return optionalUser.isPresent();
     }

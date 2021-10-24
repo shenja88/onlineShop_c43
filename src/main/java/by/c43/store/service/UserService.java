@@ -26,7 +26,7 @@ public class UserService {
     }
 
     public Optional<User> authorization(User user) {
-        if (userDAO.isExistByEmail(user.getEmail())) {
+        if (userDAO.isExistByEmailAndPassword(user.getEmail(), user.getPassword())) {
             return Optional.ofNullable(userDAO.getByEmail(user.getEmail()));
         }
         return Optional.empty();

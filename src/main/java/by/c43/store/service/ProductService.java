@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -92,8 +93,8 @@ public class ProductService {
     public List<Product> getAll(){
         return productDao.getAll();
     }
-    public Product getById(long id) {
-        return productDao.getById(id);
+    public Optional<Product> getById(long id) {
+        return Optional.of(productDao.getById(id));
     }
 
     public List<Product> getAllByPriceLowUp(int low, int up) {

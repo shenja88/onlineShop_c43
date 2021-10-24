@@ -77,7 +77,7 @@ public class CommentController {
         model.addAttribute("allComments", commentsByIdProduct);
         Product byId = productService.getById(id);
         model.addAttribute("productById", byId);
-        return "comment";
+        return "productComments";
     }
 
 }

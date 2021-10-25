@@ -54,6 +54,4 @@ public interface ProductDao {
 
     boolean isExistById(long id);
 
-    boolean isExistByInfo(Product product);
-
 }

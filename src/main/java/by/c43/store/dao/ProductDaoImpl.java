@@ -3,7 +3,6 @@ package by.c43.store.dao;
 import by.c43.store.entity.CategoryOfProduct;
 import by.c43.store.entity.Product;
 import by.c43.store.entity.User;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +28,6 @@ public class ProductDaoImpl implements ProductDao {
     private static final String GET_BY_RATING_LOW_UP = "from Product where rating.score >=: low and rating.score <=: up";
     private static final String GET_BY_RATING_LOW = "from Product where rating.score >=: low";
     private static final String GET_BY_RATING_UP = "from Product where rating.score <=: up";
-    private static final String GET_BY_INFO = "from Product where name =: name and category =: category and Producer.id =: prodId";
     private static final String GET_BY_CATEGORY = "from Product where category =: category";
     private static final String GET_BY_SALE_STATUS = "from Product where saleStatus =: status";
     private static final String GET_ALL = "from Product";
@@ -199,17 +197,6 @@ public class ProductDaoImpl implements ProductDao {
         Optional<Product> optionalProduct = sessionFactory.getCurrentSession()
                 .createQuery(GET_BY_ID, Product.class)
                 .setParameter("id", id)
-                .uniqueResultOptional();
-        return optionalProduct.isPresent();
-    }
-
-    @Override
-    public boolean isExistByInfo(Product product) {
-        Optional<Product> optionalProduct = sessionFactory.getCurrentSession()
-                .createQuery(GET_BY_INFO, Product.class)
-                .setParameter("name", product.getName())
-                .setParameter("category", product.getCategory().ordinal())
-                .setParameter("prodId", product.getProducer().getId())
                 .uniqueResultOptional();
         return optionalProduct.isPresent();
     }

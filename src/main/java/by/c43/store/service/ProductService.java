@@ -17,7 +17,7 @@ public class ProductService {
     private final RatingDao ratingDao;
 
     public boolean save(Product product) {
-        if (productDao.isExistByInfo(product)) {
+        if (!productDao.isExistById(product.getId())) {
             productDao.save(product);
             return true;
         }

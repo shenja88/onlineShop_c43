@@ -30,7 +30,7 @@ public class ProductController {
     private final CommentService commentService;
 
     @GetMapping("/add")
-    public String addProduct(@ModelAttribute("product") AllArgsProductDTO dto, Model model) {
+    public String addProduct(Model model, @ModelAttribute("product") AllArgsProductDTO dto) {
         model.addAttribute("categories", productService.getCategories());
         return "addProd";
     }

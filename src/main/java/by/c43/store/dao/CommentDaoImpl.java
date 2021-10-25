@@ -19,14 +19,12 @@ import java.util.Optional;
 public class CommentDaoImpl implements CommentDao {
     private final SessionFactory sessionFactory;
 
-    private final static String GET_BY_INFO = "FROM Comment WHERE description = :checkDescription AND User.email = :checkUserEmail";
     private final static String GET_BY_PRODUCT_ID = "FROM Comment where product.id =: id_product";
 
     @Override
     public void save(Comment comment) {
         sessionFactory.getCurrentSession().save(comment);
     }
-
 
     @Override
     public void update(long id, String newDescription) {
@@ -46,16 +44,6 @@ public class CommentDaoImpl implements CommentDao {
     public boolean isExistById(long id) {
         Optional<Comment> comment = Optional.ofNullable(sessionFactory.getCurrentSession().get(Comment.class, id));
         return comment.isPresent();
-    }
-
-    @Override
-    public boolean isExistByInfo(Comment comment) {
-        Optional<Comment> commentOpt = sessionFactory.getCurrentSession().createQuery(GET_BY_INFO, Comment.class)
-                .setParameter("checkDescription", comment.getDescription())
-                .setParameter("checkUserEmail", comment.getUser().getEmail())
-                .uniqueResultOptional();
-        return commentOpt.isPresent();
-
     }
 
     @Transactional(readOnly = true)

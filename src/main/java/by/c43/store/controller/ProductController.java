@@ -185,8 +185,12 @@ public class ProductController {
     @GetMapping("/byOwner")
     public String getByOwner(Model model, HttpSession session){
         User user = (User) session.getAttribute("user");
-        List<Product> products = productService.getByOwner(user);
-        model.addAttribute("listProd", products);
+        List<Product> productList = productService.getByOwner(user);
+        List<CardDTO> cardProducts = new ArrayList<>();
+        for (Product prod : productList) {
+            cardProducts.add(new CardDTO(prod, commentService.getCommentsByIdProduct(prod.getId()), prod.getRating()));
+        }
+        model.addAttribute("listProd", cardProducts);
         return "userProducts";
     }
 
@@ -236,8 +240,12 @@ public class ProductController {
 
     @GetMapping("/byProducer/{id}")
     public String getByProducer(Model model, @PathVariable long id){
-        List<Product> products = productService.getByProducer(Producer.builder().id(id).build());
-        model.addAttribute("producerProducts", products);
+        List<Product> productList = productService.getByProducer(Producer.builder().id(id).build());
+        List<CardDTO> cardProducts = new ArrayList<>();
+        for (Product prod : productList) {
+            cardProducts.add(new CardDTO(prod, commentService.getCommentsByIdProduct(prod.getId()), prod.getRating()));
+        }
+        model.addAttribute("producerProducts", cardProducts);
         return "producerProducts";
     }
 

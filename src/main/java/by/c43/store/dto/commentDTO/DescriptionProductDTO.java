@@ -13,13 +13,11 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class DescriptionProductUserDTO {
+public class DescriptionProductDTO {
 
     @NotBlank(message = ConstraintsMessageManager.NOT_EMPTY_ERROR)
     @NotNull
     @NotEmpty
     private String description;
-
-    private User user;
     private long productId;
 }

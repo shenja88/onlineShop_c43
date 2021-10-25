@@ -108,6 +108,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
                 .addPathPatterns("/producer/**")
                 .addPathPatterns("/product/**")
                 .addPathPatterns("/user/**")
+                .addPathPatterns("/basket/**")
                 .excludePathPatterns("/user/reg", "/user/auth", "/producer/reg", "/producer/auth");
     }
 }

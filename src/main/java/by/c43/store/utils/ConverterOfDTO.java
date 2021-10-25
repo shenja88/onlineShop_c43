@@ -5,7 +5,7 @@ import by.c43.store.dto.addressDTO.ArgNoIdAddressDTO;
 import by.c43.store.dto.cardDTO.CardDTO;
 import by.c43.store.dto.cardDTO.ProducerCardDTO;
 import by.c43.store.dto.cardDTO.UserCardInfoDTO;
-import by.c43.store.dto.commentDTO.DescriptionProductUserDTO;
+import by.c43.store.dto.commentDTO.DescriptionProductDTO;
 import by.c43.store.dto.producerDTO.AllArgsProducerDTO;
 import by.c43.store.dto.producerDTO.EmailPasswordProducerDTO;
 import by.c43.store.dto.productDTO.AllArgsProductDTO;
@@ -15,6 +15,8 @@ import by.c43.store.dto.usersDTO.AllArgUsersDTO;
 import by.c43.store.dto.usersDTO.EmailPasswordUsersDTO;
 import by.c43.store.entity.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ConverterOfDTO {
@@ -138,20 +140,11 @@ public class ConverterOfDTO {
                 .build();
     }
 
-    public static Comment getDescriptionProductUserDTO(DescriptionProductUserDTO descriptionProductUserDTO){
+    public static Comment getDescriptionProductDTO(DescriptionProductDTO descriptionProductUserDTO, User user){
         return Comment.builder()
                 .description(descriptionProductUserDTO.getDescription())
-                .user(User.builder()
-                        .name(descriptionProductUserDTO.getUser().getName())
-                        .email(descriptionProductUserDTO.getUser().getEmail())
-                        .password(descriptionProductUserDTO.getUser().getPassword())
-                        .password(descriptionProductUserDTO.getUser().getPassword())
-                        .typeOfUser(descriptionProductUserDTO.getUser().getTypeOfUser())
-                        .picture(descriptionProductUserDTO.getUser().getPicture())
-                        .telephone(Telephone.builder()
-                                .number(descriptionProductUserDTO.getUser().getTelephone().getNumber())
-                                .build())
-                        .build())
+                .time(Timestamp.valueOf(LocalDateTime.now()))
+                .user(User.builder().id(user.getId()).build())
                 .product(Product.builder()
                         .id(descriptionProductUserDTO.getProductId())
                         .build())

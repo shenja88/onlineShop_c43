@@ -2,10 +2,7 @@ package by.c43.store.controller;
 
 import by.c43.store.dto.cardDTO.CardDTO;
 import by.c43.store.dto.productDTO.*;
-import by.c43.store.entity.CategoryOfProduct;
-import by.c43.store.entity.Producer;
-import by.c43.store.entity.Product;
-import by.c43.store.entity.User;
+import by.c43.store.entity.*;
 import by.c43.store.service.CommentService;
 import by.c43.store.service.ProductService;
 import by.c43.store.utils.ControllerMessageManager;
@@ -50,7 +47,7 @@ public class ProductController {
         return "addProd";
     }
 
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable long id, Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         Optional<Product> product = productService.getById(id);

@@ -40,7 +40,7 @@ public class Product {
     @ManyToOne(fetch = FetchType.EAGER)
     private User owner;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Rating rating;
 
     private boolean reservedStatus;

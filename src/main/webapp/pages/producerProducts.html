@@ -22,11 +22,6 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" th:text="'Price: ' + ${product.price}"
                             style="background-color:#fafcfa "></li>
-                        <li th:if="${product.reservedStatus == false && product.saleStatus == false && session.producer == null}"
-                            class="list-group-item">
-                            <a th:href="@{}" class="btn btn-primary btn-lg" role="button"
-                               aria-disabled="true">Reserved</a>
-                        </li>
                     </ul>
                     <div th:if="${product.producer.id == session.producer.id}" class="card-body">
                         Your product

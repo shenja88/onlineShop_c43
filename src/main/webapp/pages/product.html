@@ -22,7 +22,7 @@
                     <li class="list-group-item" style="background-color:#fafcfa "><a th:href="@{/producer/producerInfo/{id}(id = ${card.product.producer.id})}"><span
                             th:text="'Producer: ' + ${card.product.producer.name}"> </span></a>
                     </li>
-                    <li th:if="${card.product.reservedStatus == false && card.product.saleStatus == false && session.producer == null}"
+                    <li th:if="${card.product.reservedStatus == false && card.product.saleStatus == true && session.producer == null}"
                         class="list-group-item">
                         <a th:href="@{/basket/add/{id}(id = ${card.product.id})}" class="btn btn-primary btn-lg" role="button" aria-disabled="true">Reserved</a>
                     </li>

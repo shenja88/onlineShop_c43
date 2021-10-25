@@ -1,9 +1,10 @@
 package by.c43.store.controller;
 
 import by.c43.store.dto.commentDTO.DescriptionIdCommentDTO;
-import by.c43.store.dto.commentDTO.DescriptionProductUserDTO;
+import by.c43.store.dto.commentDTO.DescriptionProductDTO;
 import by.c43.store.entity.Comment;
 import by.c43.store.entity.Product;
+import by.c43.store.entity.User;
 import by.c43.store.service.CommentService;
 import by.c43.store.service.ProductService;
 import by.c43.store.utils.ControllerMessageManager;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -26,17 +28,19 @@ public class CommentController {
     private final CommentService commentService;
     private final ProductService productService;
 
-    @GetMapping("/add")
-    public String showListOfComments(@ModelAttribute("newComment") DescriptionProductUserDTO descriptionProductUserDTO) {
+    @GetMapping("/add/{id}")
+    public String showListOfComments(@ModelAttribute("newComment") DescriptionProductDTO descriptionProductUserDTO, @PathVariable long id, Model model) {
+        model.addAttribute("prodId", id);
         return "addComment";
     }
 
     @PostMapping("/add")
-    public String addComment(@Valid @ModelAttribute("newComment") DescriptionProductUserDTO commentDTO, BindingResult bindingResult, Model model) {
+    public String addComment(@Valid @ModelAttribute("newComment") DescriptionProductDTO commentDTO, BindingResult bindingResult, Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("message_add_com", ControllerMessageManager.ADD_COMM_FAIL);
         } else {
-            if (commentService.saveComment(ConverterOfDTO.getDescriptionProductUserDTO(commentDTO))) {
+            User user = (User) session.getAttribute("user");
+            if (commentService.saveComment(ConverterOfDTO.getDescriptionProductDTO(commentDTO, user))) {
                 model.addAttribute("message_add_com", ControllerMessageManager.ADD_COMM_SUCCESSFULLY);
             }
         }
@@ -44,7 +48,7 @@ public class CommentController {
     }
 
     @GetMapping("/update/{id}")
-    public String showListOfCommentsForUpdate(@ModelAttribute("updatedComment") DescriptionProductUserDTO commentDTO, @PathVariable String id, Model model) {
+    public String showListOfCommentsForUpdate(@ModelAttribute("updatedComment") DescriptionIdCommentDTO commentDTO, @PathVariable String id, Model model) {
         model.addAttribute("comId", id);
         return "updateComment";
     }

@@ -19,7 +19,4 @@ public interface CommentDao {
 
     boolean isExistById(long id);
 
-    boolean isExistByInfo(Comment comment);
-
-
 }

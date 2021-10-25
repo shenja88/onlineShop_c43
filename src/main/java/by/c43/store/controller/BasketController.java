@@ -20,17 +20,14 @@ import java.util.List;
 public class BasketController {
 
     @GetMapping("/add/{id}")
-    public String addInBasket(@PathVariable long id, HttpSession session){
+    public String addInBasket(@PathVariable long id, HttpSession session) {
         ProductBasket basket = (ProductBasket) session.getAttribute("basket");
-        if(basket.saveInBasket(id)){
-            return "store";
-        } else{
-            return "error";
-        }
+        basket.saveInBasket(id);
+        return "store";
     }
 
     @GetMapping("/getProducts")
-    public String getReservedProducts(Model model, HttpSession session){
+    public String getReservedProducts(Model model, HttpSession session) {
         ProductBasket basket = (ProductBasket) session.getAttribute("basket");
         List<Product> productList = basket.getReservedProducts();
         model.addAttribute("basketProducts", productList);
@@ -38,7 +35,7 @@ public class BasketController {
     }
 
     @GetMapping("/buyProd")
-    public String buyProducts(Model model, HttpSession session){
+    public String buyProducts(Model model, HttpSession session) {
         ProductBasket basket = (ProductBasket) session.getAttribute("basket");
         User user = (User) session.getAttribute("user");
         basket.setStatusOwnerAfterPurchase(user);

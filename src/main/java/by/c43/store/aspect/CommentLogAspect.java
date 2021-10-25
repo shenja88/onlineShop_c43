@@ -1,7 +1,7 @@
 package by.c43.store.aspect;
 
 import by.c43.store.dto.commentDTO.DescriptionIdCommentDTO;
-import by.c43.store.dto.commentDTO.DescriptionProductUserDTO;
+import by.c43.store.dto.commentDTO.DescriptionProductDTO;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -15,7 +15,7 @@ public class CommentLogAspect {
     private final Logger logger = LoggerFactory.getLogger(CommentLogAspect.class.getSimpleName());
 
     @Pointcut("execution(public * by.c43.store.controller.CommentController.addComment(..)) && args(commentDTO, *, ..)")
-    public void newComment(DescriptionProductUserDTO commentDTO){
+    public void newComment(DescriptionProductDTO commentDTO){
     }
 
     @Pointcut("execution(public * by.c43.store.controller.CommentController.updateComments(..)) && args(commentDTO, ..)")
@@ -31,7 +31,7 @@ public class CommentLogAspect {
     }
 
     @After(value = "newComment(commentDTO)", argNames = "commentDTO")
-    public void newCom(DescriptionProductUserDTO commentDTO){
+    public void newCom(DescriptionProductDTO commentDTO){
     logger.info("New comment added.");
     }
 

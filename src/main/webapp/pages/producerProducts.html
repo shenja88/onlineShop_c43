@@ -9,27 +9,29 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="row row-cols-auto">
-            <div th:each="product : ${producerProducts}" class="col">
+            <div th:each="card : ${producerProducts}" class="col">
                 <div  class="card" style="width: 18rem; background-color: #fafcfa; border-radius:8px; margin-top: 20px">
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${product.name}"></h5>
-                        <h6 class="card-subtitle mb-2 text-muted" th:text="${product.description}"></h6>
-                        <a th:href="@{/product/updProdPage/{id}(id = ${product.id})}"><img th:if="${product.picture == null}" src="images/accountAvatar.png"
+                        <h5 class="card-title" th:text="${card.product.name}"></h5>
+                        <h6 class="card-subtitle mb-2 text-muted" th:text="${card.product.description}"></h6>
+                        <a th:href="@{/product/updProdPage/{id}(id = ${card.product.id})}"><img th:if="${card.product.picture == null}" src="images/accountAvatar.png"
                              class="card-img-top"></a>
-                        <a th:href="@{/product/updProdPage/{id}(id = ${product.id})}"><img th:if="${product.picture != null}" th:src="${product.picture}"
+                        <a th:href="@{/product/updProdPage/{id}(id = ${card.product.id})}"><img th:if="${card.product.picture != null}" th:src="${card.product.picture}"
                              class="card-img-top"></a>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item" th:text="'Price: ' + ${product.price}"
+                        <li class="list-group-item" th:text="'Price: ' + ${card.product.price}"
                             style="background-color:#fafcfa "></li>
                     </ul>
-                    <div th:if="${product.producer.id == session.producer.id}" class="card-body">
-                        Your product
+                    <div th:if="${session.producer != null}">
+                        <div th:if="${card.product.producer.id == session.producer.id}" class="card-body">
+                            Your product
+                        </div>
                     </div>
                     <div class="card-footer text-muted">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
                             <div type="btn">
-                                <a th:href="@{/comment/allByProduct/{id}(id = ${product.id})}"
+                                <a th:href="@{/comment/allByProduct/{id}(id = ${card.product.id})}"
                                    class="btn btn-outline-success btn-sm"
                                    type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -40,7 +42,7 @@
                                 </a>
                             </div>
                             <div type="btn">
-                                <a th:href="@{/product/updRating/{id}(${product.id})}"
+                                <a th:text="${card.rating.score}"
                                    class="btn btn-outline-success btn-sm"
                                    type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

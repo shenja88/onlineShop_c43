@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div th:if="${basketProducts != null}" class="row justify-content-center">
             <div class="col-sm-4">
                 <a th:href="@{/basket/buyProd}">
                     <button type="button" class="btn btn-primary">
@@ -44,9 +44,14 @@
                     </button>
                 </a>
             </div>
-            <div class="col-md-4" th:if="${purchaseMessage != null}">
-                <p th:text="${purchaseMessage}"></p>
-            </div>
+        </div>
+        <div class="col-md-4" th:if="${purchaseMessage != null}">
+            <p th:text="${purchaseMessage}"></p>
+        </div>
+    </div>
+    <div class="row justify-content-center" th:if="${basketProducts == null}">
+        <div class="col-sm-3" style="padding: 30px 20px 20px; border-radius:8px; background: #e3f2fd; margin-top: 40px">
+            <p>Basket is empty!</p>
         </div>
     </div>
 </div>

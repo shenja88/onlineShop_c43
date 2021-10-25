@@ -46,6 +46,7 @@ public class ControllerMessageManager {
     public static final String DELETE_COMM_SUCCESSFULLY = "Successfully deleted!";
     public static final String USER_NOT_FOUND = "There is no information about the requested user!";
     public static final String PRODUCER_NOT_FOUND = "There is no information about the requested producer!";
+    public static final String BUY_ALL_RESERVED_PRODUCTS_SUCCESSFULLY = "All products are purchased!";
 
 
 }

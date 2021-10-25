@@ -208,7 +208,7 @@ public class ProductDaoImpl implements ProductDao {
         Optional<Product> optionalProduct = sessionFactory.getCurrentSession()
                 .createQuery(GET_BY_INFO, Product.class)
                 .setParameter("name", product.getName())
-                .setParameter("category", product.getCategory())
+                .setParameter("category", product.getCategory().ordinal())
                 .setParameter("prodId", product.getProducer().getId())
                 .uniqueResultOptional();
         return optionalProduct.isPresent();

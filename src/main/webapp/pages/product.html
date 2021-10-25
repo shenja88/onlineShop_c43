@@ -24,7 +24,7 @@
                     </li>
                     <li th:if="${card.product.reservedStatus == false && card.product.saleStatus == false && session.producer == null}"
                         class="list-group-item">
-                        <a th:href="@{}" class="btn btn-primary btn-lg" role="button" aria-disabled="true">Reserved</a>
+                        <a th:href="@{/basket/add/{id}(id = ${card.product.id})}" class="btn btn-primary btn-lg" role="button" aria-disabled="true">Reserved</a>
                     </li>
                 </ul>
                 <div th:if="${card.product.producer.id == session.producer.id}" class="card-body">

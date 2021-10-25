@@ -76,18 +76,21 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navDropdown">
                         <li><a class="dropdown-item" th:href="@{/producer/account}">Account</a></li>
                         <li><a class="dropdown-item" th:href="@{/product/byProducer/{id}(id = ${session.producer.id})}">My products</a></li>
-                        <li><a class="dropdown-item" th:href="@{/product/add}">Add product</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
                         <li><a class="dropdown-item" th:href="@{/producer/logOut}">Sign-out</a></li>
                     </ul>
                 </li>
-                <a th:if="${session.user != null}" class="pull-right navbar-text" style="padding-left: 30px" href="">
+                <a th:if="${session.user != null}" class="pull-right navbar-text" style="padding-left: 30px" th:href="@{/basket/getProducts}">
                     <img src="/images/basket_2.png" width="30px" height="30px">
                 </a>
-                <a th:if="${session.producer != null}" class="pull-right navbar-text" style="padding-left: 30px" href="">
-                    <img src="/images/basket_2.png" width="30px" height="30px">
+                <a th:if="${session.producer != null}" class="text-decoration-none ms-5" th:href="@{/product/add}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+                    </svg>
+                    Add new product
                 </a>
                 </li>
             </ul>

@@ -59,6 +59,8 @@ public class ConverterOfDTO {
                 .producer(producer)
                 .picture(allArgsProductDTO.getPicture())
                 .price(allArgsProductDTO.getPrice())
+                .reservedStatus(false)
+                .saleStatus(true)
                 .build();
     }
 

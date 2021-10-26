@@ -13,6 +13,7 @@
         <legend style="text-align: center; padding-bottom: 20px">Product info</legend>
         <div class="card-body">
           <h5 class="card-title" th:text="${card.product.name}"></h5>
+          <h6 class="card-subtitle mb-2 text-muted" th:text="${card.product.getCategory().name()}"></h6>
           <h6 class="card-subtitle mb-2 text-muted" th:text="${card.product.description}"></h6>
           <img th:if="${card.product.picture == null}" src="images/accountAvatar.png" class="card-img-top">
           <img th:if="${card.product.picture != null}" th:src="${card.product.picture}" class="card-img-top">

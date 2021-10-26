@@ -29,6 +29,11 @@
                             Your product
                         </div>
                     </div>
+                    <ul th:if="${card.product.producer.id == session.producer.id}" class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <a th:href="@{/product/deleteForProducer/{id}(id = ${card.product.getId()})}" class="btn btn-primary btn-lg" role="button" aria-disabled="true">Delete</a>
+                        </li>
+                    </ul>
                     <div class="card-footer text-muted">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
                             <div type="btn">

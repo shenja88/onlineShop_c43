@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lists Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-6" th:if="${allUser != null}">
+            <legend style="text-align: center; padding-bottom: 20px">All users (ID + Email)</legend>
+            <div th:each="user : ${allUser}">
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item" th:text="*{user.id}"></li>
+                    <li class="list-group-item" th:text="*{user.email}"></li>
+                    <li class="list-group-item list-group-item-action">
+                        <a th:href="@{/user/deleteUser/{id}(id = *{user.id})}">Delete</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-6" th:if="${allProducers != null}">
+            <legend style="text-align: center; padding-bottom: 20px">All producers (ID + Email)</legend>
+            <div th:each="producer : ${allProducers}">
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item" th:text="*{producer.id}"></li>
+                    <li class="list-group-item" th:text="*{producer.email}"></li>
+                    <li class="list-group-item list-group-item-action">
+                        <a th:href="@{/producer/delete/{id}(id = *{producer.id})}">Delete</a></li>
+                </ul>
+            </div>
+        </div>
+      <div class="col-sm-6" th:if="${allProducts != null}">
+        <legend style="text-align: center; padding-bottom: 20px">All product (ID + name)</legend>
+        <div th:each="product : ${allProducts}">
+          <ul class="list-group list-group-horizontal">
+            <li class="list-group-item" th:text="*{product.id}"></li>
+            <li class="list-group-item" th:text="*{product.name}"></li>
+            <li class="list-group-item list-group-item-action">
+                <a th:href="@{/product/deleteForUser/{id}(id = *{product.id})}">Delete</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</div>
+<script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+</body>
+</html>

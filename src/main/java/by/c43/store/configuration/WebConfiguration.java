@@ -1,5 +1,6 @@
 package by.c43.store.configuration;
 
+import by.c43.store.interceptor.AdminInterceptor;
 import by.c43.store.interceptor.UserAndProducerInterceptor;
 import lombok.AllArgsConstructor;
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
@@ -32,7 +33,7 @@ import java.util.Properties;
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     private final UserAndProducerInterceptor userAndProducerInterceptor;
-
+    private final AdminInterceptor adminInterceptor;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -110,5 +111,9 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
                 .addPathPatterns("/user/**")
                 .addPathPatterns("/basket/**")
                 .excludePathPatterns("/user/reg", "/user/auth", "/producer/reg", "/producer/auth");
+        registry.addInterceptor(adminInterceptor)
+                .addPathPatterns("/user/all")
+                .addPathPatterns("/producer/all")
+                .addPathPatterns("/product/allForAdmin");
     }
 }

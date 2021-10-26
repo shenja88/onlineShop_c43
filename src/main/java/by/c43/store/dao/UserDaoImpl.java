@@ -6,6 +6,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Transactional
@@ -130,5 +134,11 @@ public class UserDaoImpl implements UserDao {
                 .setParameter("password", password)
                 .uniqueResultOptional();
         return optionalUser.isPresent();
+    }
+
+    @Override
+    public List<User> getAll() {
+        return sessionFactory.getCurrentSession()
+                .createQuery("from User", User.class).getResultList();
     }
 }

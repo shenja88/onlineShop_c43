@@ -3,10 +3,13 @@ package by.c43.store.service;
 
 import by.c43.store.dao.ProducerDao;
 import by.c43.store.dao.TelephoneDao;
+import by.c43.store.dto.cardDTO.UserOrProducerIdEmailForAdminDTO;
 import by.c43.store.entity.*;
+import by.c43.store.utils.ConverterOfDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,7 +27,7 @@ public class ProducerService {
     }
 
     public boolean deleteProducer(long id, User user) {
-        if (producerDao.isExistById(id) && user.getTypeOfUser() == TypeOfUser.ADMIN ) {
+        if (producerDao.isExistById(id) && user.getTypeOfUser().equals(TypeOfUser.ADMIN)) {
             producerDao.deleteProducer(id);
             return true;
         } else return false;
@@ -119,5 +122,10 @@ public class ProducerService {
             producerDao.deleteTelephone(telephone, producer.getId());
             return true;
         }else return false;
+    }
+
+    public List<UserOrProducerIdEmailForAdminDTO> getAllProducer(){
+        List<Producer> producers = producerDao.getAll();
+        return ConverterOfDTO.getCardsProducerForAdmin(producers);
     }
 }

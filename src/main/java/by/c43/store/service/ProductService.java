@@ -24,9 +24,19 @@ public class ProductService {
         return false;
     }
 
-    public boolean delete(User user, Product product) {
+    public boolean deleteForUser(User user, Product product) {
         if (productDao.isExistById(product.getId())) {
             if (user.getTypeOfUser().equals(TypeOfUser.ADMIN) || user.equals(product.getOwner())) {
+                productDao.deleteProduct(product.getId());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteForProducer(Producer producer, Product product) {
+        if (productDao.isExistById(product.getId())) {
+            if (product.getProducer().getEmail().equals(producer.getEmail()) && product.getOwner() == null) {
                 productDao.deleteProduct(product.getId());
                 return true;
             }

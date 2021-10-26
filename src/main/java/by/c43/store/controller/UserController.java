@@ -1,7 +1,6 @@
 package by.c43.store.controller;
 
 
-
 import by.c43.store.dto.telephonesDTO.NumberIdTelDTO;
 import by.c43.store.dto.cardDTO.UserCardInfoDTO;
 import by.c43.store.dto.telephonesDTO.NumberTelDTO;
@@ -65,8 +64,12 @@ public class UserController {
             Optional<User> userOp = userService.authorization(user);
             if (userOp.isPresent()) {
                 httpSession.setAttribute("user", userOp.get());
-                httpSession.setAttribute("basket", productBasket);
-                model.addAttribute("messageAuth", ControllerMessageManager.AUTH_SUCCESSFULLY);
+                if (userOp.get().getTypeOfUser().equals(TypeOfUser.ADMIN)) {
+                    return "adminPage";
+                } else {
+                    httpSession.setAttribute("basket", productBasket);
+                    model.addAttribute("messageAuth", ControllerMessageManager.AUTH_SUCCESSFULLY);
+                }
             } else {
                 model.addAttribute("messageAuth", ControllerMessageManager.AUTH_FAIL);
             }
@@ -159,7 +162,7 @@ public class UserController {
     }
 
     @GetMapping("/updTel/{id}")
-    public String updateNumber(@PathVariable long id,  Model model) {
+    public String updateNumber(@PathVariable long id, Model model) {
         model.addAttribute("numberTelDTO", new NumberIdTelDTO());
         model.addAttribute("telId", id);
         return "updNumber";
@@ -181,15 +184,15 @@ public class UserController {
         return "updNumber";
     }
 
-    @PostMapping("/deleteUser/{id}")
+    @GetMapping("/deleteUser/{id}")
     public String deleteUser(@PathVariable long id, Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         if (userService.deleteUser(user, id)) {
-            model.addAttribute("messageDeleteUser", ControllerMessageManager.DELETE_USER_SUCCESSFULLY);
+            model.addAttribute("message", ControllerMessageManager.DELETE_USER_SUCCESSFULLY);
         } else {
-            model.addAttribute("messageDeleteUser", ControllerMessageManager.DELETE_USER_FAIL);
+            model.addAttribute("message", ControllerMessageManager.DELETE_USER_FAIL);
         }
-        return "deleteUser";
+        return "adminPage";
     }
 
     @GetMapping("/logout")
@@ -203,18 +206,24 @@ public class UserController {
     }
 
     @GetMapping("account")
-    public String account(){
+    public String account() {
         return "account";
     }
 
     @GetMapping("/userInfo/{id}")
-    public String getUserInfo(@PathVariable long id, Model model){
-        if(userService.getUserById(id).isPresent()){
+    public String getUserInfo(@PathVariable long id, Model model) {
+        if (userService.getUserById(id).isPresent()) {
             UserCardInfoDTO userCard = ConverterOfDTO.getUserCard(userService.getUserById(id).get());
             model.addAttribute("userCard", userCard);
-        }else{
+        } else {
             model.addAttribute("messageUserCard", ControllerMessageManager.USER_NOT_FOUND);
         }
         return "userInfo";
+    }
+
+    @GetMapping("/all")
+    public String getAllForUser(Model model){
+        model.addAttribute("allUser", userService.getAll());
+        return "adminLists";
     }
 }

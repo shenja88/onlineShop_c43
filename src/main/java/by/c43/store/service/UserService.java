@@ -2,12 +2,16 @@ package by.c43.store.service;
 
 
 import by.c43.store.dao.UserDao;
+import by.c43.store.dto.cardDTO.UserCardInfoDTO;
+import by.c43.store.dto.cardDTO.UserOrProducerIdEmailForAdminDTO;
 import by.c43.store.entity.Telephone;
 import by.c43.store.entity.TypeOfUser;
 import by.c43.store.entity.User;
+import by.c43.store.utils.ConverterOfDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -80,11 +84,16 @@ public class UserService {
     }
 
     public boolean deleteUser(User user, long id) {
-        if (userDAO.isExistById(id) && user.getTypeOfUser().equals(TypeOfUser.ADMIN)) {
+        if (userDAO.isExistById(id) && user.getTypeOfUser().equals(TypeOfUser.ADMIN) && user.getId() != id) {
             userDAO.delete(id);
             return true;
         }
         return false;
+    }
+
+    public List<UserOrProducerIdEmailForAdminDTO> getAll(){
+       List<User> users = userDAO.getAll();
+       return ConverterOfDTO.getCardsUserForAdmin(users);
     }
 
     public Optional<User> getUserById(long id){

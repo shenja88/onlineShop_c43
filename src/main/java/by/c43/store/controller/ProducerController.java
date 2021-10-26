@@ -155,12 +155,12 @@ public class ProducerController {
         return "updateDescriptionProducer";
     }
 
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable long id, HttpSession httpSession, Model model) {
         if (producerService.deleteProducer(id, (User) httpSession.getAttribute("user"))) {
             model.addAttribute("message", ControllerMessageManager.DELETE_PRODUCER_SUCCESSFULLY);
         } else model.addAttribute("message", ControllerMessageManager.DELETE_PRODUCER_FAIL);
-        return "redirect:/producer/account";
+        return "adminPage";
     }
 
     @GetMapping("/addTelephone")
@@ -269,5 +269,11 @@ public class ProducerController {
             model.addAttribute("messageProducerCard", ControllerMessageManager.PRODUCER_NOT_FOUND);
         }
         return "producerInfo";
+    }
+
+    @GetMapping("/all")
+    public String getAllForUser(Model model){
+        model.addAttribute("allProducers", producerService.getAllProducer());
+        return "adminLists";
     }
 }

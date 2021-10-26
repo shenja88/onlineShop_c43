@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -132,5 +133,12 @@ public class ProducerDaoImpl implements  ProducerDao{
     public void deleteTelephone(Telephone telephone, long id) {
         Producer producer = sessionFactory.getCurrentSession().get(Producer.class, id);
         producer.getTelephones().remove(telephone);
+    }
+
+    @Override
+    public List<Producer> getAll() {
+        return sessionFactory.getCurrentSession()
+                .createQuery("from Producer", Producer.class)
+                .getResultList();
     }
 }

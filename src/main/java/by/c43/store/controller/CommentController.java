@@ -57,9 +57,10 @@ public class CommentController {
 
     @PostMapping("/update")
     public String updateComments(@Valid @ModelAttribute("updatedComment") DescriptionIdCommentDTO commentDTO, BindingResult bindingResult,
-                                 String newDescription, Model model) {
+                                 Model model, long id) {
         if (!bindingResult.hasErrors()) {
-            if (commentService.updateDescription(commentDTO.getCommentId(), newDescription)) {
+            commentDTO.setCommentId(id);
+            if (commentService.updateDescription(commentDTO.getCommentId(), commentDTO.getDescription())) {
                 model.addAttribute("message_update_com", ControllerMessageManager.UPDATE_COMM_SUCCESSFULLY);
             } else {
                 model.addAttribute("message_update_com", ControllerMessageManager.OPERATION_FAILED);
@@ -68,14 +69,14 @@ public class CommentController {
         return "updateComment";
     }
 
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteComment(@PathVariable long id, Model model) {
         if (commentService.deleteById(id)) {
             model.addAttribute("message_remove_com", ControllerMessageManager.DELETE_COMM_SUCCESSFULLY);
         } else {
             model.addAttribute("message_remove_com", ControllerMessageManager.OPERATION_FAILED);
         }
-        return "productComments";
+        return "store";
     }
 
     @GetMapping("/allByProduct/{id}")

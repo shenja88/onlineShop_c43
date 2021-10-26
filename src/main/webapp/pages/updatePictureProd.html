@@ -10,8 +10,8 @@
   <div class="row justify-content-center">
     <div class="col-sm-3" style="padding: 30px 20px 20px; border-radius:8px; background: #e3f2fd; margin-top: 40px">
       <legend style="text-align: center; padding-bottom: 20px">Please enter new picture URL</legend>
-      <form th:action="@{/product/udpPicture}" th:object="${pictureDTO}" method="post">
-        <input type="hidden" th:field="*{id}" th:attr="id = ${prodId}">
+      <form th:action="@{/product/updPicture}" th:object="${pictureDTO}" method="post">
+        <input type="hidden" name="id" th:value="${prodId}">
         <input type="text" th:field="*{picture}" class="form-control m-2" aria-describedby="emailHelp" required
                placeholder="New picture URL:">
         <p th:if="${#fields.hasErrors('picture')}" th:errors="*{picture}"></p>

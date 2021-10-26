@@ -11,6 +11,7 @@
         <div class="card m-3" style="width: 16rem; background-color: #fafcfa; border-radius:8px; margin-top: 20px">
             <div class="card-body">
                 <h5 class="card-title" th:text="'Name: ' + ${productById.name}"></h5>
+                <h6 class="card-subtitle mb-2 text-muted" th:text="${productById.getCategory().name()}"></h6>
                 <h6 class="card-subtitle mb-2 text-muted" th:text="'Description: ' + ${productById.description}"></h6>
                 <img th:if="${productById.picture == null}" src="images/accountAvatar.png" class="card-img-top">
                 <img th:if="${productById.picture != null}" th:src="${productById.picture}" class="card-img-top">

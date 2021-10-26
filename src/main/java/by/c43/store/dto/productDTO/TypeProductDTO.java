@@ -15,8 +15,5 @@ import javax.validation.constraints.NotNull;
 @Data
 public class TypeProductDTO {
     private long id;
-    @NotBlank
-    @NotEmpty
-    @NotNull
     private CategoryOfProduct category;
 }

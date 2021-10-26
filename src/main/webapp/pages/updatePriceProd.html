@@ -10,9 +10,9 @@
     <div class="row justify-content-center">
         <div class="col-sm-3" style="padding: 30px 20px 20px; border-radius:8px; background: #e3f2fd; margin-top: 40px">
             <legend style="text-align: center; padding-bottom: 20px">Please enter new product price</legend>
-            <form th:action="@{/product/udpPrice}" th:object="${newPrice}" method="post">
-                <input type="hidden" th:field="*{prodId}" th:attr="id = ${prodId}">
-                <input type="text" th:field="*{price}" class="form-control m-2" aria-describedby="emailHelp" required
+            <form th:action="@{/product/updPrice}" th:object="${newPrice}" method="post">
+                <input type="hidden" name="id" th:value="${prodId}">
+                <input type="number" th:field="*{price}" class="form-control m-2" aria-describedby="emailHelp" required
                        placeholder="New price:">
                 <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
                 <div style="text-align:center">

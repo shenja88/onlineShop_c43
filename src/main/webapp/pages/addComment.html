@@ -13,7 +13,7 @@
             <form th:action="@{/comment/add}" th:object="${newComment}" method="post">
                 <div class="form-floating">
                     <input type="hidden" name="id" th:value="${prodId}">
-                    <input type="text" th:field="*{description}" class="form-control m-2"  required
+                    <input type="text" th:field="*{description}" class="form-control m-2" required
                            placeholder="New comment">
                     <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
                     <div style="text-align:center">
@@ -21,13 +21,7 @@
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
-</div>
-<div class="row justify-content-center">
-    <div th:if="${message_add_com != null}" class="alert alert-warning" role="alert">
-        <div class="col-sm-3 text-center m-3">
-            <div class="alert alert-warning" role="alert">
+            <div th:if="${message_add_com != null}" class="alert alert-warning mt-3" role="alert">
                 <p th:text="*{message_add_com}"></p>
             </div>
         </div>

@@ -68,17 +68,17 @@
           <a th:href="@{/product/udpDesc/{id}(id = ${card.product.id})}" class="list-group-item list-group-item-action">Update product description</a>
           <a th:href="@{/product/udpPicture/{id}(id = ${card.product.id})}" class="list-group-item list-group-item-action">Update product picture</a>
           <a th:href="@{/product/udpType/{id}(id = ${card.product.id})}" class="list-group-item list-group-item-action">Update product category</a>
-          <a th:href="@{/product/udpPrice/{id}(id = ${card.product.id})}" class="list-group-item list-group-item-action">Update product price</a>
+          <a th:href="@{/product/updPrice/{id}(id = ${card.product.id})}" class="list-group-item list-group-item-action">Update product price</a>
         </div>
       </div>
       <div th:if="${session.user != null}">
         <div th:if="${card.product.owner.id == session.user.id}" class="list-group">
-          <a th:href="@{/product/udpPrice/{id}(id = ${card.product.id})}" class="list-group-item list-group-item-action">Update product price</a>
+          <a th:href="@{/product/updPrice/{id}(id = ${card.product.id})}" class="list-group-item list-group-item-action">Update product price</a>
           <div th:if="${card.product.saleStatus == true}">
-            <a th:href="@{/product/udpPrice/{status}{id}(id = ${card.product.id})(status = false)}" class="list-group-item list-group-item-action">Remove product from sale</a>
+            <a th:href="@{/product/setSaleStatus/{status}/{id}(status = false, id=${card.product.id})}" class="list-group-item list-group-item-action">Remove product from sale</a>
           </div>
           <div th:if="${card.product.saleStatus == false}">
-            <a th:href="@{/product/udpPrice/{status}{id}(id = ${card.product.id})(status = true)}" class="list-group-item list-group-item-action">Sell out product</a>
+            <a th:href="@{/product/setSaleStatus/{status}/{id}(status = true, id=${card.product.id})}" class="list-group-item list-group-item-action">Sell out product</a>
           </div>
         </div>
       </div>

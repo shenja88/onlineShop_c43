@@ -69,8 +69,9 @@ public class ProductController {
 
     @PostMapping("/updName")
     public String updateName(@Valid @ModelAttribute("nameDTO") NameProductDTO dto, BindingResult bindingResult,
-                             Model model) {
+                             Model model, long id) {
         if (!bindingResult.hasErrors()) {
+            dto.setId(id);
             if (productService.updateName(dto.getName(), dto.getId())) {
                 model.addAttribute("messageUpdName", ControllerMessageManager.UPDATE_PRODUCT_NAME_SUCCESSFULLY);
             } else {
@@ -88,8 +89,9 @@ public class ProductController {
 
     @PostMapping("/updDesc")
     public String updateDescription(@Valid @ModelAttribute("descDTO") DescriptionProductDTO dto, BindingResult bindingResult,
-                                    Model model) {
+                                    Model model, long id) {
         if (!bindingResult.hasErrors()) {
+            dto.setId(id);
             if (productService.updateDescription(dto.getDescription(), dto.getId())) {
                 model.addAttribute("messageUpdDescription", ControllerMessageManager.UPDATE_DESCRIPTION_SUCCESSFULLY);
             } else {
@@ -107,8 +109,9 @@ public class ProductController {
 
     @PostMapping("/updPicture")
     public String updatePicture(@Valid @ModelAttribute("pictureDTO") PictureProductDTO dto, BindingResult bindingResult,
-                                Model model) {
+                                Model model, long id) {
         if (!bindingResult.hasErrors()) {
+            dto.setId(id);
             if (productService.updatePicture(dto.getPicture(), dto.getId())) {
                 model.addAttribute("messageUpdPicture", ControllerMessageManager.UPDATE_PICTURE_SUCCESSFULLY);
             } else {
@@ -127,8 +130,9 @@ public class ProductController {
 
     @PostMapping("/updType")
     public String updateType(@Valid @ModelAttribute("typeDTO") TypeProductDTO dto, BindingResult bindingResult,
-                             Model model) {
+                             Model model, long id) {
         if (!bindingResult.hasErrors()) {
+            dto.setId(id);
             if (productService.updateTypeProduct(dto.getCategory(), dto.getId())) {
                 model.addAttribute("messageUpdType", ControllerMessageManager.UPDATE_TYPE_SUCCESSFULLY);
             } else {
@@ -138,15 +142,17 @@ public class ProductController {
         return "updateTypeProd";
     }
 
-    @GetMapping("/udpPrice/{id}")
+    @GetMapping("/updPrice/{id}")
     public String updatePrice(@ModelAttribute("newPrice") NewPriceDTO priceDTO, @PathVariable long id, Model model) {
         model.addAttribute("prodId", id);
         return "updatePriceProd";
     }
 
     @PostMapping("/updPrice")
-    public String updatePrice(@Valid @ModelAttribute("newPrice") NewPriceDTO priceDTO, BindingResult bindingResult, Model model) {
+    public String updatePrice(@Valid @ModelAttribute("newPrice") NewPriceDTO priceDTO, BindingResult bindingResult, Model model,
+                              long id) {
         if(!bindingResult.hasErrors()) {
+            priceDTO.setProdId(id);
             if (productService.updatePrice(priceDTO.getPrice(), priceDTO.getProdId())) {
                 model.addAttribute("messageUpdPrice", ControllerMessageManager.UPDATE_PRICE_SUCCESSFULLY);
             } else {
@@ -163,9 +169,11 @@ public class ProductController {
     }
 
     @PostMapping("/updRating")
-    public String updateRating(@Valid @ModelAttribute("newRating") NewRatingDTO ratingDTO, BindingResult bindingResult, Model model, HttpSession session){
+    public String updateRating(@Valid @ModelAttribute("newRating") NewRatingDTO ratingDTO, BindingResult bindingResult, Model model, HttpSession session,
+                               long id){
         if(!bindingResult.hasErrors()) {
             User user = (User) session.getAttribute("user");
+            ratingDTO.setProdId(id);
             if (productService.updateScore(ratingDTO.getScore(), ratingDTO.getProdId(), user)) {
                 model.addAttribute("messageUpdRating", ControllerMessageManager.UPDATE_RATING_SUCCESSFULLY);
             } else {
@@ -263,7 +271,7 @@ public class ProductController {
         return "store";
     }
 
-    @GetMapping("/setSaleStatus/{status},{id}")
+    @GetMapping("/setSaleStatus/{status}/{id}")
     public String setForSaleStatus(@PathVariable(name = "status") boolean status, @PathVariable(name = "id") long id){
         productService.setSaleStatus(status, id);
         return "userProducts";

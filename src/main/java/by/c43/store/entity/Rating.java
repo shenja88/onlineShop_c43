@@ -21,7 +21,7 @@ public class Rating {
     @Column(nullable = false)
     private double score;
 
-    @Singular
+
     @ElementCollection
     private List<Long> users;
 

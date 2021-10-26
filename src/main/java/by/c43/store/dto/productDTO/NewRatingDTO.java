@@ -11,8 +11,10 @@ import javax.validation.constraints.Min;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NewRatingDTO {
+
     private long prodId;
     @Min(1)
     @Max(5)
     private int score;
+
 }

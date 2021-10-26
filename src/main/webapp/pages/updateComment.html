@@ -10,9 +10,9 @@
     <div class="row justify-content-center">
         <div class="col-sm-4 m5 bg-success p-2 text-dark bg-opacity-10 rounded">
             <legend style="text-align: center; padding-bottom: 20px">Please enter new description for product</legend>
-            <form th:action="@{/comment/add}" th:object="${updatedComment}" method="post">
+            <form th:action="@{/comment/update}" th:object="${updatedComment}" method="post">
                 <div class="form-floating">
-                    <input type="hidden" th:field="*{commentId}" th:attr="id = ${comId}">
+                    <input type="hidden" name="id" th:value="${comId}">
                     <input type="text" th:field="*{description}" class="form-control m-2" aria-describedby="emailHelp"
                            required
                            placeholder="New comment:">
@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </form>
-            <div th:if="${message_update_com != null}" class="alert alert-warning" role="alert">
+            <div th:if="${message_update_com != null}" class="alert alert-warning mt-3" role="alert">
                 <p th:text="*{message_update_com}"></p>
             </div>
         </div>

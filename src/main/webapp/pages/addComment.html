@@ -12,6 +12,7 @@
             <legend style="text-align: center; padding-bottom: 20px">Write your comment</legend>
             <form th:action="@{/comment/add}" th:object="${newComment}" method="post">
                 <div class="form-floating">
+                    <input type="hidden" name="id" th:value="${prodId}">
                     <input type="text" th:field="*{description}" class="form-control m-2"  required
                            placeholder="New comment">
                     <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>

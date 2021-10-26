@@ -35,11 +35,13 @@ public class CommentController {
     }
 
     @PostMapping("/add")
-    public String addComment(@Valid @ModelAttribute("newComment") DescriptionProductDTO commentDTO, BindingResult bindingResult, Model model, HttpSession session) {
+    public String addComment(@Valid @ModelAttribute("newComment") DescriptionProductDTO commentDTO, BindingResult bindingResult, Model model, HttpSession session
+    ,long id) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("message_add_com", ControllerMessageManager.ADD_COMM_FAIL);
         } else {
             User user = (User) session.getAttribute("user");
+            commentDTO.setProductId(id);
             if (commentService.saveComment(ConverterOfDTO.getDescriptionProductDTO(commentDTO, user))) {
                 model.addAttribute("message_add_com", ControllerMessageManager.ADD_COMM_SUCCESSFULLY);
             }

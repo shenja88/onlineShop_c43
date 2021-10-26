@@ -5,6 +5,7 @@ import by.c43.store.dto.addressDTO.ArgNoIdAddressDTO;
 import by.c43.store.dto.cardDTO.CardDTO;
 import by.c43.store.dto.cardDTO.ProducerCardDTO;
 import by.c43.store.dto.cardDTO.UserCardInfoDTO;
+import by.c43.store.dto.cardDTO.UserOrProducerIdEmailForAdminDTO;
 import by.c43.store.dto.commentDTO.DescriptionProductDTO;
 import by.c43.store.dto.producerDTO.AllArgsProducerDTO;
 import by.c43.store.dto.producerDTO.EmailPasswordProducerDTO;
@@ -17,6 +18,7 @@ import by.c43.store.entity.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConverterOfDTO {
@@ -149,5 +151,17 @@ public class ConverterOfDTO {
                         .id(descriptionProductUserDTO.getProductId())
                         .build())
                 .build();
+    }
+
+    public static List<UserOrProducerIdEmailForAdminDTO> getCardsUserForAdmin(List<User> users){
+        List<UserOrProducerIdEmailForAdminDTO> userCards = new ArrayList<>();
+        users.forEach(u -> userCards.add(UserOrProducerIdEmailForAdminDTO.builder().id(u.getId()).email(u.getEmail()).build()));
+        return userCards;
+    }
+
+    public static List<UserOrProducerIdEmailForAdminDTO> getCardsProducerForAdmin(List<Producer> producers){
+        List<UserOrProducerIdEmailForAdminDTO> producerCards = new ArrayList<>();
+        producers.forEach(p -> producerCards.add(UserOrProducerIdEmailForAdminDTO.builder().id(p.getId()).email(p.getEmail()).build()));
+        return producerCards;
     }
 }

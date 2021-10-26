@@ -4,6 +4,7 @@ import by.c43.store.entity.Address;
 import by.c43.store.entity.Producer;
 import by.c43.store.entity.Telephone;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ProducerDao {
@@ -38,4 +39,5 @@ public interface ProducerDao {
 
     void deleteTelephone(Telephone telephone, long id);
 
+    List<Producer> getAll();
 }

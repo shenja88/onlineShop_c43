@@ -47,12 +47,29 @@ public class ProductController {
         return "addProd";
     }
 
-    @GetMapping("/delete/{id}")
-    public String delete(@PathVariable long id, Model model, HttpSession session) {
+    @GetMapping("/deleteForUser/{id}")
+    public String deleteForUser(@PathVariable long id, Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         Optional<Product> product = productService.getById(id);
         if(product.isPresent()) {
-            if (productService.delete(user, product.get())) {
+            if (productService.deleteForUser(user, product.get())) {
+                model.addAttribute("message", ControllerMessageManager.DELETE_PRODUCT_SUCCESSFULLY);
+            } else {
+                model.addAttribute("message", ControllerMessageManager.DELETE_PRODUCT_FAIL);
+            }
+        }
+        if(user.getTypeOfUser().equals(TypeOfUser.ADMIN)){
+            return "adminPage";
+        }
+        return "store";
+    }
+
+    @GetMapping("/deleteForProducer/{id}")
+    public String deleteForProducer(@PathVariable long id, Model model, HttpSession session) {
+        Producer producer = (Producer) session.getAttribute("producer");
+        Optional<Product> product = productService.getById(id);
+        if(product.isPresent()) {
+            if (productService.deleteForProducer(producer, product.get())) {
                 model.addAttribute("messageRemoveProd", ControllerMessageManager.DELETE_PRODUCT_SUCCESSFULLY);
             } else {
                 model.addAttribute("messageRemoveProd", ControllerMessageManager.DELETE_PRODUCT_FAIL);
@@ -267,5 +284,12 @@ public class ProductController {
     public String setForSaleStatus(@PathVariable(name = "status") boolean status, @PathVariable(name = "id") long id){
         productService.setSaleStatus(status, id);
         return "userProducts";
+    }
+
+    @GetMapping("/allForAdmin")
+    public String getAllForAdmin(Model model){
+        Optional<List<Product>> products = Optional.ofNullable(productService.getAll());
+        products.ifPresent(productList -> model.addAttribute("allProducts", productList));
+        return "adminLists";
     }
 }

@@ -4,6 +4,7 @@ import by.c43.store.entity.Telephone;
 import by.c43.store.entity.User;
 import org.hibernate.Session;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserDao {
@@ -32,4 +33,5 @@ public interface UserDao {
 
     boolean isExistByEmailAndPassword(String email, String password);
 
+    List<User> getAll();
 }

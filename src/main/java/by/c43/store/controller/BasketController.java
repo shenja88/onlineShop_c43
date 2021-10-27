@@ -31,7 +31,7 @@ public class BasketController {
         ProductBasket basket = (ProductBasket) session.getAttribute("basket");
         List<Product> productList = basket.getReservedProducts();
         model.addAttribute("basketProducts", productList);
-        return "basket";
+        return "user/basket";
     }
 
     @GetMapping("/buyProd")
@@ -40,6 +40,6 @@ public class BasketController {
         User user = (User) session.getAttribute("user");
         basket.setStatusOwnerAfterPurchase(user);
         model.addAttribute("purchaseMessage", ControllerMessageManager.BUY_ALL_RESERVED_PRODUCTS_SUCCESSFULLY);
-        return "basket";
+        return "user/basket";
     }
 }

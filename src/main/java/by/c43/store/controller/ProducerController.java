@@ -30,7 +30,7 @@ public class ProducerController {
 
     @GetMapping("/reg")
     public String registration(@ModelAttribute("newProducer") AllArgsProducerDTO allArgsProducerDTO) {
-        return "regProducer";
+        return "producer/regProducer";
     }
 
     @PostMapping("/reg")
@@ -42,12 +42,12 @@ public class ProducerController {
                 model.addAttribute("message", ControllerMessageManager.REG_SUCCESSFULLY);
             } else model.addAttribute("message", ControllerMessageManager.REG_PRODUCER_FAIL);
         }
-        return "regProducer";
+        return "producer/regProducer";
     }
 
     @GetMapping("/auth")
     public String authorization(@ModelAttribute("oldProducer") EmailPasswordProducerDTO emailPasswordProducerDTO) {
-        return "authProducer";
+        return "producer/authProducer";
     }
 
     @PostMapping("/auth")
@@ -61,13 +61,13 @@ public class ProducerController {
                 model.addAttribute("message", ControllerMessageManager.AUTH_SUCCESSFULLY);
             } else model.addAttribute("message", ControllerMessageManager.AUTH_PRODUCER_FAIL);
         }
-        return "authProducer";
+        return "producer/authProducer";
     }
 
 
     @GetMapping("/updateName")
     public String updateName(@ModelAttribute("producerName") ProducerNameDTO producerNameDTO) {
-        return "updateNameProducer";
+        return "producer/updateNameProducer";
     }
 
     @PostMapping("/updateName")
@@ -80,12 +80,12 @@ public class ProducerController {
                 model.addAttribute("message", ControllerMessageManager.UPDATE_NAME_SUCCESSFULLY);
             } else model.addAttribute("message", ControllerMessageManager.UPDATE_NAME_FAIL);
         }
-        return "updateNameProducer";
+        return "producer/updateNameProducer";
     }
 
     @GetMapping("/updateEmail")
     public String updateEmail(@ModelAttribute("producerEmail") ProducerEmailDTO producerEmailDTO) {
-        return "updateEmailProducer";
+        return "producer/updateEmailProducer";
     }
 
     @PostMapping("/updateEmail")
@@ -98,12 +98,12 @@ public class ProducerController {
                 model.addAttribute("message", ControllerMessageManager.UPDATE_EMAIL_SUCCESSFULLY);
             } else model.addAttribute("message", ControllerMessageManager.UPDATE_EMAIL_FAIL);
         }
-        return "updateEmailProducer";
+        return "producer/updateEmailProducer";
     }
 
     @GetMapping("/updatePassword")
     public String updatePassword(@ModelAttribute("producerPassword") ProducerPasswordDTO passwordDTO) {
-        return "updatePasswordProducer";
+        return "producer/updatePasswordProducer";
     }
 
     @PostMapping("/updatePassword")
@@ -116,12 +116,12 @@ public class ProducerController {
                 model.addAttribute("message", ControllerMessageManager.UPDATE_PASSWORD_SUCCESSFULLY);
             } else model.addAttribute("message", ControllerMessageManager.UPDATE_PASSWORD_FAIL);
         }
-        return "updatePasswordProducer";
+        return "producer/updatePasswordProducer";
     }
 
     @GetMapping("/updatePicture")
     public String updatePicture(@ModelAttribute("producerPicture") ProducerPictureDTO producerPictureDTO) {
-        return "updatePictureProducer";
+        return "producer/updatePictureProducer";
     }
 
     @PostMapping("/updatePicture")
@@ -134,12 +134,12 @@ public class ProducerController {
                 model.addAttribute("message", ControllerMessageManager.UPDATE_PICTURE_SUCCESSFULLY);
             } else model.addAttribute("message", ControllerMessageManager.UPDATE_PICTURE_FAIL);
         }
-        return "updatePictureProducer";
+        return "producer/updatePictureProducer";
     }
 
     @GetMapping("/updateDescription")
     public String updateDescription(@ModelAttribute("producerDescription") ProducerDescriptionDTO descriptionDTO) {
-        return "updateDescriptionProducer";
+        return "producer/updateDescriptionProducer";
     }
 
     @PostMapping("/updateDescription")
@@ -152,7 +152,7 @@ public class ProducerController {
                 model.addAttribute("message", ControllerMessageManager.UPDATE_DESCRIPTION_SUCCESSFULLY);
             } else model.addAttribute("message", ControllerMessageManager.OPERATION_FAILED);
         }
-        return "updateDescriptionProducer";
+        return "producer/updateDescriptionProducer";
     }
 
     @GetMapping("/delete/{id}")
@@ -160,12 +160,12 @@ public class ProducerController {
         if (producerService.deleteProducer(id, (User) httpSession.getAttribute("user"))) {
             model.addAttribute("message", ControllerMessageManager.DELETE_PRODUCER_SUCCESSFULLY);
         } else model.addAttribute("message", ControllerMessageManager.DELETE_PRODUCER_FAIL);
-        return "adminPage";
+        return "admin/adminPage";
     }
 
     @GetMapping("/addTelephone")
     public String addTelephone(@ModelAttribute("newTelephone") NumberTelDTO numberTelDTO) {
-        return "addTelephoneProducer";
+        return "producer/addTelephoneProducer";
     }
 
     @PostMapping("/addTelephone")
@@ -182,13 +182,13 @@ public class ProducerController {
 
             } else model.addAttribute("message", ControllerMessageManager.ADD_TEL_FAIL);
         }
-        return "addTelephoneProducer";
+        return "producer/addTelephoneProducer";
     }
 
     @GetMapping("/updateTelephone/{id}")
     public String updateTelephone(@ModelAttribute("telephone") NumberIdTelDTO numberTelDTO,
                                   @ModelAttribute("telId") @PathVariable long id) {
-        return "updateTelephoneProducer";
+        return "producer/updateTelephoneProducer";
     }
 
     @PostMapping("/updateTelephone")
@@ -202,13 +202,13 @@ public class ProducerController {
                 model.addAttribute("message", ControllerMessageManager.UPDATE_TEL_SUCCESSFULLY);
             } else model.addAttribute("message", ControllerMessageManager.UPDATE_TEL_FAIL);
         }
-        return "updateTelephoneProducer";
+        return "producer/updateTelephoneProducer";
     }
 
     @GetMapping("/updateAddress/{id}")
     public String updateAddress(@ModelAttribute("address") AllArgsAddressDTO argAddressDTO,
                                 @PathVariable @ModelAttribute("addrId") long id ){
-        return "updateAddressProducer";
+        return "producer/updateAddressProducer";
     }
 
     @PostMapping("/updateAddress")
@@ -224,14 +224,14 @@ public class ProducerController {
                 }
             } else model.addAttribute("message", ControllerMessageManager.UPDATE_ADDRESS_FAIL);
         }
-        return "updateAddressProducer";
+        return "producer/updateAddressProducer";
     }
 
     @GetMapping("/allTelephones")
     public String getTelephones(Model model, HttpSession httpSession){
         Producer producer = (Producer) httpSession.getAttribute("producer");
         model.addAttribute("telephones", producer.getTelephones());
-        return "allTelephones";
+        return "producer/allTelephones";
     }
 
     @GetMapping("/deleteTelephone/{id}")
@@ -244,7 +244,7 @@ public class ProducerController {
                 model.addAttribute("message", ControllerMessageManager.DELETE_TELEPHONE_SUCCESSFULLY);
             }
         }else model.addAttribute("message", ControllerMessageManager.DELETE_TELEPHONE_FAIL);
-        return "allTelephones";
+        return "producer/allTelephones";
     }
 
     @GetMapping("/logOut")
@@ -255,7 +255,7 @@ public class ProducerController {
 
     @GetMapping("/account")
     public String account() {
-        return "accountProducer";
+        return "producer/accountProducer";
     }
 
     @GetMapping("/producerInfo/{id}")
@@ -268,12 +268,12 @@ public class ProducerController {
         }else{
             model.addAttribute("messageProducerCard", ControllerMessageManager.PRODUCER_NOT_FOUND);
         }
-        return "producerInfo";
+        return "producer/producerInfo";
     }
 
     @GetMapping("/all")
     public String getAllForUser(Model model){
         model.addAttribute("allProducers", producerService.getAllProducer());
-        return "adminLists";
+        return "admin/adminLists";
     }
 }

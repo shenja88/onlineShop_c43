@@ -3,7 +3,6 @@ package by.c43.store.controller;
 
 import by.c43.store.dto.telephonesDTO.NumberIdTelDTO;
 import by.c43.store.dto.cardDTO.UserCardInfoDTO;
-import by.c43.store.dto.telephonesDTO.NumberTelDTO;
 import by.c43.store.dto.usersDTO.*;
 import by.c43.store.entity.Telephone;
 import by.c43.store.entity.TypeOfUser;
@@ -32,7 +31,7 @@ public class UserController {
     @GetMapping("/reg")
     public String registration(Model model) {
         model.addAttribute("userRegDTO", new AllArgUsersDTO());
-        return "reg";
+        return "user/reg";
     }
 
     @PostMapping("/reg")
@@ -47,13 +46,13 @@ public class UserController {
                 model.addAttribute("messageReg", ControllerMessageManager.REG_FAIL);
             }
         }
-        return "reg";
+        return "user/reg";
     }
 
     @GetMapping("/auth")
     public String authorization(Model model) {
         model.addAttribute("userAuthDTO", new EmailPasswordUsersDTO());
-        return "auth";
+        return "user/auth";
     }
 
     @PostMapping("/auth")
@@ -65,7 +64,7 @@ public class UserController {
             if (userOp.isPresent()) {
                 httpSession.setAttribute("user", userOp.get());
                 if (userOp.get().getTypeOfUser().equals(TypeOfUser.ADMIN)) {
-                    return "adminPage";
+                    return "admin/adminPage";
                 } else {
                     httpSession.setAttribute("basket", productBasket);
                     model.addAttribute("messageAuth", ControllerMessageManager.AUTH_SUCCESSFULLY);
@@ -74,13 +73,13 @@ public class UserController {
                 model.addAttribute("messageAuth", ControllerMessageManager.AUTH_FAIL);
             }
         }
-        return "auth";
+        return "user/auth";
     }
 
     @GetMapping("/updName")
     public String updateName(Model model) {
         model.addAttribute("userNameDTO", new NameUserDTO());
-        return "updName";
+        return "user/updName";
     }
 
     @PostMapping("/updName")
@@ -95,13 +94,13 @@ public class UserController {
                 model.addAttribute("messageName", ControllerMessageManager.UPDATE_NAME_FAIL);
             }
         }
-        return "updName";
+        return "user/updName";
     }
 
     @GetMapping("/updEmail")
     public String updateEmail(Model model) {
         model.addAttribute("userEmailDTO", new EmailUserDTO());
-        return "updEmail";
+        return "user/updEmail";
     }
 
     @PostMapping("/updEmail")
@@ -116,13 +115,13 @@ public class UserController {
                 model.addAttribute("messageEmail", ControllerMessageManager.UPDATE_EMAIL_FAIL);
             }
         }
-        return "updEmail";
+        return "user/updEmail";
     }
 
     @GetMapping("/updPassword")
     public String updatePassword(Model model) {
         model.addAttribute("userPasswordDTO", new PasswordUserDTO());
-        return "updPassword";
+        return "user/updPassword";
     }
 
     @PostMapping("/updPassword")
@@ -137,13 +136,13 @@ public class UserController {
                 model.addAttribute("messagePassword", ControllerMessageManager.UPDATE_PASSWORD_FAIL);
             }
         }
-        return "updPassword";
+        return "user/updPassword";
     }
 
     @GetMapping("/updPicture")
     public String updatePicture(Model model) {
         model.addAttribute("userPictureDTO", new PictureUserDTO());
-        return "updPicture";
+        return "user/updPicture";
     }
 
     @PostMapping("/updPicture")
@@ -158,14 +157,14 @@ public class UserController {
                 model.addAttribute("messagePicture", ControllerMessageManager.UPDATE_PICTURE_FAIL);
             }
         }
-        return "updPicture";
+        return "user/updPicture";
     }
 
     @GetMapping("/updTel/{id}")
     public String updateNumber(@PathVariable long id, Model model) {
         model.addAttribute("numberTelDTO", new NumberIdTelDTO());
         model.addAttribute("telId", id);
-        return "updNumber";
+        return "user/updNumber";
     }
 
     @PostMapping("/updTel")
@@ -181,7 +180,7 @@ public class UserController {
                 model.addAttribute("messageUpdNumber", ControllerMessageManager.UPDATE_NUMBER_FAIL);
             }
         }
-        return "updNumber";
+        return "user/updNumber";
     }
 
     @GetMapping("/deleteUser/{id}")
@@ -192,7 +191,7 @@ public class UserController {
         } else {
             model.addAttribute("message", ControllerMessageManager.DELETE_USER_FAIL);
         }
-        return "adminPage";
+        return "admin/adminPage";
     }
 
     @GetMapping("/logout")
@@ -207,7 +206,7 @@ public class UserController {
 
     @GetMapping("account")
     public String account() {
-        return "account";
+        return "user/account";
     }
 
     @GetMapping("/userInfo/{id}")
@@ -218,12 +217,12 @@ public class UserController {
         } else {
             model.addAttribute("messageUserCard", ControllerMessageManager.USER_NOT_FOUND);
         }
-        return "userInfo";
+        return "user/userInfo";
     }
 
     @GetMapping("/all")
     public String getAllForUser(Model model){
         model.addAttribute("allUser", userService.getAll());
-        return "adminLists";
+        return "admin/adminLists";
     }
 }

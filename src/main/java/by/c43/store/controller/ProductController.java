@@ -29,7 +29,7 @@ public class ProductController {
     @GetMapping("/add")
     public String addProduct(Model model, @ModelAttribute("product") AllArgsProductDTO dto) {
         model.addAttribute("categories", productService.getCategories());
-        return "addProd";
+        return "product/addProd";
     }
 
     @PostMapping("/add")
@@ -44,7 +44,7 @@ public class ProductController {
                 model.addAttribute("messageAddProd", ControllerMessageManager.ADD_PRODUCT_FAIL);
             }
         }
-        return "addProd";
+        return "product/addProd";
     }
 
     @GetMapping("/deleteForUser/{id}")
@@ -59,7 +59,7 @@ public class ProductController {
             }
         }
         if(user.getTypeOfUser().equals(TypeOfUser.ADMIN)){
-            return "adminPage";
+            return "admin/adminPage";
         }
         return "store";
     }
@@ -81,7 +81,7 @@ public class ProductController {
     @GetMapping("/udpName/{id}")
     public String updateName(@ModelAttribute("nameDTO") NameProductDTO dto, @PathVariable long id, Model model) {
         model.addAttribute("prodId", id);
-        return "updateNameProd";
+        return "product/updateNameProd";
     }
 
     @PostMapping("/updName")
@@ -95,13 +95,13 @@ public class ProductController {
                 model.addAttribute("messageUpdName", ControllerMessageManager.OPERATION_FAILED);
             }
         }
-        return "updateNameProd";
+        return "product/updateNameProd";
     }
 
     @GetMapping("/udpDesc/{id}")
     public String updateDescription(@ModelAttribute("descDTO") DescriptionProductDTO dto, @PathVariable long id, Model model) {
         model.addAttribute("prodId", id);
-        return "updateDescriptionProd";
+        return "product/updateDescriptionProd";
     }
 
     @PostMapping("/updDesc")
@@ -115,13 +115,13 @@ public class ProductController {
                 model.addAttribute("messageUpdDescription", ControllerMessageManager.OPERATION_FAILED);
             }
         }
-        return "updateDescriptionProd";
+        return "product/updateDescriptionProd";
     }
 
     @GetMapping("/udpPicture/{id}")
     public String updatePicture(@ModelAttribute("pictureDTO") PictureProductDTO dto, @PathVariable long id, Model model) {
         model.addAttribute("prodId", id);
-        return "updatePictureProd";
+        return "product/updatePictureProd";
     }
 
     @PostMapping("/updPicture")
@@ -135,14 +135,14 @@ public class ProductController {
                 model.addAttribute("messageUpdPicture", ControllerMessageManager.OPERATION_FAILED);
             }
         }
-        return "updatePictureProd";
+        return "product/updatePictureProd";
     }
 
     @GetMapping("/udpType/{id}")
     public String updateType(@ModelAttribute("typeDTO") TypeProductDTO dto, @PathVariable long id, Model model) {
         model.addAttribute("prodId", id);
         model.addAttribute("category", productService.getCategories());
-        return "updateTypeProd";
+        return "product/updateTypeProd";
     }
 
     @PostMapping("/updType")
@@ -156,13 +156,13 @@ public class ProductController {
                 model.addAttribute("messageUpdType", ControllerMessageManager.OPERATION_FAILED);
             }
         }
-        return "updateTypeProd";
+        return "product/updateTypeProd";
     }
 
     @GetMapping("/updPrice/{id}")
     public String updatePrice(@ModelAttribute("newPrice") NewPriceDTO priceDTO, @PathVariable long id, Model model) {
         model.addAttribute("prodId", id);
-        return "updatePriceProd";
+        return "product/updatePriceProd";
     }
 
     @PostMapping("/updPrice")
@@ -176,13 +176,13 @@ public class ProductController {
                 model.addAttribute("messageUpdPrice", ControllerMessageManager.OPERATION_FAILED);
             }
         }
-        return "updatePriceProd";
+        return "product/updatePriceProd";
     }
 
     @GetMapping("/updRating/{id}")
     public String updateRating(@PathVariable long id, @ModelAttribute("newRating") NewRatingDTO ratingDTO, Model model){
         model.addAttribute("prodId", id);
-        return "updRatingProd";
+        return "product/updRatingProd";
     }
 
     @PostMapping("/updRating")
@@ -197,7 +197,7 @@ public class ProductController {
                 model.addAttribute("messageUpdRating", ControllerMessageManager.OPERATION_FAILED);
             }
         }
-        return "updRatingProd";
+        return "product/updRatingProd";
     }
 
     @PostMapping("/byType")
@@ -216,7 +216,7 @@ public class ProductController {
             cardProducts.add(new CardDTO(prod, commentService.getCommentsByIdProduct(prod.getId()), prod.getRating()));
         }
         model.addAttribute("listProd", cardProducts);
-        return "userProducts";
+        return "user/userProducts";
     }
 
     @PostMapping("/byProducer")
@@ -252,7 +252,7 @@ public class ProductController {
                     .comments(commentService.getCommentsByIdProduct(id))
                     .build();
             model.addAttribute("card", cardDTO);
-            return "product";
+            return "product/product";
         }else return "store";
     }
 
@@ -271,7 +271,7 @@ public class ProductController {
             cardProducts.add(new CardDTO(prod, commentService.getCommentsByIdProduct(prod.getId()), prod.getRating()));
         }
         model.addAttribute("producerProducts", cardProducts);
-        return "producerProducts";
+        return "producer/producerProducts";
     }
 
     @GetMapping("/updProdPage/{id}")
@@ -283,7 +283,7 @@ public class ProductController {
                     .comments(commentService.getCommentsByIdProduct(id))
                     .build();
             model.addAttribute("card", cardDTO);
-            return "productUpdPage";
+            return "product/productUpdPage";
         }
         return "store";
     }
@@ -291,13 +291,13 @@ public class ProductController {
     @GetMapping("/setSaleStatus/{status}/{id}")
     public String setForSaleStatus(@PathVariable(name = "status") boolean status, @PathVariable(name = "id") long id){
         productService.setSaleStatus(status, id);
-        return "userProducts";
+        return "user/userProducts";
     }
 
     @GetMapping("/allForAdmin")
     public String getAllForAdmin(Model model){
         Optional<List<Product>> products = Optional.ofNullable(productService.getAll());
         products.ifPresent(productList -> model.addAttribute("allProducts", productList));
-        return "adminLists";
+        return "admin/adminLists";
     }
 }

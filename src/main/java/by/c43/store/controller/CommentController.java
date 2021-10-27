@@ -31,7 +31,7 @@ public class CommentController {
     @GetMapping("/add/{id}")
     public String showListOfComments(@ModelAttribute("newComment") DescriptionProductDTO descriptionProductUserDTO, @PathVariable long id, Model model) {
         model.addAttribute("prodId", id);
-        return "addComment";
+        return "product/addComment";
     }
 
     @PostMapping("/add")
@@ -46,13 +46,13 @@ public class CommentController {
                 model.addAttribute("message_add_com", ControllerMessageManager.ADD_COMM_SUCCESSFULLY);
             }
         }
-        return "addComment";
+        return "product/addComment";
     }
 
     @GetMapping("/update/{id}")
     public String showListOfCommentsForUpdate(@ModelAttribute("updatedComment") DescriptionIdCommentDTO commentDTO, @PathVariable String id, Model model) {
         model.addAttribute("comId", id);
-        return "updateComment";
+        return "product/updateComment";
     }
 
     @PostMapping("/update")
@@ -66,7 +66,7 @@ public class CommentController {
                 model.addAttribute("message_update_com", ControllerMessageManager.OPERATION_FAILED);
             }
         }
-        return "updateComment";
+        return "product/updateComment";
     }
 
     @GetMapping("/delete/{id}")
@@ -86,7 +86,7 @@ public class CommentController {
             List<Comment> commentsByIdProduct = commentService.getCommentsByIdProduct(id);
             model.addAttribute("allComments", commentsByIdProduct);
             model.addAttribute("productById", byId.get());
-            return "productComments";
+            return "product/productComments";
         }else return "store";
     }
 
